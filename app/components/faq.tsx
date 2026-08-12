@@ -1,22 +1,31 @@
 "use client";
 
 import { useState } from "react";
-import { faqs } from "../lib/content";
+import { faqs, mailto } from "../lib/content";
 import { Eyebrow } from "./ui";
 
 export default function Faq() {
-  // Accordion: one panel open at a time, matching the original page.
+  // Accordion: one panel open at a time.
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
     <section className="section" id="faq">
-      <div className="wrap" style={{ maxWidth: 820 }}>
+      <div className="wrap" style={{ maxWidth: 860 }}>
         <div className="section-head center" data-anim="fade-up">
           <Eyebrow center>FAQ</Eyebrow>
-          <h2>Questions we get before every build</h2>
+          <h2>Frequently Asked Questions</h2>
+          <p>Get answers to common questions here — or ask us directly.</p>
+          <a
+            href={mailto}
+            className="btn btn-ghost btn-sm"
+            style={{ marginTop: 18 }}
+            data-ripple
+          >
+            Ask Us Directly
+          </a>
         </div>
 
-        <div className="faq-list">
+        <div className="faq-list" data-anim="fade-up">
           {faqs.map((item, i) => {
             const open = openIndex === i;
             return (

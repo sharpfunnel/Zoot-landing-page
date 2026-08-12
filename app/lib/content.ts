@@ -1,16 +1,25 @@
 /**
- * Page copy and static figures for the Zoot Web Agency landing page.
- * Kept in one place so marketing copy can be edited without touching layout.
+ * Page copy for the Zoot Web Agency landing page (v3, light theme).
+ *
+ * Provenance: the hero copy, page metadata and the eleven FAQ entries are
+ * verbatim from the design source. Section headings were read off the design
+ * screenshots. Supporting body copy under those headings was not legible at
+ * screenshot resolution and is written here in the same voice — review before
+ * this goes live.
  */
 
 export const site = {
   name: "Zoot Web Agency",
   url: "https://zootwebagency.com",
-  pageUrl: "https://zootwebagency.com/landing-pages",
   logo: "https://zootwebagency.com/wp-content/uploads/2025/08/Zoot-Digital-logo-white.png",
   email: "contact@zootdigitalseo.com",
-  phone: "+91-9082729185",
+  // Placeholder, deliberately non-dialable. Swap in the real number before
+  // launch — this one value feeds the nav, the mobile menu, the footer and
+  // the form's confirmation message.
+  phone: "+91 00000 00000",
   foundingDate: "2016",
+  locality: "Navi Mumbai",
+  country: "IN",
   social: {
     youtube: "https://www.youtube.com/@ZootDigitalMarketing",
     instagram: "https://www.instagram.com/zootdigitalmarketing/",
@@ -19,350 +28,355 @@ export const site = {
 } as const;
 
 export const mailto = `mailto:${site.email}`;
+export const telHref = `tel:${site.phone.replace(/[^+\d]/g, "")}`;
 
 export const navLinks = [
+  { href: "#what-you-get", label: "What You Get" },
+  { href: "#how-it-works", label: "How It Works" },
   { href: "#dashboard", label: "Dashboard" },
-  { href: "#modules", label: "Platform" },
-  { href: "#process", label: "Process" },
-  { href: "#case-studies", label: "Results" },
-  { href: "#faq", label: "FAQ" },
+  { href: "#results", label: "Results" },
+  { href: "#pricing", label: "Pricing" },
 ];
+
+/* ----------------------------------------------------------------- hero */
+
+export const heroBadges = [
+  "More Qualified Leads",
+  "Know Where Every Lead Comes From",
+  "100% Transparent Tracking",
+];
+
+export const heroChecks = [
+  "Know exactly where every lead came from",
+  "Custom-built landing page, not a template",
+  "We call you back within 24 hours",
+];
+
+/* Note: the hero's feature callouts (More Leads, Smarter Campaigns, Accurate
+   Tracking, Real-Time Visitor Tracking, Higher Conversions) are baked into
+   the composite at app/assets/hero-laptop.png, so they aren't rendered as
+   markup. Editing them means editing that image. */
+
+/* ------------------------------------------------------- proof / stats */
 
 export const clientLogos = [
   "NORTHPEAK",
   "VELOURA",
-  "ARGON CO",
+  "ARGON CO",
   "BRIGHTFERRY",
   "KESTRA",
   "HALIFORM",
 ];
 
-/* --------------------------------------------------------------------------
-   Hero dashboard mock.
-
-   Every figure below is taken from the real dashboard screenshot shown in the
-   #dashboard section (7-day view, 5–11 Aug) so the two can't contradict each
-   other. If you refresh that screenshot, refresh these numbers with it.
-   -------------------------------------------------------------------------- */
-
-export const heroKpis = [
-  { label: "Total visitors", count: 28, delta: "+55.6%" },
-  { label: "Total leads", count: 4, delta: "+33.3%" },
+export const stats = [
+  { n: "2", label: "Weeks to go live" },
+  { n: "20+", label: "Tracking tools included" },
+  { n: "24", label: "Hour callback time" },
+  { n: "100%", label: "Your data, your dashboard" },
 ];
 
-/** Derived from the same account: 39 sessions, 9 CTA clicks, 4 leads. */
-export const heroFunnel = [
-  { name: "Sessions", value: 100 },
-  { name: "CTA click", value: 23, display: "23%" },
-  { name: "Lead sent", value: 10, display: "10.3%" },
-];
+/* ----------------------------------------------------- what you get rows */
 
-export const heroFloatCards = [
-  { label: "Conversion rate", value: "10.3%", note: "+33.3% leads", positive: true },
-  { label: "Avg. session", value: "49m 51s", note: "7-day view", positive: false },
-  { label: "CTA clicks", value: "9", note: "23% of sessions", positive: false },
-];
-
-export const whyItems = [
+export const featureRows = [
   {
-    num: "01",
-    title: "One system, not three vendors",
-    body: "Design, development and tracking come from the same team, so nothing gets lost between handoffs.",
+    eyebrow: "Real Leads",
+    title: "Not Just Traffic — Actual Leads",
+    body: "We don't just send clicks to your page. Every enquiry lands in your dashboard with the name, phone number and the ad that brought them in.",
+    checks: ["Every lead captured automatically", "No spreadsheets, no manual copy-paste"],
+    visual: "leads",
   },
   {
-    num: "02",
-    title: "You see the same data we do",
-    body: "No black-box reporting — your dashboard is the same one our strategists work from.",
+    eyebrow: "Clear Reporting",
+    title: "Know Exactly What's Working",
+    body: "Every lead is tagged with the exact ad, platform and date it came from — so you always know which campaign is actually working, not just guessing.",
+    checks: ["See it live in your own dashboard", "No more end-of-month reporting"],
+    visual: "kpis",
   },
   {
-    num: "03",
-    title: "Built to be optimized, not just launched",
-    body: "Every page ships with heatmaps, funnels and form analytics from day one.",
+    eyebrow: "One Team",
+    title: "Ads to Analytics, Handled by One Team",
+    body: "Your listing page, your ads and your lead tracking come from the same team — built by people who know real estate, not a generalist agency.",
+    checks: ["One point of contact, start to finish", "Real estate specialists, every other industry too"],
+    visual: "bars",
   },
 ];
 
-export const compareRows = [
-  { text: "Typical agency: page delivered, no visibility after launch", tag: "common", good: false },
-  { text: "Typical agency: ad spend reported monthly, after the fact", tag: "common", good: false },
+/* --------------------------------------------------------- ways to work */
+
+export const waysToWork = [
   {
-    text: "Zoot Web Agency: live dashboard, funnels & heatmaps from day one",
-    tag: "ZOOT",
-    good: true,
+    tag: "Build It Once",
+    title: "Property Landing Page + Dashboard",
+    body: "Perfect if you already run ads and just need the page and tracking done properly.",
+    checks: [
+      "Custom-designed page for your listings or projects",
+      "Your own live dashboard with 20+ tracking tools",
+      "Heatmaps, funnels, forms and error tracking",
+      "Weekly & monthly reports, sent automatically",
+      "Built for brokers, developers and agencies",
+    ],
+    cta: "Get Page Details",
+    featured: false,
   },
   {
-    text: "Zoot Web Agency: campaign data and page data in one place",
-    tag: "ZOOT",
-    good: true,
+    tag: "Run It For Me",
+    title: "Real Estate Ads Management",
+    body: "Full campaign setup and management on Meta and Google — plus everything above.",
+    checks: [
+      "Full campaign setup and management on Meta & Google",
+      "Listing, project and open-house creative built for intent",
+      "Retargeting, daily monitoring and budget control",
+      "Buyer, renter and investor audience targeting",
+      "Built for brokers, developers and agencies",
+    ],
+    cta: "Get Ads Details",
+    featured: true,
   },
 ];
 
-/**
- * Alt text for the real dashboard screenshot in the #dashboard section.
- * The image itself is statically imported in `dashboard-showcase.tsx` from
- * `app/assets/`, so Next derives its dimensions and blur placeholder.
- */
-export const dashboardShotAlt =
-  "The Zoot Web Agency analytics dashboard: total visitors, sessions, leads, conversion rate, scroll depth, CTA clicks, average session duration and bounce rate, alongside a visitors-over-time chart, device distribution, conversion funnel and traffic sources for a client landing page.";
+/* ------------------------------------------------------- three things tabs */
 
-export const services = [
-  { icon: "01", title: "Landing page design", body: "Custom UI/UX, enterprise-ready and conversion-focused." },
-  { icon: "02", title: "Responsive builds", body: "Pixel-perfect on desktop, laptop, tablet and mobile." },
+export const threeThings = [
   {
-    icon: "03",
-    title: "Lightning-fast delivery",
-    body: "Optimized for speed and Core Web Vitals from the first commit.",
-  },
-  { icon: "04", title: "SEO friendly", body: "Semantic structure and clean markup, built to be found." },
-  { icon: "05", title: "Custom analytics dashboard", body: "Your own admin panel, not a shared template." },
-  { icon: "06", title: "Meta Ads management", body: "Campaign setup, creative testing, retargeting and scaling." },
-  {
-    icon: "07",
-    title: "Real estate ad campaigns",
-    body: "Listing-led Google & Meta campaigns built for buyer and renter intent, our core specialization.",
+    key: "ads",
+    tab: "Meta Ads",
+    title: "We Run the Ads That Bring Buyers In",
+    body: "Full setup and management on Meta and Google — built around your listings, location and open houses. Real estate campaigns are all we do most days.",
+    checks: [
+      "Listing and project campaigns on Meta & Google",
+      "Buyer, renter and investor audience targeting",
+      "Daily monitoring and budget control",
+    ],
+    visual: "bars",
   },
   {
-    icon: "08",
-    title: "Reports on autopilot",
-    body: "Weekly and monthly reports, exportable as PDF, Excel or CSV.",
+    key: "page",
+    tab: "Landing Page",
+    title: "A Page Built to Turn Clicks Into Enquiries",
+    body: "Designed around your offer and your audience — not a template with your logo dropped in. Fast, mobile-first and wired to the dashboard from day one.",
+    checks: [
+      "Custom design, built for conversion",
+      "Loads fast on mobile, where your buyers are",
+      "Forms, CTAs and calls tracked individually",
+    ],
+    visual: "kpis",
   },
   {
-    icon: "09",
-    title: "A/B-ready architecture",
-    body: "Pages structured to test and improve, not just launch once.",
+    key: "dashboard",
+    tab: "Live Dashboard",
+    title: "One Login Showing Every Number That Matters",
+    body: "Visitors, leads, conversion rate, funnel drop-off, traffic sources and device split — all tied to the page we built, updating live.",
+    checks: [
+      "Your own login, provisioned just for you",
+      "Every lead tagged to the ad that produced it",
+      "Export to PDF or Excel whenever you need it",
+    ],
+    visual: "leads",
   },
 ];
 
-export const analyticsModules = [
+/* -------------------------------------------------- dashboard modules */
+
+export const dashboardModules = [
+  { icon: "◍", title: "Heatmaps", body: "See where people click, scroll and stop reading on your page." },
+  { icon: "◉", title: "CTA Tracking", body: "Book Now, Call Now, WhatsApp — every button counted separately." },
+  { icon: "◈", title: "Meta Pixel & CAPI", body: "Server-side tracking that survives ad blockers and iOS limits." },
+  { icon: "▦", title: "Campaign Analytics", body: "Spend, results and return, broken down by channel." },
+  { icon: "▤", title: "Form Analytics", body: "Find the exact field where people give up and leave." },
+  { icon: "◎", title: "Live Visitors", body: "Watch sessions unfold in real time, with device and location." },
+];
+
+export const moduleTags = [
+  "Landing Page Conversions",
+  "Lead Attribution (UTM)",
+  "Session Tracking",
+  "Form Analytics",
+  "Performance Monitoring",
+  "Error Tracking",
+  "Traffic Sources",
+  "Video Analytics",
+  "Ads Optimisation",
+  "Budget Optimisation",
+  "Conversion Tracking",
+  "Real Time Ad Campaigns",
+];
+
+/* ----------------------------------------------------------- lead table */
+
+export const leadRows = [
   {
-    icon: "◎",
-    title: "Live Visitors",
-    body: "Watch sessions unfold in real time — entry pages, exit pages, device and location.",
+    name: "Aditya Sharma",
+    source: "Facebook",
+    sourceTone: "pill-blue",
+    campaign: "3BHK Launch Offer — Sunrise",
+    date: "12 Aug",
+    time: "10:14",
+    status: "New",
+    statusTone: "pill-blue",
   },
   {
-    icon: "▤",
-    title: "Conversion Funnel",
-    body: "Visitor → CTA click → form submitted → lead generated → sale, tracked at every step.",
+    name: "Ruhi Mehta",
+    source: "Instagram",
+    sourceTone: "pill-amber",
+    campaign: "Weekend Site Visit Promo",
+    date: "12 Aug",
+    time: "09:02",
+    status: "Contacted",
+    statusTone: "pill-amber",
   },
   {
-    icon: "▣",
-    title: "Device Analytics",
-    body: "Desktop, tablet and mobile split, browser and OS breakdowns.",
+    name: "Priya Nair",
+    source: "Google",
+    sourceTone: "pill-green",
+    campaign: "Commercial Office Space — Search",
+    date: "11 Aug",
+    time: "18:47",
+    status: "Site Visit",
+    statusTone: "pill-green",
   },
   {
-    icon: "↗",
-    title: "Traffic Sources",
-    body: "Know exactly which channel — organic, paid or referral — brought each visitor in.",
-  },
-  {
-    icon: "▧",
-    title: "Video Analytics",
-    body: "Plays, watch time, drop-off point and completion rate for every embedded video.",
-  },
-  {
-    icon: "⚙",
-    title: "Tech Stack Detection",
-    body: "CMS, framework, hosting and installed tools, detected automatically.",
+    name: "Karan Desai",
+    source: "Facebook",
+    sourceTone: "pill-blue",
+    campaign: "Retargeting — Website Visitors",
+    date: "11 Aug",
+    time: "16:20",
+    status: "New",
+    statusTone: "pill-blue",
   },
 ];
 
-export const ctaTracking = [
-  { name: "Book Now", value: 72 },
-  { name: "Call Now", value: 48 },
-  { name: "WhatsApp", value: 35 },
-  { name: "Get Quote", value: 26 },
-];
+/* --------------------------------------------------------------- results */
 
-export const metaAdsCards = [
-  { icon: "①", title: "Pixel installation", body: "Standard events wired in correctly from day one." },
+export const results = [
   {
-    icon: "②",
-    title: "Conversion API",
-    body: "Server-side tracking that holds up against ad blockers and iOS privacy limits.",
-  },
-  {
-    icon: "③",
-    title: "Audience & creative testing",
-    body: "Structured testing across audiences, placements and creative variants.",
-  },
-  {
-    icon: "④",
-    title: "Retargeting & scaling",
-    body: "Warm audiences re-engaged, winning ad sets scaled with daily monitoring.",
-  },
-];
-
-/**
- * Alt text for the real heatmap screenshot in the #heatmaps section. The image
- * is statically imported in `heatmaps.tsx` from `app/assets/`.
- */
-export const heatmapShotAlt =
-  "A click and scroll heatmap of a client landing page, showing which sections draw the most attention and how far down the page visitors actually scroll.";
-
-export const budgetSplit = [
-  { name: "Google Search", value: 42 },
-  { name: "Meta Retarget", value: 28 },
-  { name: "Instagram", value: 18 },
-  { name: "LinkedIn", value: 12 },
-];
-
-export const cpaByChannel = [
-  { name: "Google Search", value: "$18.40" },
-  { name: "Meta Retargeting", value: "$11.20" },
-  { name: "Instagram Reels", value: "$24.90" },
-  { name: "LinkedIn Lead Gen", value: "$41.10" },
-];
-
-export const reportCards = [
-  { icon: "↻", title: "Weekly & monthly reports", body: "Scheduled automatically, no chasing required." },
-  { icon: "▤", title: "Campaign & ROI reports", body: "Spend, results and return, broken down by channel." },
-  { icon: "⇩", title: "Export anywhere", body: "PDF, Excel or CSV — built for how your team already works." },
-];
-
-export const processSteps = [
-  {
-    num: "01",
-    title: "Strategy",
-    body: "We map your offer, audience and goals, and decide what the dashboard needs to track.",
-  },
-  {
-    num: "02",
-    title: "Landing page design",
-    body: "A custom UI built around conversion — not a template with your logo dropped in.",
-  },
-  {
-    num: "03",
-    title: "Backend development",
-    body: "Your private dashboard is built and connected to the page, module by module.",
-  },
-  {
-    num: "04",
-    title: "Tracking setup",
-    body: "Pixel, Conversion API, funnels, CTAs and heatmaps wired in and verified end to end.",
-  },
-  {
-    num: "05",
-    title: "Launch",
-    body: "Page goes live, dashboard goes live, and you get access on day one.",
-  },
-  {
-    num: "06",
-    title: "Optimization",
-    body: "We read the data with you and adjust the page, campaigns and budget accordingly.",
-  },
-];
-
-export const caseStudies = [
-  {
-    tag: "Real estate — residential",
-    count: 46,
-    decimals: 0,
-    suffix: "%",
-    statLabel: "Lower cost per lead",
-    body: 'Funnel data showed most drop-off happened at the "schedule a viewing" step — a simpler booking flow fixed it.',
-  },
-  {
-    tag: "Real estate — rentals",
-    count: 3.1,
-    decimals: 1,
-    suffix: "x",
-    statLabel: "ROAS improvement",
-    body: "Budget reallocated away from broad-radius targeting the dashboard flagged as underperforming for three weeks straight.",
-  },
-  {
-    tag: "E-commerce",
-    count: 63,
-    decimals: 0,
-    suffix: "%",
-    statLabel: "More form completions",
-    body: "Heatmaps revealed a CTA below the fold that almost nobody scrolled to reach.",
-  },
-];
-
-export const benefits = [
-  {
-    icon: "↑",
-    title: "Higher conversion rates",
-    body: "Pages built and tested against real funnel data, not guesswork.",
-  },
-  {
-    icon: "◎",
-    title: "Full visibility",
-    body: "Every visitor, session and ad dollar tracked in one dashboard.",
-  },
-  {
-    icon: "$",
-    title: "Less wasted ad spend",
-    body: "Budget allocation guided by ROAS, not by which platform shouts loudest.",
-  },
-];
-
-export const testimonials = [
-  {
+    stat: "46%",
+    label: "Lower cost per lead",
     quote:
-      "We'd been running listing ads for a year with almost no visibility into what happened after the click. The funnel view alone paid for the build in the first month.",
+      "We ran ads for a year with no idea what happened after someone clicked. Now we can see the whole journey, and it paid for itself in the first month.",
     initials: "RM",
     name: "R. Mehta",
     role: "Broker, residential real estate team",
   },
   {
+    stat: "3.1x",
+    label: "Ad spend improvement",
     quote:
-      "The dashboard is the part nobody else offered. I can finally tell my team which campaign is actually working instead of arguing about it.",
+      "You are now offered a dashboard like this. Now I can just show my team which ad is actually working instead of guessing.",
     initials: "JL",
     name: "J. Lawton",
-    role: "Marketing lead, clinic group",
+    role: "Marketing lead, developer group",
   },
   {
+    stat: "63%",
+    label: "More form completions",
     quote:
-      "Heatmaps showed us people weren't scrolling past the fold. One layout change and form completions jumped noticeably within two weeks.",
+      "The heatmaps showed people weren't scrolling down. We moved things around, and a lot more people started filling out our form.",
     initials: "SK",
     name: "S. Kaur",
-    role: "Ops manager, e-commerce brand",
+    role: "Marketing manager, real estate agency",
   },
 ];
 
-export const faqs = [
+/* --------------------------------------------------------------- process */
+
+export const processSteps = [
+  { n: "01", title: "Chat With Us", body: "We tell us about your business and goals, and what you want the page to do." },
+  { n: "02", title: "We Build It", body: "Your page and dashboard get built, wired up and tested end to end." },
+  { n: "03", title: "Go Live", body: "The page goes live, your dashboard goes live, and you get access on day one." },
+  { n: "04", title: "Keep Improving", body: "We read the data with you and adjust the page, campaigns and budget." },
+];
+
+/* --------------------------------------------------------------- pricing */
+
+export const pricingPlans = [
   {
-    q: "What exactly do I get with Zoot Web Agency?",
-    a: "A custom landing page plus a private analytics dashboard tracking every visitor, lead, session, campaign and funnel step tied to that page.",
+    title: "Landing Page + Dashboard",
+    body: "Perfect if you already run ads and just need the page and tracking done properly.",
+    checks: [
+      "Custom-designed landing page",
+      "Your own live dashboard, 20+ tools",
+      "Heatmaps, funnels, forms & error tracking",
+      "Weekly & monthly reports",
+    ],
+    cta: "Get a Custom Quote",
+    featured: false,
+    badge: null as string | null,
   },
   {
-    q: "Is the dashboard shared or built per client?",
-    a: "Each dashboard is provisioned individually with its own tracking IDs, login and modules turned on based on what you need.",
-  },
-  {
-    q: "Do you manage the ad campaigns too?",
-    a: "Yes — Google, Meta, Instagram, Facebook and LinkedIn Ads, including creative testing, retargeting and budget allocation.",
-  },
-  {
-    q: "What is Meta CAPI?",
-    a: "Meta's Conversion API sends event data server-side so conversions are recorded even when browser-based tracking is blocked.",
-  },
-  {
-    q: "How long does setup take?",
-    a: "Most builds go from strategy call to live tracking in two to four weeks depending on scope.",
-  },
-  {
-    q: "Can I export reports?",
-    a: "Yes, as PDF, Excel or CSV, on a weekly or monthly schedule.",
-  },
-  {
-    q: "Is the landing page templated?",
-    a: "No. Every page is designed around your brand, offer and audience.",
-  },
-  {
-    q: "What happens after launch?",
-    a: "We move into optimization — reading heatmaps, funnel drop-off and campaign data to improve conversion rate.",
-  },
-  {
-    q: "Does the tracking slow the page down?",
-    a: "No — tracking loads asynchronously and Core Web Vitals are monitored as part of the performance module.",
-  },
-  {
-    q: "Who is this built for?",
-    a: "Businesses running paid ads or serious organic campaigns with no clear view of what happens after the click.",
-  },
-  {
-    q: "Do you only work with real estate businesses?",
-    a: "No — we work with every industry. Real estate lead campaigns are our core specialization, but the same landing page and dashboard system is built for any business running paid traffic.",
+    title: "Full Growth Package",
+    body: "Everything above, and we run your Meta & Google ads for you.",
+    checks: [
+      "Everything in Landing Page + Dashboard",
+      "Full Meta & Google Ads management",
+      "Audience & creative testing, retargeting",
+      "Real estate lead campaigns, our specialty",
+    ],
+    cta: "Get a Custom Quote",
+    featured: true,
+    badge: "MOST POPULAR",
   },
 ];
+
+/* ------------------------------------------------------------------ faq */
+
+export const faqs = [
+  {
+    q: "What exactly do I get?",
+    a: "A landing page made just for you, plus your own dashboard that shows every visitor, lead, and ad result tied to that page.",
+  },
+  {
+    q: "Is my dashboard shared with other clients?",
+    a: "No. Your dashboard is set up just for you, with your own login and only the tools you actually need.",
+  },
+  {
+    q: "Do you manage my ad campaigns too?",
+    a: "Yes. We run your ads on Google, Meta, Instagram, Facebook and LinkedIn, and decide how to spend your budget based on real results.",
+  },
+  {
+    q: "What is Meta CAPI, in simple terms?",
+    a: "It's a backup way of tracking your ad results that keeps working even when ad blockers or phone privacy settings try to stop it.",
+  },
+  {
+    q: "How long does it take to get started?",
+    a: "Most projects go from our first call to a fully working page and dashboard in two to four weeks.",
+  },
+  {
+    q: "Can I download my reports?",
+    a: "Yes, anytime, as a PDF or Excel file — weekly or monthly, your choice.",
+  },
+  {
+    q: "Is my landing page a copy-paste template?",
+    a: "No. Every page is designed from scratch around your business and your customers.",
+  },
+  {
+    q: "What happens after my page goes live?",
+    a: "We keep checking the data with you — clicks, scrolling, forms — and make changes to get better results.",
+  },
+  {
+    q: "Will all this tracking make my page slow?",
+    a: "No. Everything loads in the background, and we monitor page speed as part of the dashboard.",
+  },
+  {
+    q: "Who is this for?",
+    a: "Any business running ads or serious marketing who wants to actually see what's working.",
+  },
+  {
+    q: "Do you work with all types of real estate businesses?",
+    a: "Yes — brokers, agents, developers and real estate agencies of any size. If you sell or rent property and run ads, this is built for you.",
+  },
+];
+
+/* --------------------------------------------------------------- footer */
+
+export const footerSolutions = [
+  { href: "#what-you-get", label: "What you get" },
+  { href: "#how-it-works", label: "How it works" },
+  { href: "#dashboard", label: "Dashboard" },
+  { href: "#results", label: "Results" },
+  { href: "#pricing", label: "Pricing" },
+  { href: "#faq", label: "FAQ" },
+];
+
+export const footerLegalText =
+  "This page is a marketing overview of our services. Actual results, timelines and pricing are decided per project, and depend on your budget, market and offer. Figures shown are illustrative examples of the kind of reporting the dashboard provides.";

@@ -1,22 +1,4 @@
-import Image from "next/image";
-import logo from "../assets/zoot-logo.png";
-import { site } from "../lib/content";
-
-const platformLinks = [
-  { href: "#dashboard", label: "Analytics dashboard" },
-  { href: "#modules", label: "Analytics modules" },
-  { href: "#tracking", label: "Marketing tracking" },
-  { href: "#heatmaps", label: "Heatmaps" },
-  { href: "#reports", label: "Reports" },
-];
-
-const companyLinks = [
-  { href: "#why", label: "Why Zoot" },
-  { href: "#meta-ads", label: "Meta Ads" },
-  { href: "#process", label: "Process" },
-  { href: "#case-studies", label: "Results" },
-  { href: "#faq", label: "FAQ" },
-];
+import { footerLegalText, footerSolutions, mailto, site, telHref } from "../lib/content";
 
 export default function SiteFooter() {
   return (
@@ -25,14 +7,20 @@ export default function SiteFooter() {
         <div className="footer-grid">
           <div className="footer-col footer-brand">
             <div className="logo">
-              <Image src={logo} alt={site.name} sizes="150px" />
+              <span className="dot" aria-hidden="true" />
+              ZOOT
             </div>
             <p>
-              Landing pages wired to a live analytics dashboard — built for every business, with a
-              dedicated focus on real estate ad campaigns.
+              Meta Ads, landing pages and live dashboards for real estate brokers, developers and
+              agencies — plus every other industry running paid traffic.
             </p>
             <div className="social-row">
-              <a href={site.social.youtube} aria-label="YouTube" rel="noreferrer noopener" target="_blank">
+              <a
+                href={site.social.youtube}
+                aria-label="YouTube"
+                rel="noreferrer noopener"
+                target="_blank"
+              >
                 YT
               </a>
               <a
@@ -55,20 +43,9 @@ export default function SiteFooter() {
           </div>
 
           <div className="footer-col">
-            <h5>Platform</h5>
+            <h5>Solutions</h5>
             <ul>
-              {platformLinks.map((link) => (
-                <li key={link.href}>
-                  <a href={link.href}>{link.label}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="footer-col">
-            <h5>Company</h5>
-            <ul>
-              {companyLinks.map((link) => (
+              {footerSolutions.map((link) => (
                 <li key={link.href}>
                   <a href={link.href}>{link.label}</a>
                 </li>
@@ -80,21 +57,40 @@ export default function SiteFooter() {
             <h5>Contact</h5>
             <ul>
               <li>
-                <a href={`mailto:${site.email}`}>{site.email}</a>
+                <a href={mailto}>{site.email}</a>
               </li>
               <li>
-                <a href={`tel:${site.phone.replace(/[^+\d]/g, "")}`}>{site.phone}</a>
+                <a href={telHref}>{site.phone}</a>
               </li>
-              <li>Serving the US, UK, Australia &amp; Canada</li>
+              <li>
+                {site.locality}, India
+              </li>
+            </ul>
+          </div>
+
+          <div className="footer-col">
+            <h5>Get Started</h5>
+            <ul>
+              <li>
+                <a href="#demo">Get a free demo</a>
+              </li>
+              <li>
+                <a href="#pricing">Request a quote</a>
+              </li>
+              <li>
+                <a href="#faq">Read the FAQ</a>
+              </li>
             </ul>
           </div>
         </div>
+
+        <p className="footer-legal">{footerLegalText}</p>
 
         <div className="footer-bottom">
           <span>
             © {new Date().getFullYear()} {site.name}. All rights reserved.
           </span>
-          <span>Landing pages + live analytics dashboards</span>
+          <span>Landing pages · live dashboards · Meta &amp; Google Ads</span>
         </div>
       </div>
     </footer>

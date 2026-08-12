@@ -1,9 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
-import logo from "../assets/zoot-logo.png";
-import { mailto, navLinks, site } from "../lib/content";
+import { navLinks, site, telHref } from "../lib/content";
 
 export default function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
@@ -20,9 +18,8 @@ export default function SiteHeader() {
     <header className={scrolled || menuOpen ? "scrolled" : undefined}>
       <nav>
         <a href="#top" className="logo" aria-label={`${site.name} — back to top`}>
-          {/* Above the fold, so it skips lazy loading. Next 16 deprecates
-              `priority` in favour of eager loading + fetchPriority. */}
-          <Image src={logo} alt={site.name} loading="eager" fetchPriority="high" sizes="120px" />
+          <span className="dot" aria-hidden="true" />
+          ZOOT
         </a>
 
         <div className="navlinks">
@@ -34,8 +31,14 @@ export default function SiteHeader() {
         </div>
 
         <div className="nav-actions">
-          <a href={mailto} className="btn btn-accent btn-sm" data-ripple>
-            Get FREE Quote
+          <a href={telHref} className="nav-phone">
+            <span className="ic" aria-hidden="true">
+              ✆
+            </span>
+            {site.phone}
+          </a>
+          <a href="#demo" className="btn btn-accent btn-sm" data-ripple>
+            Get Free Demo
           </a>
           <button
             type="button"
@@ -58,6 +61,9 @@ export default function SiteHeader() {
             {link.label}
           </a>
         ))}
+        <a href={telHref} onClick={() => setMenuOpen(false)}>
+          {site.phone}
+        </a>
       </div>
     </header>
   );

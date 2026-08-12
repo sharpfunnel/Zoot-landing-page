@@ -3,20 +3,19 @@ import { Eyebrow } from "./ui";
 
 export default function Process() {
   return (
-    <section className="section" id="process">
+    <section className="section-tight" id="process">
       <div className="wrap">
         <div className="section-head" data-anim="fade-up">
-          <Eyebrow>How it works</Eyebrow>
-          <h2>From strategy call to live optimization</h2>
+          <Eyebrow>The Process</Eyebrow>
+          <h2>From First Call to Live Dashboard</h2>
         </div>
-        <div className="steps">
+
+        <div className="step-grid">
           {processSteps.map((step) => (
-            <div className="step" data-anim="from-left" key={step.num}>
-              <div className="marker">{step.num}</div>
-              <div>
-                <h4>{step.title}</h4>
-                <p>{step.body}</p>
-              </div>
+            <div className="step-card" key={step.n} data-anim="from-bottom">
+              <div className="n">{step.n}</div>
+              <h4>{step.title}</h4>
+              <p>{step.body}</p>
             </div>
           ))}
         </div>
