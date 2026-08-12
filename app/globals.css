@@ -1,26 +1,1550 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   Zoot Web Agency — design system
+   Tokens + component classes for the landing page. Tailwind stays available
+   for one-off utilities, but the page itself is built from these classes so
+   the visual language lives in one place.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Brand palette, lifted from the Elementor global kit on zootwebagency.com
+   (post-21.css). The names in brackets are Elementor's own token names, so
+   these can be diffed against the live site if the brand is ever retuned.
+   -------------------------------------------------------------------------- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #091028; /* [secondary]  page background */
+  --bg-1: #040e1e; /* [495d27d]    deepest navy, solid panels */
+  --bg-2: #040f42; /* [4ac277f]    navy, gradient partner */
+  --panel: rgba(255, 255, 255, 0.035);
+  --panel-solid: #040e1e;
+  --border: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.16);
+
+  --accent: #008afc; /* [4a5499b]    primary brand blue */
+  --accent-soft: #119cff; /* [beb0691]    lighter blue, gradient top */
+  --accent-deep: #0b71d9; /* [b96bd57]    darker blue, gradient base */
+  --accent-dim: rgba(0, 138, 252, 0.16);
+
+  --text: #d2cfcf; /* [primary]    headings */
+  --text-muted: #a7a3a3; /* dimmed step from [text] #c7c2c2 */
+  --text-faint: #857f7f; /* micro-labels, still ~4.8:1 on --bg */
+  --text-bright: #ffffff; /* [accent]     emphasis */
+
+  /* Secondary brand accents — available for highlights, not yet load-bearing. */
+  --brand-lime: #9dff00; /* [b9ee49c] */
+  --brand-cyan: #97f8f4; /* [896f197] */
+  --brand-orange: #f58300; /* [1e3e6a2] */
+  --brand-magenta: #d400f5; /* [37c897c] */
+
+  /* Positive-metric green. Deliberately not the brand lime: it has to sit
+     beside the real dashboard screenshot, which uses an emerald green. */
+  --good: #4ade80;
+
+  --radius: 24px;
+  --radius-sm: 16px;
+
+  /* Typefaces as configured on the live site's Elementor kit. */
+  --display: var(--font-display), "DM Sans", sans-serif;
+  --body: var(--font-body), "Manrope", sans-serif;
+  --label: var(--font-label), "Nunito Sans", sans-serif;
+  --maxw: 1200px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  cursor: default;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(1200px 700px at 15% -10%, rgba(0, 138, 252, 0.16), transparent 60%),
+    radial-gradient(900px 600px at 100% 0%, rgba(45, 90, 160, 0.16), transparent 55%),
+    radial-gradient(1000px 700px at 50% 100%, rgba(255, 255, 255, 0.04), transparent 60%);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+.wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 30px;
+  position: relative;
+  z-index: 1;
+}
+
+/* DM Sans 500 with tight negative tracking — the site's [primary] heading
+   style (57px / weight 500 / -1px). */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--display);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+}
+
+/* The dashboard mock lost its monospace when the brand fonts came in, so the
+   figures opt into tabular numerals to keep columns and bars aligned. */
+.kpi .num,
+.kpi .delta,
+.fc .v,
+.fc .d,
+.fbar,
+.list-box .row,
+.case-card .stat,
+.step .marker,
+.why-item .num {
+  font-variant-numeric: tabular-nums;
+}
+
+.eyebrow {
+  font-family: var(--label);
+  font-size: 12.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 18px;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  transform: rotate(45deg);
+  box-shadow: 0 0 12px var(--accent);
+}
+
+.eyebrow-center {
+  justify-content: center;
+}
+
+.section {
+  padding: 130px 0;
+  position: relative;
+}
+
+.section-tight {
+  padding: 88px 0;
+  position: relative;
+}
+
+.section-head {
+  max-width: 660px;
+  margin-bottom: 60px;
+}
+
+.section-head h2 {
+  font-size: clamp(28px, 4vw, 44px);
+  margin-bottom: 16px;
+}
+
+.section-head p {
+  color: var(--text-muted);
+  font-size: 17px;
+}
+
+.center {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Split-section headings reuse the same scale in both column layouts. */
+.split-title {
+  font-size: clamp(26px, 3.6vw, 38px);
+  margin-bottom: 18px;
+}
+
+.split-lead {
+  color: var(--text-muted);
+  margin-bottom: 22px;
+}
+
+/* --------------------------------------------------------------- effects */
+
+#cursorGlow {
+  position: fixed;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle, rgba(0, 138, 252, 0.14), transparent 70%);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  will-change: left, top;
+}
+
+/* Reveal-on-scroll. Only armed once the client effects mount (html.fx-ready),
+   so the page still renders fully with JavaScript disabled. Timing mirrors
+   Elementor's slideInUp on the live site — a deliberate ~0.9s rise rather
+   than a quick fade. Grid children get a cascading --fx-delay from ScrollFx. */
+.fx-ready [data-anim] {
+  opacity: 0;
+  transition:
+    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--fx-delay, 0s);
+}
+
+/* Entrance variants, named by where the element travels FROM. Mirrors
+   Elementor's slideIn* family: a subtle `fade-up` for body copy, longer
+   directional slides for split layouts and card grids, and a zoom for the
+   large framed panels. */
+.fx-ready [data-anim="fade-up"] {
+  transform: translateY(32px);
+}
+
+.fx-ready [data-anim="from-bottom"] {
+  transform: translateY(64px);
+}
+
+.fx-ready [data-anim="from-top"] {
+  transform: translateY(-48px);
+}
+
+.fx-ready [data-anim="from-left"] {
+  transform: translateX(-72px);
+}
+
+.fx-ready [data-anim="from-right"] {
+  transform: translateX(72px);
+}
+
+/* Diagonals, for cards that sit in a corner of their group. */
+.fx-ready [data-anim="from-bottom-left"] {
+  transform: translate(-52px, 44px);
+}
+
+.fx-ready [data-anim="from-bottom-right"] {
+  transform: translate(52px, 44px);
+}
+
+.fx-ready [data-anim="zoom-in"] {
+  transform: scale(0.9);
+}
+
+.fx-ready [data-anim="zoom-out"] {
+  transform: scale(1.06);
+}
+
+.fx-ready [data-anim].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* --------------------------------------------------------------- buttons */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 15px 28px;
+  border-radius: 100px;
+  font-weight: 600;
+  font-size: 14.5px;
+  font-family: inherit;
+  cursor: pointer;
+  border: 1px solid transparent;
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s,
+    color 0.25s,
+    border-color 0.25s;
+}
+
+.btn-accent {
+  background: linear-gradient(135deg, var(--accent-soft), var(--accent));
+  color: #000000;
+}
+
+.btn-accent:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 34px rgba(0, 138, 252, 0.38);
+}
+
+.btn-ghost {
+  border-color: var(--border-strong);
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(6px);
+}
+
+.btn-ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent-soft);
+}
+
+.btn-sm {
+  padding: 11px 20px;
+  font-size: 13px;
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: scale(0);
+  animation: rippleAnim 0.6s ease-out;
+  pointer-events: none;
+}
+
+@keyframes rippleAnim {
+  to {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+/* ------------------------------------------------------------------- nav */
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  border-bottom: 1px solid transparent;
+  transition: all 0.3s ease;
+}
+
+header.scrolled {
+  background: rgba(9, 16, 40, 0.82);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 30px;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  transition: padding 0.3s ease;
+}
+
+/* The live header is an Elementor sticky with scroll effects — it tightens
+   once you leave the top of the page. */
+header.scrolled nav {
+  padding: 11px 30px;
+}
+
+/* The real brand mark, cropped to its ink so height alone controls its size.
+   Both dimensions are declared so next/image doesn't warn about a modified
+   aspect ratio. */
+.logo {
+  display: inline-flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 38px;
+  width: auto;
+  transition: height 0.3s ease;
+}
+
+header.scrolled .logo img {
+  height: 32px;
+}
+
+.footer-brand .logo img {
+  height: 46px;
+}
+
+.navlinks {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
+.navlinks a {
+  font-size: 14.5px;
+  color: var(--text-muted);
+  transition: color 0.2s;
+}
+
+.navlinks a:hover {
+  color: var(--text);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.mobile-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 6px;
+}
+
+.mobile-toggle span {
+  width: 22px;
+  height: 2px;
+  background: var(--text);
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.mobile-menu {
+  display: none;
+  border-top: 1px solid var(--border);
+  background: rgba(9, 16, 40, 0.96);
+  backdrop-filter: blur(16px);
+  padding: 18px 30px 26px;
+}
+
+.mobile-menu a {
+  display: block;
+  padding: 12px 0;
+  font-size: 15px;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+}
+
+.mobile-menu a:last-child {
+  border-bottom: none;
+}
+
+/* ------------------------------------------------------------------ hero */
+
+.hero {
+  padding: 180px 0 110px;
+  position: relative;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 70px;
+  align-items: center;
+}
+
+.hero h1 {
+  font-size: clamp(36px, 5.2vw, 56px);
+  margin-bottom: 22px;
+}
+
+.hero h1 .accent {
+  background: linear-gradient(135deg, var(--accent-soft), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero p.lead {
+  font-size: 18px;
+  color: var(--text-muted);
+  max-width: 520px;
+  margin-bottom: 34px;
+}
+
+.hero-ctas {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 36px;
+  flex-wrap: wrap;
+}
+
+.trust-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--text-faint);
+  font-size: 13px;
+}
+
+.trust-row .stars {
+  color: var(--accent);
+  letter-spacing: 2px;
+}
+
+.hero-stage {
+  position: relative;
+  height: 520px;
+}
+
+.dash {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015));
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  padding: 22px;
+  backdrop-filter: blur(18px);
+  box-shadow:
+    0 40px 90px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  position: absolute;
+  width: 88%;
+  left: 0;
+  top: 20px;
+  z-index: 2;
+}
+
+.float-card {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid var(--border-strong);
+  border-radius: 16px;
+  padding: 14px 16px;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+  z-index: 3;
+}
+
+.fc-1 {
+  top: -6px;
+  right: -10px;
+  width: 170px;
+}
+
+.fc-2 {
+  bottom: 26px;
+  right: 20px;
+  width: 190px;
+}
+
+.fc-3 {
+  bottom: -18px;
+  left: -10px;
+  width: 160px;
+}
+
+.fc .l {
+  font-family: var(--label);
+  font-size: 9.5px;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+}
+
+.fc .v {
+  font-family: var(--display);
+  font-size: 19px;
+}
+
+.fc .d {
+  font-family: var(--label);
+  font-size: 10.5px;
+  color: var(--good);
+  margin-top: 3px;
+}
+
+.fc .d-neutral {
+  color: var(--text-faint);
+}
+
+.dash-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.dash-tabs {
+  display: flex;
+  gap: 6px;
+  font-family: var(--label);
+  font-size: 11px;
+  color: var(--text-faint);
+}
+
+.dash-tabs span {
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+.dash-tabs span.active {
+  background: var(--accent-dim);
+  color: var(--accent-soft);
+}
+
+.live-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--label);
+  font-size: 11px;
+  color: var(--good);
+}
+
+.live-pill i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--good);
+  box-shadow: 0 0 8px var(--good);
+  animation: pulse 1.6s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.kpi {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.kpi .label {
+  font-family: var(--label);
+  font-size: 10.5px;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+
+.kpi .num {
+  font-family: var(--display);
+  font-size: 23px;
+  font-weight: 600;
+}
+
+.kpi .delta {
+  font-family: var(--label);
+  font-size: 11px;
+  color: var(--good);
+  margin-top: 4px;
+}
+
+.funnel-mini {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.funnel-mini .label {
+  font-family: var(--label);
+  font-size: 10.5px;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+
+.funnel-bare {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.fbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 9px;
+  font-family: var(--label);
+  font-size: 11px;
+}
+
+.fbar .ftrack {
+  flex: 1;
+  height: 8px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.07);
+  overflow: hidden;
+}
+
+.fbar .ffill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-soft));
+  border-radius: 5px;
+  width: 0;
+  transition: width 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fbar .fname {
+  width: 92px;
+  color: var(--text-muted);
+}
+
+.fbar .fval {
+  width: 46px;
+  text-align: right;
+  color: var(--text);
+}
+
+/* ------------------------------------------------------------ trusted by */
+
+.trustedby {
+  padding: 60px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.trustedby .label {
+  text-align: center;
+  font-family: var(--label);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 32px;
+}
+
+/* The live site runs its logo strips as Swiper carousels; this is the same
+   idea without the library — two identical tracks scrolling as one, faded out
+   at both edges so names never pop in or out abruptly. */
+.logo-marquee {
+  overflow: hidden;
+  opacity: 0.55;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+
+.logo-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 38s linear infinite;
+}
+
+.logo-marquee:hover .logo-track,
+.logo-marquee:focus-within .logo-track {
+  animation-play-state: paused;
+}
+
+.logo-track span {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 19px;
+  color: var(--text-muted);
+  padding: 0 34px;
+  white-space: nowrap;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ----------------------------------------------------------- why / split */
+
+.why-grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.why-list {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  margin-top: 10px;
+}
+
+.why-item {
+  display: flex;
+  gap: 16px;
+}
+
+.why-item .num {
+  font-family: var(--label);
+  color: var(--accent);
+  font-size: 13px;
+  padding-top: 3px;
+}
+
+.why-item h4 {
+  font-size: 17px;
+  margin-bottom: 6px;
+}
+
+.why-item p {
+  color: var(--text-muted);
+  font-size: 14.5px;
+}
+
+.why-visual {
+  background: var(--panel-solid);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 36px;
+  position: relative;
+  overflow: hidden;
+}
+
+.why-visual .glow {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(0, 138, 252, 0.22), transparent 65%);
+  top: -90px;
+  right: -90px;
+}
+
+.why-visual .inner {
+  position: relative;
+  z-index: 1;
+}
+
+.compare-mini {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.compare-mini .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  font-size: 13.5px;
+  gap: 14px;
+}
+
+.compare-mini .row.good {
+  border-color: rgba(0, 138, 252, 0.4);
+  background: var(--accent-dim);
+}
+
+.compare-mini .row .tag {
+  font-family: var(--label);
+  font-size: 10.5px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.compare-mini .row.good .tag {
+  background: var(--accent);
+  color: #000000;
+}
+
+.compare-mini .row:not(.good) .tag {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-faint);
+}
+
+/* ----------------------------------------------------------- card grids */
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.glass-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 28px;
+  backdrop-filter: blur(10px);
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    background 0.3s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--border-strong);
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.card-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--accent-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+  color: var(--accent);
+  font-family: var(--label);
+}
+
+.glass-card h4 {
+  font-size: 17px;
+  margin-bottom: 8px;
+}
+
+.glass-card p {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+/* ------------------------------------------------------------- showcase */
+
+.showcase {
+  background: var(--panel-solid);
+  border: 1px solid var(--border-strong);
+  border-radius: 30px;
+  padding: 8px;
+  position: relative;
+}
+
+.showcase-inner {
+  background: var(--bg-1);
+  border-radius: 24px;
+  padding: 30px;
+  border: 1px solid var(--border);
+}
+
+/* A real product screenshot sitting directly in the showcase bezel, so the
+   frame reads as a device rather than a second nested panel. */
+/* The screenshot is statically imported, so Next reserves its exact aspect
+   ratio ahead of load — the frame just needs to clip to the rounded corners. */
+.showcase-shot {
+  display: block;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #0a0a0a;
+  line-height: 0;
+}
+
+.showcase-shot img {
+  width: 100%;
+  height: auto;
+  /* Alt text stays small and inside the frame if the image ever fails. */
+  font-family: var(--label);
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--text-faint);
+}
+
+.showcase-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  margin-top: 20px;
+  font-family: var(--label);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  text-align: center;
+}
+
+.showcase-note i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--good);
+  box-shadow: 0 0 8px var(--good);
+  flex-shrink: 0;
+  animation: pulse 1.6s infinite;
+}
+
+.showcase-lower {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 16px;
+}
+
+.chart-box {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  min-height: 190px;
+}
+
+.chart-box .l {
+  font-family: var(--label);
+  font-size: 10.5px;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.list-box {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.list-box .l {
+  font-family: var(--label);
+  font-size: 10.5px;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.list-box .row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.list-box .row:last-child {
+  border-bottom: none;
+}
+
+.list-box .row .name {
+  color: var(--text-muted);
+}
+
+/* ---------------------------------------------------------- shot frame --
+   A product screenshot framed for the two-column split sections — the same
+   treatment as the large showcase bezel, scaled for a narrower column. */
+.shot-frame {
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border-strong);
+  background: #0a0a0a;
+  line-height: 0;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.45);
+}
+
+.shot-frame img {
+  width: 100%;
+  height: auto;
+}
+
+/* -------------------------------------------------------------- process */
+
+.steps {
+  position: relative;
+  padding-left: 8px;
+}
+
+.steps::before {
+  content: "";
+  position: absolute;
+  left: 29px;
+  top: 12px;
+  bottom: 12px;
+  width: 1px;
+  background: linear-gradient(180deg, var(--accent), transparent);
+}
+
+.step {
+  display: flex;
+  gap: 26px;
+  padding-bottom: 46px;
+  position: relative;
+}
+
+.step:last-child {
+  padding-bottom: 0;
+}
+
+.step .marker {
+  width: 58px;
+  height: 58px;
+  min-width: 58px;
+  border-radius: 50%;
+  background: var(--panel-solid);
+  border: 1px solid var(--border-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--label);
+  color: var(--accent);
+  font-size: 15px;
+  z-index: 1;
+}
+
+.step h4 {
+  font-size: 18px;
+  margin-bottom: 6px;
+  padding-top: 12px;
+}
+
+.step p {
+  color: var(--text-muted);
+  font-size: 14.5px;
+  max-width: 520px;
+}
+
+/* --------------------------------------------------------- case studies */
+
+.case-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.case-card {
+  background: var(--panel-solid);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 30px;
+  position: relative;
+  overflow: hidden;
+}
+
+.case-card .tag {
+  font-family: var(--label);
+  font-size: 11px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 14px;
+}
+
+.case-card .stat {
+  font-family: var(--display);
+  font-size: 38px;
+  color: var(--accent-soft);
+  margin-bottom: 6px;
+}
+
+.case-card .stat-label {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 18px;
+}
+
+.case-card p {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+/* ------------------------------------------------------------- benefits */
+
+.benefit-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.benefit {
+  background: var(--bg-1);
+  padding: 36px 30px;
+}
+
+.benefit .num {
+  font-family: var(--display);
+  font-size: 32px;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+.benefit h4 {
+  font-size: 15.5px;
+  margin-bottom: 8px;
+}
+
+.benefit p {
+  font-size: 13.5px;
+  color: var(--text-muted);
+}
+
+/* --------------------------------------------------------- testimonials */
+
+.testi-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 28px;
+  backdrop-filter: blur(10px);
+}
+
+.testi-card .stars {
+  color: var(--accent);
+  font-size: 13px;
+  margin-bottom: 14px;
+  letter-spacing: 2px;
+}
+
+.testi-card p {
+  font-size: 14.5px;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+.testi-person {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.testi-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), #0c142e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 14px;
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.testi-person .name {
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.testi-person .role {
+  font-size: 12px;
+  color: var(--text-faint);
+}
+
+/* ------------------------------------------------------------------ faq */
+
+.faq-list {
+  border-top: 1px solid var(--border);
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--border);
+}
+
+.faq-q {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 4px;
+  cursor: pointer;
+  gap: 20px;
+  width: 100%;
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+}
+
+.faq-q h4 {
+  font-size: 15.5px;
+  font-weight: 500;
+}
+
+.faq-q .plus {
+  font-family: var(--label);
+  color: var(--accent);
+  font-size: 18px;
+  transition: transform 0.25s;
+  flex-shrink: 0;
+}
+
+.faq-item.open .plus {
+  transform: rotate(45deg);
+}
+
+/* Collapse via a 0fr→1fr grid row so the panel animates to its natural
+   height without measuring anything in JavaScript. */
+.faq-a {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+}
+
+.faq-item.open .faq-a {
+  grid-template-rows: 1fr;
+}
+
+.faq-a > div {
+  overflow: hidden;
+}
+
+.faq-a p {
+  padding: 0 4px 22px;
+  color: var(--text-muted);
+  font-size: 14.5px;
+  max-width: 640px;
+}
+
+/* ----------------------------------------------------------- cta banner */
+
+.cta-banner {
+  background: linear-gradient(135deg, var(--panel-solid), var(--bg-2));
+  border: 1px solid var(--border-strong);
+  border-radius: 34px;
+  padding: 66px 56px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-banner::before {
+  content: "";
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, rgba(0, 138, 252, 0.26), transparent 65%);
+  top: -150px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.cta-banner h2 {
+  font-size: clamp(26px, 4vw, 38px);
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.cta-banner p {
+  color: var(--text-muted);
+  max-width: 520px;
+  margin: 0 auto 30px;
+  position: relative;
+}
+
+.cta-banner .btn {
+  position: relative;
+}
+
+.cta-banner .eyebrow {
+  position: relative;
+}
+
+/* --------------------------------------------------------------- footer */
+
+footer {
+  border-top: 1px solid var(--border);
+  padding: 74px 0 30px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+  gap: 40px;
+  margin-bottom: 56px;
+}
+
+.footer-col h5 {
+  font-family: var(--label);
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-faint);
+  margin-bottom: 18px;
+}
+
+.footer-col ul {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.footer-col a,
+.footer-col li {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.footer-col a:hover {
+  color: var(--accent);
+}
+
+.footer-brand p {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin: 16px 0 20px;
+  max-width: 280px;
+}
+
+.social-row {
+  display: flex;
+  gap: 12px;
+}
+
+.social-row a {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--label);
+  font-size: 11px;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.social-row a:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 26px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--text-faint);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* ---------------------------------------------------------- breakpoints */
+
+@media (max-width: 980px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+  .hero-stage {
+    height: 420px;
+    margin-top: 20px;
+  }
+  .why-grid {
+    grid-template-columns: 1fr;
+  }
+  .grid-3,
+  .case-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .showcase-lower {
+    grid-template-columns: 1fr;
+  }
+  .benefit-strip {
+    grid-template-columns: 1fr;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .navlinks {
+    display: none;
+  }
+  .mobile-toggle {
+    display: flex;
+  }
+  .mobile-menu.open {
+    display: block;
+  }
+  #cursorGlow {
+    display: none;
+  }
+  /* The split sections put the visual first in source order for a11y on
+     desktop; on stacked layouts the copy should lead. */
+  .why-grid > .visual-last {
+    order: 2;
+  }
+}
+
+@media (max-width: 560px) {
+  .section {
+    padding: 80px 0;
+  }
+  .section-tight {
+    padding: 64px 0;
+  }
+  .grid-3,
+  .grid-4,
+  .case-grid {
+    grid-template-columns: 1fr;
+  }
+  .kpi-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .showcase-shot {
+    border-radius: 16px;
+  }
+  .showcase-inner {
+    padding: 20px;
+  }
+  .cta-banner {
+    padding: 48px 24px;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+  .fc {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+  .fx-ready [data-anim] {
+    opacity: 1;
+    transform: none;
+  }
 }
