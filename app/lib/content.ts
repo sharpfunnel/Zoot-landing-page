@@ -31,10 +31,10 @@ export const mailto = `mailto:${site.email}`;
 export const telHref = `tel:${site.phone.replace(/[^+\d]/g, "")}`;
 
 export const navLinks = [
-  { href: "#what-you-get", label: "What You Get" },
-  { href: "#how-it-works", label: "How It Works" },
+  { href: "#deliverables", label: "What You Get" },
+  { href: "#journey", label: "How It Works" },
   { href: "#dashboard", label: "Dashboard" },
-  { href: "#results", label: "Results" },
+  { href: "#who-for", label: "Who It's For" },
   { href: "#pricing", label: "Pricing" },
 ];
 
@@ -68,12 +68,233 @@ export const clientLogos = [
   "HALIFORM",
 ];
 
+/**
+ * Headline numbers.
+ *
+ * IMPORTANT: these are marketing claims, not figures I can verify. Confirm
+ * every one against your own records before publishing — "99.9% uptime" and
+ * "45% average conversion improvement" in particular are the kind of claim
+ * that invites a challenge.
+ */
 export const stats = [
-  { n: "2", label: "Weeks to go live" },
-  { n: "20+", label: "Tracking tools included" },
-  { n: "24", label: "Hour callback time" },
-  { n: "100%", label: "Your data, your dashboard" },
+  { count: 120, suffix: "+", label: "Landing pages built" },
+  { count: 1.5, decimals: 1, suffix: "M+", label: "Visitors tracked" },
+  { count: 250, suffix: "K+", label: "Leads captured" },
+  { count: 99.9, decimals: 1, suffix: "%", label: "Dashboard uptime" },
+  { count: 45, suffix: "%", label: "Avg. conversion lift" },
 ];
+
+/** Trust markers shown alongside the numbers. Same caveat as above. */
+export const trustPoints = [
+  { icon: "★", title: "Rated 5 stars", body: "By the teams we build for" },
+  { icon: "◆", title: "100+ projects", body: "Delivered since 2016" },
+  { icon: "✓", title: "95% satisfaction", body: "Clients who'd recommend us" },
+  { icon: "⚡", title: "Fast delivery", body: "Live in two to four weeks" },
+  { icon: "☎", title: "Dedicated support", body: "One team, one contact" },
+];
+
+/* ------------------------------------------------------- deliverables */
+
+/**
+ * What lands in the client's hands. Deliberately concrete nouns rather than
+ * feature language — this is the "what do I actually receive" answer.
+ */
+export const deliverables = [
+  { title: "Landing Page Design", body: "Custom-built around your offer" },
+  { title: "Admin Dashboard", body: "Your own private login" },
+  { title: "Lead CRM", body: "Every enquiry in one place" },
+  { title: "Visitor Tracking", body: "Who visits and what they do" },
+  { title: "Heatmaps", body: "Where people click and scroll" },
+  { title: "Session Recording", body: "Watch real visits back" },
+  { title: "Meta Pixel", body: "Standard events wired correctly" },
+  { title: "Meta CAPI", body: "Server-side conversion tracking" },
+  { title: "Funnel Analytics", body: "See exactly where people drop" },
+  { title: "Campaign Dashboard", body: "Spend, ROAS and ROI by channel" },
+  { title: "Reports", body: "PDF and Excel, on a schedule" },
+  { title: "Performance Monitoring", body: "Core Web Vitals and errors" },
+];
+
+/* ---------------------------------------------------------- journey flow */
+
+/** The end-to-end path a visitor takes, from ad click to reporting. */
+export const journeySteps = [
+  { n: "01", title: "Ad Click", body: "Someone taps your Meta or Google ad." },
+  { n: "02", title: "Landing Page", body: "They land on a page built to convert." },
+  { n: "03", title: "Visitor Tracked", body: "Source, device and campaign recorded." },
+  { n: "04", title: "Heatmap Logged", body: "Clicks and scroll depth captured." },
+  { n: "05", title: "CTA Clicked", body: "Call, WhatsApp or Book Now — counted." },
+  { n: "06", title: "Form Submitted", body: "Field-by-field, so drop-off is visible." },
+  { n: "07", title: "Lead Created", body: "Straight into your CRM, tagged to the ad." },
+  { n: "08", title: "Pixel Fires", body: "Meta Pixel and CAPI confirm the conversion." },
+  { n: "09", title: "Reports Generated", body: "Weekly and monthly, sent automatically." },
+];
+
+/* ------------------------------------------------------ dashboard gallery */
+
+/**
+ * Tabs for the interactive dashboard showcase.
+ *
+ * `shot` names a real screenshot; tabs without one fall back to a styled HTML
+ * panel. Only two real captures exist so far (Overview and Heatmaps). Send
+ * the remaining screenshots and they drop straight in — no code changes
+ * beyond adding the import and setting `shot`.
+ */
+export const galleryTabs = [
+  {
+    key: "overview",
+    label: "Overview",
+    title: "Everything at a glance",
+    body: "Visitors, sessions, leads, conversion rate and scroll depth for the last 7, 30 or 90 days.",
+    shot: "dashboard",
+  },
+  {
+    key: "leads",
+    label: "Leads",
+    title: "Every lead, tagged to its ad",
+    body: "Name, phone, campaign and date — sortable, exportable, never a spreadsheet again.",
+    shot: null,
+    panel: "leads",
+  },
+  {
+    key: "sessions",
+    label: "Sessions",
+    title: "What each visit actually did",
+    body: "Entry page, time on site, pages viewed, device and location, session by session.",
+    shot: null,
+    panel: "kpis",
+  },
+  {
+    key: "funnels",
+    label: "Funnels",
+    title: "Exactly where people drop out",
+    body: "Visitor to CTA click to form start to lead — with the drop-off at every step.",
+    shot: null,
+    panel: "funnel",
+  },
+  {
+    key: "heatmaps",
+    label: "Heatmaps",
+    title: "Where attention actually goes",
+    body: "Click and scroll heatmaps showing what gets noticed and what never gets seen.",
+    shot: "heatmap",
+  },
+  {
+    key: "performance",
+    label: "Performance",
+    title: "Speed and errors, monitored",
+    body: "Core Web Vitals, JavaScript errors and broken pages, flagged before they cost you leads.",
+    shot: null,
+    panel: "performance",
+  },
+  {
+    key: "reports",
+    label: "Reports",
+    title: "Reporting that shows up",
+    body: "Weekly and monthly summaries, exportable to PDF or Excel whenever you need them.",
+    shot: null,
+    panel: "reports",
+  },
+];
+
+/* ------------------------------------------------------ dashboard modules */
+
+export const dashboardModules = [
+  { icon: "◎", title: "Overview", body: "Real-time business insights" },
+  { icon: "▤", title: "Lead CRM", body: "Manage every lead" },
+  { icon: "◍", title: "Heatmaps", body: "See where users click" },
+  { icon: "▽", title: "Funnels", body: "Know where visitors leave" },
+  { icon: "⚡", title: "Performance", body: "Core Web Vitals" },
+  { icon: "◈", title: "Meta Pixel", body: "Server-side tracking" },
+  { icon: "◹", title: "Campaigns", body: "ROAS & ROI" },
+  { icon: "⇩", title: "Reports", body: "Export PDF & Excel" },
+];
+
+/* ------------------------------------------------------------ industries */
+
+export const industries = [
+  { icon: "⌂", name: "Real Estate", note: "Our specialty" },
+  { icon: "✚", name: "Healthcare", note: null },
+  { icon: "✎", name: "Education", note: null },
+  { icon: "⚙", name: "Automotive", note: null },
+  { icon: "◍", name: "Restaurants", note: null },
+  { icon: "⛭", name: "Construction", note: null },
+  { icon: "§", name: "Law Firms", note: null },
+  { icon: "₹", name: "Finance", note: null },
+  { icon: "◈", name: "Agencies", note: null },
+  { icon: "▤", name: "Ecommerce", note: null },
+  { icon: "★", name: "Coaches", note: null },
+  { icon: "◆", name: "Consultants", note: null },
+];
+
+/* --------------------------------------------------------- before / after */
+
+export const comparison = {
+  before: {
+    title: "A Traditional Agency",
+    items: [
+      { text: "Beautiful landing page", has: true },
+      { text: "Live dashboard", has: false },
+      { text: "Lead CRM", has: false },
+      { text: "Heatmaps", has: false },
+      { text: "Campaign tracking", has: false },
+      { text: "Meta Pixel", has: false },
+      { text: "Conversion API", has: false },
+      { text: "Performance monitoring", has: false },
+      { text: "Reports", has: false },
+    ],
+  },
+  after: {
+    title: "Zoot Web Agency",
+    items: [
+      { text: "Beautiful landing page", has: true },
+      { text: "Live dashboard", has: true },
+      { text: "Lead CRM", has: true },
+      { text: "Heatmaps", has: true },
+      { text: "Campaign tracking", has: true },
+      { text: "Meta Pixel", has: true },
+      { text: "Conversion API", has: true },
+      { text: "Performance monitoring", has: true },
+      { text: "Reports", has: true },
+    ],
+  },
+};
+
+/* ------------------------------------------------------- why choose us */
+
+export const whyChooseUs = [
+  { icon: "◱", title: "Landing Pages", body: "Custom-designed, built to convert." },
+  { icon: "◎", title: "Analytics", body: "Your own dashboard, not a shared tool." },
+  { icon: "◹", title: "Meta Ads", body: "Setup, testing, retargeting, scaling." },
+  { icon: "◈", title: "Pixel Tracking", body: "Pixel and CAPI, wired properly." },
+  { icon: "▽", title: "Funnels", body: "Every step measured, drop-off visible." },
+  { icon: "⇩", title: "Reports", body: "Automatic, exportable, on schedule." },
+  { icon: "⚡", title: "Performance", body: "Fast pages, monitored continuously." },
+  { icon: "◍", title: "Heatmaps", body: "Real behaviour, not assumptions." },
+  { icon: "▤", title: "Lead CRM", body: "Every enquiry captured and tagged." },
+  { icon: "↻", title: "Automation", body: "Reports and alerts without chasing." },
+];
+
+/* ---------------------------------------------------------------- video */
+
+/**
+ * Set `src` to an MP4 (in /public) or leave null to show the poster with a
+ * "coming soon" state. No video file exists yet — the section renders the
+ * frame and the shot list, ready for one.
+ */
+export const video = {
+  src: null as string | null,
+  title: "See Everything in Action",
+  body: "Forty-five seconds: a lead arrives, the dashboard updates, the heatmap fills in, and the report writes itself.",
+  chapters: [
+    "Dashboard overview",
+    "A lead arrives",
+    "Heatmap replay",
+    "Funnel drop-off",
+    "Campaign & ROAS",
+    "Meta Pixel firing",
+    "Reports exported",
+  ],
+};
 
 /* ----------------------------------------------------- what you get rows */
 
@@ -175,17 +396,6 @@ export const threeThings = [
   },
 ];
 
-/* -------------------------------------------------- dashboard modules */
-
-export const dashboardModules = [
-  { icon: "◍", title: "Heatmaps", body: "See where people click, scroll and stop reading on your page." },
-  { icon: "◉", title: "CTA Tracking", body: "Book Now, Call Now, WhatsApp — every button counted separately." },
-  { icon: "◈", title: "Meta Pixel & CAPI", body: "Server-side tracking that survives ad blockers and iOS limits." },
-  { icon: "▦", title: "Campaign Analytics", body: "Spend, results and return, broken down by channel." },
-  { icon: "▤", title: "Form Analytics", body: "Find the exact field where people give up and leave." },
-  { icon: "◎", title: "Live Visitors", body: "Watch sessions unfold in real time, with device and location." },
-];
-
 export const moduleTags = [
   "Landing Page Conversions",
   "Lead Attribution (UTM)",
@@ -281,10 +491,15 @@ export const results = [
 /* --------------------------------------------------------------- process */
 
 export const processSteps = [
-  { n: "01", title: "Chat With Us", body: "We tell us about your business and goals, and what you want the page to do." },
-  { n: "02", title: "We Build It", body: "Your page and dashboard get built, wired up and tested end to end." },
-  { n: "03", title: "Go Live", body: "The page goes live, your dashboard goes live, and you get access on day one." },
-  { n: "04", title: "Keep Improving", body: "We read the data with you and adjust the page, campaigns and budget." },
+  { n: "01", title: "Discovery", body: "We learn your offer, audience and goals on one call." },
+  { n: "02", title: "Wireframe", body: "The page structure is mapped before anything is designed." },
+  { n: "03", title: "UI Design", body: "A custom design built around your brand and your buyers." },
+  { n: "04", title: "Development", body: "Built fast, responsive and clean — no page builders." },
+  { n: "05", title: "Dashboard", body: "Your private admin panel is provisioned and connected." },
+  { n: "06", title: "Tracking Setup", body: "Pixel, CAPI, funnels, CTAs and heatmaps wired in." },
+  { n: "07", title: "Testing", body: "Every form, event and conversion verified end to end." },
+  { n: "08", title: "Launch", body: "Page live, dashboard live, access handed to you." },
+  { n: "09", title: "Optimization", body: "We read the data with you and keep improving it." },
 ];
 
 /* --------------------------------------------------------------- pricing */
@@ -365,17 +580,33 @@ export const faqs = [
     q: "Do you work with all types of real estate businesses?",
     a: "Yes — brokers, agents, developers and real estate agencies of any size. If you sell or rent property and run ads, this is built for you.",
   },
+  {
+    q: "How does the tracking actually work?",
+    a: "A small script on your page records each visit, and the Meta Pixel plus Conversion API confirm conversions back to the ad platform. Everything lands in your dashboard tagged with the campaign, device and source it came from.",
+  },
+  {
+    q: "Can I connect Google Ads as well as Meta?",
+    a: "Yes. Google, Meta, Instagram, Facebook and LinkedIn all report into the same dashboard, so you can compare cost per lead across channels side by side.",
+  },
+  {
+    q: "Can I use my own domain?",
+    a: "Yes — the page runs on your domain or a subdomain of it, and the dashboard can sit on a subdomain too so everything stays under your brand.",
+  },
+  {
+    q: "Can you integrate with my existing CRM?",
+    a: "In most cases yes. Leads can be pushed to your CRM as they arrive, or exported on a schedule if your system doesn't support a direct connection.",
+  },
 ];
 
 /* --------------------------------------------------------------- footer */
 
 export const footerSolutions = [
-  { href: "#what-you-get", label: "What you get" },
-  { href: "#how-it-works", label: "How it works" },
-  { href: "#dashboard", label: "Dashboard" },
+  { href: "#deliverables", label: "What you get" },
+  { href: "#journey", label: "How it works" },
+  { href: "#dashboard", label: "Dashboard gallery" },
+  { href: "#compare", label: "Why us" },
   { href: "#results", label: "Results" },
   { href: "#pricing", label: "Pricing" },
-  { href: "#faq", label: "FAQ" },
 ];
 
 export const footerLegalText =

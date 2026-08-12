@@ -1,7 +1,13 @@
+import BeforeAfter from "./components/before-after";
 import CtaBand from "./components/cta-band";
+import DashboardGallery from "./components/dashboard-gallery";
 import DashboardModules from "./components/dashboard-modules";
+import Deliverables from "./components/deliverables";
 import Faq from "./components/faq";
+import FinalCta from "./components/final-cta";
 import Hero from "./components/hero";
+import Industries from "./components/industries";
+import Journey from "./components/journey";
 import LeadForm from "./components/lead-form";
 import LeadTable from "./components/lead-table";
 import Pricing from "./components/pricing";
@@ -11,9 +17,12 @@ import Results from "./components/results";
 import ScrollFx from "./components/scroll-fx";
 import SiteFooter from "./components/site-footer";
 import SiteHeader from "./components/site-header";
+import StickyCta from "./components/sticky-cta";
 import ThreeThings from "./components/three-things";
+import VideoSection from "./components/video-section";
 import WaysToWork from "./components/ways-to-work";
 import WhatYouGet from "./components/what-you-get";
+import WhyChooseUs from "./components/why-choose-us";
 import { faqs, site } from "./lib/content";
 
 const jsonLd = {
@@ -70,13 +79,29 @@ export default function Page() {
           ]}
         />
 
+        {/* Proof, then what you receive, then how it all connects. */}
         <ProofStrip />
-        <WhatYouGet />
-        <WaysToWork />
-        <ThreeThings />
+        <Deliverables />
+        <Journey />
+
+        {/* The product itself: gallery, then the modules behind it. */}
+        <DashboardGallery />
         <DashboardModules />
         <LeadTable />
+
         <CtaBand />
+
+        {/* Positioning: who it's for, and how it differs. */}
+        <Industries />
+        <BeforeAfter />
+        <WhyChooseUs />
+
+        <VideoSection />
+
+        {/* The offer and the evidence. */}
+        <WhatYouGet />
+        <ThreeThings />
+        <WaysToWork />
         <Results />
         <Process />
 
@@ -95,9 +120,11 @@ export default function Page() {
 
         <Pricing />
         <Faq />
+        <FinalCta />
       </main>
 
       <SiteFooter />
+      <StickyCta />
       <ScrollFx />
     </>
   );

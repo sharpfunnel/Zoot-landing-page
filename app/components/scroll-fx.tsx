@@ -48,15 +48,66 @@ export default function ScrollFx() {
       });
     }
 
+    /* ---------------------------------------------------------- counters */
+
+    const frames = new Set<number>();
+    const raf = (fn: FrameRequestCallback) => {
+      const id = requestAnimationFrame((t) => {
+        frames.delete(id);
+        fn(t);
+      });
+      frames.add(id);
+    };
+    cleanups.push(() => frames.forEach((id) => cancelAnimationFrame(id)));
+
+    const countUp = (el: HTMLElement) => {
+      const target = Number(el.dataset.count ?? 0);
+      const decimals = Number(el.dataset.decimals ?? 0);
+      const suffix = el.dataset.suffix ?? "";
+      const fmt = (v: number) =>
+        v.toLocaleString("en-US", {
+          minimumFractionDigits: decimals,
+          maximumFractionDigits: decimals,
+        }) + suffix;
+
+      if (reduced) {
+        el.textContent = fmt(target);
+        return;
+      }
+
+      const duration = 1600;
+      const start = performance.now();
+      const tick = (now: number) => {
+        const p = Math.min((now - start) / duration, 1);
+        el.textContent = fmt(target * (1 - Math.pow(1 - p, 3)));
+        if (p < 1) raf(tick);
+      };
+      raf(tick);
+    };
+
     /* ------------------------------------------------------------ reveal */
 
     const reveal = (el: HTMLElement) => {
       if (revealed.has(el)) return;
       revealed.add(el);
       el.classList.add("is-in");
+
+      if (el.dataset.count !== undefined) countUp(el);
+      // Numbers and bars nested inside a revealing block animate on its cue,
+      // since they have no height of their own for the observer to catch.
+      el.querySelectorAll<HTMLElement>("[data-count]").forEach((kid) => {
+        if (revealed.has(kid)) return;
+        revealed.add(kid);
+        countUp(kid);
+      });
+      el.querySelectorAll<HTMLElement>("[data-w]").forEach((kid) => {
+        kid.style.width = `${kid.dataset.w}%`;
+      });
     };
 
-    const targets = Array.from(document.querySelectorAll<HTMLElement>("[data-anim]"));
+    const targets = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-anim],[data-count]"),
+    );
 
     if (typeof IntersectionObserver === "undefined") {
       targets.forEach(reveal);
