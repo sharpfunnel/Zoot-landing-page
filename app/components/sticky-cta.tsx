@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { site } from "../lib/content";
+import { offer, site } from "../lib/content";
 
 /**
  * Persistent bottom bar. Appears once the hero is out of the way and hides
@@ -36,7 +36,11 @@ export default function StickyCta() {
     <div className={show ? "sticky-cta show" : "sticky-cta"} aria-hidden={!show}>
       <div className="sticky-inner">
         <div className="sticky-copy">
-          <div className="t">See your leads in one dashboard</div>
+          <div className="sticky-price">
+            <span className="was">{offer.was}</span>
+            <span className="now">{offer.now}</span>
+            <span className="off">{offer.off}</span>
+          </div>
           <div className="b">Free demo, no obligation — we reply the same day.</div>
         </div>
         <div className="sticky-actions">

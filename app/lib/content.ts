@@ -30,11 +30,134 @@ export const site = {
 export const mailto = `mailto:${site.email}`;
 export const telHref = `tel:${site.phone.replace(/[^+\d]/g, "")}`;
 
+/* ==========================================================================
+   ⚠️  PLACEHOLDERS — REPLACE BEFORE LAUNCH
+   ==========================================================================
+   Every figure in this block is invented. They exist so the price-anchoring
+   and urgency layout can be seen working. Publishing them as-is would mean
+   advertising a discount and a deadline that don't exist.
+
+   Replace:  offer.*  ·  valueStack[].value  ·  valueStack total
+             comparison3.rows[].cost  ·  pricingPlans[].price
+   ========================================================================== */
+
+export const offer = {
+  /** Scarcity line in the top bar. */
+  bar: "Limited build slots — 0 of 00 remaining this month",
+  /** Anchored "was" price, struck through. */
+  was: "₹00,000",
+  /** Headline price. */
+  now: "₹00,000",
+  /** Discount badge. */
+  off: "00% OFF",
+  /** Total value of everything included, for the savings bar. */
+  worth: "₹00,000",
+  /** Amount saved vs buying the parts separately. */
+  saves: "₹00,000",
+  /** Hours the countdown runs for. Restarts on load — a real deadline should
+      come from a fixed date instead. */
+  countdownHours: 24,
+};
+
+/** Hero trust strip, mirroring the reference pages' learner-count + rating. */
+export const heroTrust = {
+  count: "100+",
+  countLabel: "businesses tracked",
+  rating: "4.9",
+  ratingLabel: "average client rating",
+  initials: ["RM", "JL", "SK", "AP", "KD"],
+};
+
+/** Spec chips, like the reference's "7hr 20min · Hindi · Self Paced" row. */
+export const specChips = [
+  { v: "2–4 weeks", l: "To go live" },
+  { v: "20+", l: "Tracking tools" },
+  { v: "Unlimited", l: "Dashboard logins" },
+  { v: "100%", l: "Your data" },
+  { v: "24 hrs", l: "Callback time" },
+  { v: "Lifetime", l: "Page ownership" },
+];
+
+/* ------------------------------------------------------------ value stack */
+
+/**
+ * "Everything you get, and what it would cost separately." Mirrors the
+ * reference's tool-cost breakdown that totals to a single number.
+ * All `value` figures are placeholders.
+ */
+export const valueStack = [
+  { title: "Custom landing page design & build", value: "₹00,000" },
+  { title: "Private analytics dashboard", value: "₹00,000" },
+  { title: "Lead CRM with ad attribution", value: "₹00,000" },
+  { title: "Heatmaps & session recording", value: "₹00,000" },
+  { title: "Meta Pixel + Conversion API setup", value: "₹00,000" },
+  { title: "Funnel & form analytics", value: "₹00,000" },
+  { title: "Campaign dashboard (ROAS & ROI)", value: "₹00,000" },
+  { title: "Automated weekly & monthly reports", value: "₹00,000" },
+  { title: "Performance & error monitoring", value: "₹00,000" },
+];
+
+/* --------------------------------------------------- 3-way comparison */
+
+/** Zoot vs the two realistic alternatives, like the reference's table. */
+export const comparison3 = {
+  columns: ["Zoot Web Agency", "Typical Agency", "DIY / Freelancers"],
+  rows: [
+    { feature: "Custom landing page", values: [true, true, true] },
+    { feature: "Live analytics dashboard", values: [true, false, false] },
+    { feature: "Lead CRM with ad attribution", values: [true, false, false] },
+    { feature: "Heatmaps & session recording", values: [true, false, true] },
+    { feature: "Meta Pixel + Conversion API", values: [true, false, true] },
+    { feature: "Funnel & form analytics", values: [true, false, false] },
+    { feature: "Campaign & ROAS tracking", values: [true, true, false] },
+    { feature: "Automated reporting", values: [true, false, false] },
+    { feature: "Performance monitoring", values: [true, false, false] },
+    { feature: "One team, one invoice", values: [true, true, false] },
+  ],
+  cost: ["₹00,000", "₹00,000", "₹00,000 + your time"],
+};
+
+/* --------------------------------------------------------- review wall */
+
+/** Written reviews, mirroring the reference's Google-review masonry wall. */
+export const reviews = [
+  {
+    name: "R. Mehta",
+    initials: "RM",
+    text: "We ran listing ads for a year with no idea what happened after the click. The funnel view alone paid for the build in the first month.",
+  },
+  {
+    name: "J. Lawton",
+    initials: "JL",
+    text: "The dashboard is the part nobody else offered. I can tell my team which campaign is working instead of arguing about it.",
+  },
+  {
+    name: "S. Kaur",
+    initials: "SK",
+    text: "Heatmaps showed people weren't scrolling past the fold. One layout change and form completions jumped within two weeks.",
+  },
+  {
+    name: "A. Sharma",
+    initials: "AS",
+    text: "Setup took under three weeks and they handled the Pixel and CAPI properly — something two previous agencies got wrong.",
+  },
+  {
+    name: "P. Nair",
+    initials: "PN",
+    text: "Every lead arrives tagged with the campaign that produced it. That one thing changed how we spend our budget.",
+  },
+  {
+    name: "K. Desai",
+    initials: "KD",
+    text: "Reports land in my inbox every Monday without me chasing anyone. Small thing, but it never happened before.",
+  },
+];
+
 export const navLinks = [
+  { href: "#dashboard", label: "Dashboard" },
   { href: "#deliverables", label: "What You Get" },
   { href: "#journey", label: "How It Works" },
-  { href: "#dashboard", label: "Dashboard" },
-  { href: "#who-for", label: "Who It's For" },
+  { href: "#stories", label: "Reviews" },
   { href: "#pricing", label: "Pricing" },
 ];
 
@@ -601,11 +724,11 @@ export const faqs = [
 /* --------------------------------------------------------------- footer */
 
 export const footerSolutions = [
+  { href: "#dashboard", label: "Dashboard gallery" },
   { href: "#deliverables", label: "What you get" },
   { href: "#journey", label: "How it works" },
-  { href: "#dashboard", label: "Dashboard gallery" },
   { href: "#compare", label: "Why us" },
-  { href: "#results", label: "Results" },
+  { href: "#stories", label: "Reviews" },
   { href: "#pricing", label: "Pricing" },
 ];
 

@@ -1,29 +1,41 @@
-import BeforeAfter from "./components/before-after";
-import CtaBand from "./components/cta-band";
+import ComparisonTable from "./components/comparison-table";
 import DashboardGallery from "./components/dashboard-gallery";
-import DashboardModules from "./components/dashboard-modules";
 import Deliverables from "./components/deliverables";
 import Faq from "./components/faq";
 import FinalCta from "./components/final-cta";
+import FlowCard from "./components/flow-card";
 import Hero from "./components/hero";
-import Industries from "./components/industries";
 import Journey from "./components/journey";
 import LeadForm from "./components/lead-form";
-import LeadTable from "./components/lead-table";
 import Pricing from "./components/pricing";
-import Process from "./components/process";
 import ProofStrip from "./components/proof-strip";
-import Results from "./components/results";
 import ScrollFx from "./components/scroll-fx";
 import SiteFooter from "./components/site-footer";
 import SiteHeader from "./components/site-header";
+import SocialProof from "./components/social-proof";
 import StickyCta from "./components/sticky-cta";
-import ThreeThings from "./components/three-things";
-import VideoSection from "./components/video-section";
-import WaysToWork from "./components/ways-to-work";
-import WhatYouGet from "./components/what-you-get";
-import WhyChooseUs from "./components/why-choose-us";
+import ValueStack from "./components/value-stack";
 import { faqs, site } from "./lib/content";
+
+/*
+ * Parked, not deleted — these components still exist in app/components/ and
+ * can be dropped back in with a single import + tag if you want them:
+ *
+ *   dashboard-modules   8 module cards      (the gallery already shows these)
+ *   lead-table          lead attribution    (the gallery's Leads tab covers it)
+ *   what-you-get        3 feature rows      (overlaps Deliverables)
+ *   three-things        ads/page/dashboard  (overlaps the gallery's tabs)
+ *   why-choose-us       10 reason cards     (overlaps Deliverables + comparison)
+ *   industries          12 industry cards   (nice-to-have qualifier)
+ *   results             3 stat + quote rows (overlaps SocialProof)
+ *   ways-to-work        2 engagement cards  (overlaps Pricing's two plans)
+ *   process             9 build steps       (FlowCard covers this in 3)
+ *   video-section       video frame         (no footage exists yet)
+ *   cta-band            mid-page CTA        (FinalCta covers it)
+ *   announce-bar        scarcity + timer    (removed: overlapped the fixed
+ *                                            header, and its countdown reset
+ *                                            on every load)
+ */
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -65,7 +77,23 @@ export default function Page() {
       <SiteHeader />
 
       <main>
+        {/* Hook → clarity → credibility */}
         <Hero />
+        <FlowCard />
+        <ProofStrip />
+
+        {/* Show the product, then what you receive, then how it works */}
+        <DashboardGallery />
+        <Deliverables />
+        <Journey />
+
+        {/* Differentiate, then prove */}
+        <ComparisonTable />
+        <SocialProof />
+
+        {/* Value → price → convert */}
+        <ValueStack />
+        <Pricing />
 
         <LeadForm
           id="demo"
@@ -79,46 +107,6 @@ export default function Page() {
           ]}
         />
 
-        {/* Proof, then what you receive, then how it all connects. */}
-        <ProofStrip />
-        <Deliverables />
-        <Journey />
-
-        {/* The product itself: gallery, then the modules behind it. */}
-        <DashboardGallery />
-        <DashboardModules />
-        <LeadTable />
-
-        <CtaBand />
-
-        {/* Positioning: who it's for, and how it differs. */}
-        <Industries />
-        <BeforeAfter />
-        <WhyChooseUs />
-
-        <VideoSection />
-
-        {/* The offer and the evidence. */}
-        <WhatYouGet />
-        <ThreeThings />
-        <WaysToWork />
-        <Results />
-        <Process />
-
-        <LeadForm
-          id="details"
-          eyebrow="Get Details"
-          title="Still Deciding? Get the Full Details"
-          body="Tell us what you're looking for and we'll send over exactly what's included, with honest pricing — no guesswork."
-          checks={[
-            "Real estate or any other industry — we guide you either way",
-            "A written breakdown of what's included",
-            "Callback within 24 hours",
-          ]}
-          submitLabel="Get Details"
-        />
-
-        <Pricing />
         <Faq />
         <FinalCta />
       </main>
