@@ -345,25 +345,51 @@ export const setupSnippet = {
    * number, now = white with a blue ring, idle = greyed out.
    */
   wizard: [
-    { n: "1", title: "Create Account", body: "Your account is ready", state: "done" },
+    {
+      n: "1",
+      title: "Create Account",
+      body: "Your account is ready",
+      state: "done",
+      art: "account",
+    },
     {
       n: "2",
       title: "Add Site Details",
       body: "Add your website name and domain",
       state: "fill",
+      art: "site",
     },
     {
       n: "3",
       title: "Install Tracking Code",
       body: "Add the tracking snippet to your website",
       state: "now",
+      art: "code",
     },
     {
       n: "4",
       title: "Start Tracking",
       body: "All set! We'll start capturing data",
       state: "idle",
+      art: "chart",
     },
+  ],
+};
+
+/**
+ * The ad-account row under the setup wizard.
+ *
+ * The Google Ads and Meta marks are drawn as simplified SVG approximations of
+ * third-party logos — fine for an "integrates with" illustration, but replace
+ * them with the official assets if this ever becomes a real integrations page.
+ * Click and conversion figures are illustrative.
+ */
+export const setupAds = {
+  title: "Track campaigns from your ads",
+  body: "Connect your ad accounts and monitor performance in one place.",
+  accounts: [
+    { key: "google", name: "Google Ads", clicks: "1,245", conversions: "145" },
+    { key: "meta", name: "Meta Ads", clicks: "2,134", conversions: "214" },
   ],
 };
 

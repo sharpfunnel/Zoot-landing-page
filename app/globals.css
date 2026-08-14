@@ -2779,10 +2779,10 @@ footer {
    under it — pulled left so they sit inboard of the card, as in the artwork. */
 .su {
   display: grid;
-  grid-template-columns: 33% 1fr;
-  column-gap: 26px;
+  grid-template-columns: 41% 1fr;
+  column-gap: 22px;
   align-items: start;
-  padding-bottom: 18px;
+  padding-bottom: 4px;
 }
 
 .su-side {
@@ -2795,13 +2795,22 @@ footer {
   grid-row: 1;
 }
 
-/* Nudged just past the snippet card's left edge. It can't go further: the
-   steps rail spans both rows, so a bigger pull would sit on top of step 4. */
+/* Reaches back slightly past the snippet card's left edge, as in the artwork. */
 .su-stack {
   grid-column: 2;
   grid-row: 2;
   position: relative;
-  margin: 26px 0 0 -5%;
+  margin: 22px 0 0 -3%;
+}
+
+/* Ad accounts row, full width under both columns. */
+.su-ads {
+  grid-column: 1 / 3;
+  grid-row: 3;
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 14px;
+  margin-top: 26px;
 }
 
 .su-h {
@@ -2819,8 +2828,14 @@ footer {
 
 .su-step {
   display: flex;
+  align-items: center;
   gap: 12px;
   position: relative;
+}
+
+.su-tx {
+  flex: 1;
+  min-width: 0;
 }
 
 /* Dashed rail joining one step's circle to the next. */
@@ -2884,6 +2899,120 @@ footer {
 .su-step.idle .su-t,
 .su-step.idle .su-b {
   color: var(--text-faint);
+}
+
+/* ---- the small illustration beside each step ---- */
+
+.su-art {
+  position: relative;
+  width: 74px;
+  min-width: 74px;
+  height: 52px;
+  flex-shrink: 0;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 8px;
+}
+
+.su-art.glyph {
+  font-family: var(--mono);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.su-art .grow {
+  width: 46px;
+}
+
+/* step 1 — account row with its confirmation badge */
+.su-art.acct .av {
+  width: 17px;
+  height: 17px;
+  min-width: 17px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.su-art.acct .ls {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.su-art.acct .ls i {
+  height: 3.5px;
+  border-radius: 2px;
+  background: #dbe9fc;
+}
+
+.su-art.acct .ls i.sm {
+  width: 76%;
+}
+
+.su-art.acct .ls i.xs {
+  width: 52%;
+}
+
+.su-art .ok {
+  position: absolute;
+  right: -5px;
+  bottom: -5px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--good);
+  color: #ffffff;
+  border: 2px solid #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  font-weight: 700;
+}
+
+/* step 2 — mini browser with its address field */
+.su-art.site {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.su-art.site .bar {
+  display: flex;
+  gap: 3px;
+  padding: 6px 7px;
+  background: var(--bg-1);
+}
+
+.su-art.site .bar i {
+  width: 4.5px;
+  height: 4.5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.su-art.site .bar i.rd {
+  background: #ff5f57;
+}
+
+.su-art.site .fld {
+  margin: 6px 7px;
+  padding: 5px 7px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  font-size: 8.5px;
+  font-weight: 600;
+  color: var(--accent);
 }
 
 .su-card {
@@ -2960,20 +3089,20 @@ footer {
 
 /* ---- lower composition: browser + overlapping live card + dashed arrow ---- */
 
-/* Runs down the strip the browser doesn't reach, from under the snippet card
-   to the live card's top corner. */
+/* Sits in the clear strip to the right of the live card, so the arrowhead
+   lands beside its top corner instead of on the label. */
 .su-arrow {
   position: absolute;
-  top: -30px;
-  right: 4%;
-  width: 78px;
-  height: 144px;
+  top: -26px;
+  right: 3%;
+  width: 13%;
+  height: 124px;
   color: var(--accent-deep);
   z-index: 2;
 }
 
 .su-browser {
-  width: 73%;
+  width: 62%;
   background: #ffffff;
   border: 1px solid var(--border);
   border-radius: 12px;
@@ -3056,12 +3185,13 @@ footer {
   width: 74%;
 }
 
-/* Overlaps the browser's bottom-right corner and hangs past it, as drawn. */
+/* Overlaps the browser's bottom-right corner and hangs past it, as drawn.
+   Inset from the right so the arrow has a lane beside it. */
 .su-live {
   position: absolute;
-  right: 0;
+  right: 15%;
   bottom: -8px;
-  width: 47%;
+  width: 39%;
   background: #ffffff;
   border: 1px solid var(--border);
   border-radius: 14px;
@@ -3082,7 +3212,7 @@ footer {
   height: 24px;
   min-width: 24px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+  background: var(--good);
   color: #ffffff;
   display: flex;
   align-items: center;
@@ -3115,6 +3245,165 @@ footer {
 
 .su-bars i.on {
   background: var(--accent);
+}
+
+/* ---- ad accounts row ---- */
+
+.su-brand {
+  width: 17px;
+  min-width: 17px;
+  flex-shrink: 0;
+}
+
+.su-brand.meta {
+  width: 21px;
+  min-width: 21px;
+}
+
+.su-connect {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #eef5fe;
+  border-radius: 14px;
+  padding: 15px 16px;
+}
+
+.su-connect .tx {
+  flex: 1;
+  min-width: 0;
+}
+
+.su-connect .tx b {
+  display: block;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 11.5px;
+  letter-spacing: -0.022em;
+}
+
+.su-connect .tx i {
+  display: block;
+  font-style: normal;
+  font-size: 9.5px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.su-connect .brands {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.su-connect .br {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-size: 8.5px;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.su-connect .br .su-brand {
+  width: 24px;
+  min-width: 24px;
+}
+
+.su-connect .br .su-brand.meta {
+  width: 30px;
+  min-width: 30px;
+}
+
+.su-connect .div {
+  width: 1px;
+  align-self: stretch;
+  background: var(--border-strong);
+}
+
+/* Dashed, as drawn — reads as "slots you connect", not a finished panel. */
+.su-accounts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  border: 1.5px dashed var(--border-strong);
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.su-accounts .acc {
+  display: block;
+  min-width: 0;
+}
+
+.su-accounts .acc + .acc {
+  border-left: 1px solid var(--border);
+  padding-left: 14px;
+}
+
+.su-accounts .hd {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 10px;
+  min-width: 0;
+}
+
+.su-accounts .hd b {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.su-accounts .hd .pill {
+  font-size: 8px;
+  padding: 2px 7px;
+}
+
+.su-accounts .st {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  min-width: 0;
+}
+
+.su-accounts .st > span {
+  min-width: 0;
+}
+
+.su-accounts .st i {
+  display: block;
+  font-style: normal;
+  font-size: 9px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.su-accounts .st b {
+  display: block;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: -0.02em;
+}
+
+.su-accounts .spark {
+  flex: 1;
+  min-width: 0;
+  height: 26px;
+  stroke: var(--accent);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.su-accounts .spark.g {
+  stroke: var(--good);
 }
 
 /* -------------------------------------- stage mock: the finished page */
@@ -5924,12 +6213,29 @@ footer {
      so the three blocks simply stack. */
   .su-side,
   .su-card,
-  .su-stack {
+  .su-stack,
+  .su-ads {
     grid-column: 1;
     grid-row: auto;
   }
   .su-stack {
     margin: 20px 0 0;
+  }
+  .su-ads,
+  .su-connect,
+  .su-accounts {
+    grid-template-columns: 1fr;
+  }
+  .su-connect {
+    flex-wrap: wrap;
+  }
+  .su-accounts .acc + .acc {
+    border-left: none;
+    border-top: 1px solid var(--border);
+    padding: 14px 0 0;
+  }
+  .su-art {
+    display: none;
   }
   .su-arrow {
     display: none;

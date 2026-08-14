@@ -1,10 +1,90 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { setupSnippet, setupSteps } from "../lib/content";
+import { setupAds, setupSnippet, setupSteps } from "../lib/content";
 import { Eyebrow } from "./ui";
 
 /* -------------------------------------------------------------- mocks */
+
+/**
+ * Simplified marks for the two ad platforms. Approximations of third-party
+ * logos, drawn to sit at ~20px in the illustration — not official assets.
+ */
+/* Two rounded legs and the green dot at the foot of the left one. The apexes
+   are offset a little so the blue leg doesn't bury the yellow one, and the
+   legs are drawn as strokes — rotated rects drifted at small sizes. */
+const GoogleAdsMark = () => (
+  <svg className="su-brand" viewBox="0 0 24 24" fill="none" strokeLinecap="round">
+    <path d="M11.2 4.6L6 14.2" stroke="#FBBC04" strokeWidth="6.6" />
+    <path d="M13 4.6L18.2 14.6" stroke="#4285F4" strokeWidth="6.6" />
+    <circle cx="5.8" cy="17.9" r="3.9" fill="#34A853" stroke="none" />
+  </svg>
+);
+
+/* One continuous lemniscate with a thick stroke and tight loops, so it reads
+   as a single ribbon. Thin, round loops just read as "∞". */
+const MetaMark = () => (
+  <svg className="su-brand meta" viewBox="0 0 32 20">
+    <path
+      d="M10 5c3.2 0 4.5 2.9 6 5s2.8 5 6 5c2.9 0 4.7-2.2 4.7-5S24.9 5 22 5c-3.2 0-4.5 2.9-6 5s-2.8 5-6 5C7.1 15 5.3 12.8 5.3 10S7.1 5 10 5z"
+      fill="none"
+      stroke="#0081FB"
+      strokeWidth="4.2"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+/** The small illustration beside each wizard step. */
+const SU_ART: Record<string, React.ReactElement> = {
+  account: (
+    <span className="su-art acct">
+      <i className="av" />
+      <span className="ls">
+        <i />
+        <i className="sm" />
+        <i className="xs" />
+      </span>
+      <b className="ok">✓</b>
+    </span>
+  ),
+  site: (
+    <span className="su-art site">
+      <span className="bar">
+        <i />
+        <i />
+        <i className="rd" />
+      </span>
+      <span className="fld">www.</span>
+    </span>
+  ),
+  code: <span className="su-art glyph">&lt;/&gt;</span>,
+  chart: (
+    <span className="su-art">
+      <svg className="grow" viewBox="0 0 46 32">
+        <rect x="2" y="20" width="8" height="10" rx="2.4" fill="#34A853" opacity="0.45" />
+        <rect x="13" y="15" width="8" height="15" rx="2.4" fill="#34A853" opacity="0.7" />
+        <rect x="24" y="9" width="8" height="21" rx="2.4" fill="#34A853" />
+        <path
+          d="M5 15L16 8l6 4 11-8"
+          fill="none"
+          stroke="#1e9e4a"
+          strokeWidth="2.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M27 3.4h7v7"
+          fill="none"
+          stroke="#1e9e4a"
+          strokeWidth="2.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </span>
+  ),
+};
 
 /** Bar chart in the "Tracking Active" card. `on` marks the solid-blue bars. */
 const SU_BARS = [
@@ -39,10 +119,11 @@ function SetupPanel() {
               <span className="su-dot" aria-hidden="true">
                 {s.state === "done" ? "✓" : s.n}
               </span>
-              <span>
+              <span className="su-tx">
                 <span className="su-t">{s.title}</span>
                 <span className="su-b">{s.body}</span>
               </span>
+              {SU_ART[s.art]}
             </div>
           ))}
         </div>
@@ -125,6 +206,51 @@ function SetupPanel() {
               <i className={b.on ? "on" : undefined} style={{ height: `${b.h}%` }} key={i} />
             ))}
           </div>
+        </div>
+      </div>
+
+      <div className="su-ads">
+        <div className="su-connect">
+          <span className="tx">
+            <b>{setupAds.title}</b>
+            <i>{setupAds.body}</i>
+          </span>
+          <span className="brands">
+            <span className="br">
+              <GoogleAdsMark />
+              Google Ads
+            </span>
+            <span className="div" />
+            <span className="br">
+              <MetaMark />
+              Meta Ads
+            </span>
+          </span>
+        </div>
+
+        <div className="su-accounts">
+          {setupAds.accounts.map((a, i) => (
+            <span className="acc" key={a.key}>
+              <span className="hd">
+                {a.key === "google" ? <GoogleAdsMark /> : <MetaMark />}
+                <b>{a.name}</b>
+                <span className="pill pill-green">Connected</span>
+              </span>
+              <span className="st">
+                <span>
+                  <i>Clicks</i>
+                  <b>{a.clicks}</b>
+                </span>
+                <span>
+                  <i>Conversions</i>
+                  <b>{a.conversions}</b>
+                </span>
+                <svg className={i === 0 ? "spark g" : "spark"} viewBox="0 0 70 26" fill="none">
+                  <path d="M2 22C9 22 11 13 17 14.5s8 6 14 2.5 10-11 15-12 12 6 20 3" />
+                </svg>
+              </span>
+            </span>
+          ))}
         </div>
       </div>
     </div>
