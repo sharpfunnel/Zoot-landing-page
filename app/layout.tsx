@@ -61,7 +61,20 @@ const FX_READY = `document.documentElement.classList.add('fx-ready')`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
+    // suppressHydrationWarning is required, not incidental: the script below
+    // runs while the body is still parsing — before React hydrates — and adds
+    // `fx-ready` to this element. React then sees a className it didn't render
+    // and reports a mismatch. The class cannot move to the server: it exists
+    // precisely to mark "JavaScript ran", and rendering it in the HTML would
+    // leave every [data-anim] element at opacity 0 for anyone without JS.
+    //
+    // The flag applies only to this element's own attributes — it does not
+    // cascade, so genuine mismatches anywhere inside are still reported.
+    <html
+      lang="en"
+      className={`${display.variable} ${body.variable} ${mono.variable}`}
+      suppressHydrationWarning
+    >
       <body>
         <script dangerouslySetInnerHTML={{ __html: FX_READY }} />
         {children}
