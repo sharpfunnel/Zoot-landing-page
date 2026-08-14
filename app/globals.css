@@ -2574,6 +2574,3039 @@ footer {
   margin-top: 14px;
 }
 
+/* ------------------------------------------------------- tracking setup */
+
+.setup-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 26px;
+  align-items: start;
+}
+
+.setup-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.setup-item {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+}
+
+.setup-item:hover {
+  border-color: var(--border-strong);
+}
+
+.setup-item.open {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-md);
+}
+
+.setup-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 16px 18px;
+  background: none;
+  border: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.setup-n {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--text-faint);
+  flex-shrink: 0;
+}
+
+.setup-item.open .setup-n {
+  color: var(--accent-deep);
+}
+
+.setup-t {
+  flex: 1;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 1.3;
+}
+
+/* The open step's title gets the highlight box, as on the reference layout. */
+.setup-item.open .setup-t {
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  border-radius: 8px;
+  padding: 3px 10px;
+  margin: -3px -10px;
+}
+
+.setup-chev {
+  font-size: 15px;
+  line-height: 1;
+  color: var(--text-faint);
+  transition: transform 0.25s;
+  flex-shrink: 0;
+}
+
+.setup-item.open .setup-chev {
+  transform: rotate(180deg);
+  color: var(--accent-deep);
+}
+
+/* Same 0fr → 1fr trick the FAQ uses, so the height animates without JS. */
+.setup-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+}
+
+.setup-item.open .setup-body {
+  grid-template-rows: 1fr;
+}
+
+.setup-body > div {
+  overflow: hidden;
+}
+
+.setup-body p {
+  padding: 0 18px 18px 42px;
+  font-size: 13.5px;
+  color: var(--text-muted);
+}
+
+/* ------------------------------------------------ tracking setup — stage */
+
+.setup-stage {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  min-height: 460px;
+}
+
+.setup-stage:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.setup-chrome {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 16px;
+  background: var(--bg-1);
+  border-bottom: 1px solid var(--border);
+}
+
+.setup-dots {
+  display: flex;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.setup-dots i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--border-strong);
+}
+
+.setup-url {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-faint);
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 5px 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.setup-screen {
+  padding: 20px;
+}
+
+/* A class rather than an inline style, so the 720px rule can still collapse
+   it — an inline grid-template-columns would outrank the media query. */
+.kpi-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.setup-list-box {
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 6px 16px;
+  margin-top: 14px;
+}
+
+.setup-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.setup-foot span {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 5px 12px;
+}
+
+/* -------------------------------------------- stage mock: setup wizard */
+
+/* Two columns, two rows: the steps rail runs the full height on the left,
+   the snippet card sits top right, and the browser + live card fill the row
+   under it — pulled left so they sit inboard of the card, as in the artwork. */
+.su {
+  display: grid;
+  grid-template-columns: 33% 1fr;
+  column-gap: 26px;
+  align-items: start;
+  padding-bottom: 18px;
+}
+
+.su-side {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+}
+
+.su-card {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+/* Nudged just past the snippet card's left edge. It can't go further: the
+   steps rail spans both rows, so a bigger pull would sit on top of step 4. */
+.su-stack {
+  grid-column: 2;
+  grid-row: 2;
+  position: relative;
+  margin: 26px 0 0 -5%;
+}
+
+.su-h {
+  font-size: clamp(19px, 2.1vw, 24px);
+  font-weight: 700;
+  letter-spacing: -0.028em;
+  margin-bottom: 22px;
+}
+
+.su-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.su-step {
+  display: flex;
+  gap: 12px;
+  position: relative;
+}
+
+/* Dashed rail joining one step's circle to the next. */
+.su-step:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 15px;
+  top: 36px;
+  bottom: -20px;
+  border-left: 1px dashed var(--border-strong);
+}
+
+.su-dot {
+  width: 31px;
+  height: 31px;
+  min-width: 31px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  font-weight: 600;
+  background: #ffffff;
+  border: 1px solid var(--border-strong);
+  color: var(--text-faint);
+  position: relative;
+  z-index: 1;
+}
+
+.su-step.done .su-dot,
+.su-step.fill .su-dot {
+  background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+  border-color: transparent;
+  color: #ffffff;
+}
+
+.su-step.now .su-dot {
+  background: #ffffff;
+  border-color: var(--accent);
+  border-width: 1.5px;
+  color: var(--accent-deep);
+}
+
+.su-t {
+  display: block;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.su-b {
+  display: block;
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.45;
+  margin-top: 2px;
+}
+
+.su-step.idle .su-t,
+.su-step.idle .su-b {
+  color: var(--text-faint);
+}
+
+.su-card {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.su-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.su-card-t {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 14.5px;
+  padding-right: 44px;
+}
+
+.su-card-b {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 5px 0 13px;
+}
+
+.su-code {
+  background: var(--accent-soft);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  line-height: 1.85;
+  color: var(--text);
+  /* The snippet is one long line — wrap it rather than let the stage scroll. */
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.su-code .cm {
+  color: var(--accent);
+}
+
+/* A span, not a button: the snippet is illustrative, so this is a picture of
+   a control rather than one that would copy something unusable. */
+.su-copy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  margin-top: 13px;
+  padding: 11px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* ---- lower composition: browser + overlapping live card + dashed arrow ---- */
+
+/* Runs down the strip the browser doesn't reach, from under the snippet card
+   to the live card's top corner. */
+.su-arrow {
+  position: absolute;
+  top: -30px;
+  right: 4%;
+  width: 78px;
+  height: 144px;
+  color: var(--accent-deep);
+  z-index: 2;
+}
+
+.su-browser {
+  width: 73%;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+.su-browser-bar {
+  display: flex;
+  gap: 7px;
+  padding: 10px 13px;
+  background: #eaf2fd;
+}
+
+.su-browser-bar i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.su-browser-bar i.off {
+  background: var(--text-faint);
+  opacity: 0.5;
+}
+
+.su-browser-body {
+  display: flex;
+  gap: 14px;
+  padding: 15px 15px 4px;
+}
+
+.su-thumb {
+  width: 43%;
+  aspect-ratio: 4 / 3;
+  border-radius: 9px;
+  background: #61a5f7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.su-thumb svg {
+  width: 52%;
+}
+
+.su-lines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding-top: 3px;
+}
+
+.su-lines i,
+.su-wide i {
+  display: block;
+  height: 8px;
+  border-radius: 4px;
+  background: #dbe9fc;
+}
+
+.su-lines i:nth-child(2) {
+  width: 86%;
+}
+
+.su-lines i:nth-child(4) {
+  width: 62%;
+}
+
+.su-wide {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 12px 15px 18px;
+}
+
+.su-wide i:last-child {
+  width: 74%;
+}
+
+/* Overlaps the browser's bottom-right corner and hangs past it, as drawn. */
+.su-live {
+  position: absolute;
+  right: 0;
+  bottom: -8px;
+  width: 47%;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 13px 15px 15px;
+  box-shadow: var(--shadow-lg);
+  z-index: 1;
+}
+
+.su-live-h {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.su-live-h .ic {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+.su-live-h .t {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 13.5px;
+}
+
+.su-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 62px;
+  padding-left: 8px;
+  border-left: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.su-bars i {
+  flex: 1;
+  border-radius: 3px;
+  background: #b6d6fb;
+}
+
+.su-bars i.on {
+  background: var(--accent);
+}
+
+/* -------------------------------------- stage mock: the finished page */
+
+/* The browser is inset from the left so the "Landing Page Created!" card can
+   overlap it, and the arrow has a lane to curve up through. */
+.lp {
+  position: relative;
+  padding-bottom: 32px;
+}
+
+.lp-browser {
+  width: 77%;
+  margin-left: 23%;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+.lp-bar {
+  display: flex;
+  gap: 7px;
+  padding: 10px 14px;
+}
+
+.lp-bar i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #cfd6e0;
+}
+
+.lp-bar i.on {
+  background: var(--accent);
+}
+
+.lp-page {
+  border-top: 1px solid var(--border);
+  padding: 12px 14px 14px;
+}
+
+.lp-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.lp-logo {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 17px;
+  color: var(--accent);
+  letter-spacing: -0.04em;
+}
+
+.lp-links {
+  display: flex;
+  gap: 11px;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.lp-links b {
+  font-weight: 500;
+  font-size: 9px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.lp-btn {
+  background: var(--accent);
+  color: #ffffff;
+  font-size: 9.5px;
+  font-weight: 600;
+  border-radius: 7px;
+  padding: 6px 11px;
+  white-space: nowrap;
+}
+
+.lp-hero {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 16px;
+  align-items: start;
+  margin-bottom: 16px;
+}
+
+.lp-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: 4px;
+}
+
+.lp-badge {
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  font-size: 8.5px;
+  font-weight: 600;
+  border-radius: 100px;
+  padding: 4px 9px;
+  margin-bottom: 10px;
+}
+
+.lp-h {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 21px;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+}
+
+.lp-h em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+.lp-p {
+  font-size: 10px;
+  line-height: 1.55;
+  color: var(--text-muted);
+  margin: 9px 0 12px;
+}
+
+.lp-cta {
+  background: var(--accent);
+  color: #ffffff;
+  font-size: 10.5px;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 9px 15px;
+}
+
+.lp-note {
+  font-size: 8.5px;
+  color: var(--text-faint);
+  margin-top: 7px;
+}
+
+/* ---- the analytics cluster ---- */
+
+.lp-viz {
+  position: relative;
+  background: var(--bg-1);
+  border-radius: 12px;
+  padding: 9px;
+}
+
+.lp-chart {
+  position: relative;
+  height: 96px;
+  background: #ffffff;
+  border-radius: 9px;
+  overflow: hidden;
+}
+
+.lp-chart svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.lp-grid line {
+  stroke: var(--border);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.lp-line .area {
+  fill: rgba(0, 138, 252, 0.09);
+}
+
+.lp-line .stroke {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.4;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.lp-stat {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.lp-stat .l {
+  font-size: 8.5px;
+  color: var(--text-muted);
+}
+
+.lp-stat .v {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: -0.02em;
+}
+
+.lp-stat .up {
+  font-size: 8px;
+  color: var(--good);
+}
+
+/* Overlaps the chart's top-left corner, as drawn. */
+.lp-float {
+  position: absolute;
+  top: 14px;
+  left: 5px;
+  width: 54%;
+  box-shadow: var(--shadow-md);
+  z-index: 2;
+}
+
+.lp-spark {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  width: 44%;
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+/* Positioned so it paints above .lp-chart, which is itself positioned — the
+   device card rides up into the chart's box and would otherwise be cut. */
+.lp-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 7px;
+  margin-top: 7px;
+}
+
+/* The device card rides higher than its neighbours in the artwork. */
+.lp-dev {
+  margin-top: -22px;
+  align-items: center;
+  gap: 2px;
+  box-shadow: var(--shadow-sm);
+}
+
+.lp-donut {
+  width: 40px;
+  margin: 2px 0;
+}
+
+.lp-donut circle {
+  fill: none;
+  stroke-width: 5;
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+.lp-donut .t {
+  stroke: var(--bg-2);
+}
+
+.lp-donut .f {
+  stroke: var(--accent);
+  stroke-linecap: round;
+}
+
+.lp-donut text {
+  font-family: var(--display);
+  font-size: 10px;
+  font-weight: 700;
+  fill: var(--text);
+  text-anchor: middle;
+}
+
+.lp-dev .sub {
+  font-size: 8px;
+  color: var(--text-muted);
+}
+
+/* ---- feature row ---- */
+
+.lp-feats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 11px;
+}
+
+.lp-feat {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.lp-feat .ic {
+  width: 26px;
+  height: 26px;
+  min-width: 26px;
+  border-radius: 7px;
+  background: var(--accent);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lp-feat .ic svg {
+  width: 15px;
+}
+
+.lp-feat .t {
+  display: block;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 9.5px;
+  line-height: 1.3;
+}
+
+.lp-feat .b {
+  display: block;
+  font-size: 8.5px;
+  line-height: 1.4;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* ---- live URL bar ---- */
+
+.lp-live {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 61%;
+  margin: 12px 0 0 39%;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  box-shadow: var(--shadow-sm);
+}
+
+.lp-live .ic {
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lp-live .ic svg {
+  width: 17px;
+}
+
+.lp-live .tx {
+  flex: 1;
+  min-width: 0;
+}
+
+.lp-live .t {
+  display: block;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 11.5px;
+}
+
+.lp-live .u {
+  display: block;
+  font-size: 10.5px;
+  color: var(--accent);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lp-open {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  padding: 7px 11px;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+/* ---- floating confirmation card + arrow ---- */
+
+.lp-card {
+  position: absolute;
+  left: 2%;
+  top: 48%;
+  width: 27%;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 14px 12px;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+  z-index: 3;
+}
+
+.lp-tick {
+  position: relative;
+  display: block;
+  width: 44px;
+  height: 44px;
+  margin: 2px auto 9px;
+}
+
+.lp-tick .sparks {
+  position: absolute;
+  inset: -12px;
+  width: calc(100% + 24px);
+  color: var(--accent);
+}
+
+.lp-tick .dot {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.lp-card .t {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: -0.02em;
+}
+
+.lp-card p {
+  font-size: 9.5px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin: 5px 0 11px;
+}
+
+.lp-card .b1,
+.lp-card .b2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: 8px;
+  padding: 8px;
+  font-size: 9.5px;
+  font-weight: 600;
+}
+
+.lp-card .b1 {
+  background: var(--accent);
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.lp-card .b2 {
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+}
+
+.lp-i {
+  width: 12px;
+  min-width: 12px;
+}
+
+/* Sweeps out from under the card and up into the browser's lower edge. */
+.lp-arrow {
+  position: absolute;
+  left: 18%;
+  bottom: 2px;
+  width: 18%;
+  height: 88px;
+  color: var(--accent-deep);
+  z-index: 1;
+}
+
+/* ------------------------------------ stage mock: analytics dashboard */
+
+.vd {
+  position: relative;
+  padding-bottom: 56px;
+}
+
+.vd-app {
+  width: 82%;
+  margin-left: 18%;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+.vd-body {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  border-top: 1px solid var(--border);
+}
+
+.vd-side {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 8px;
+  background: var(--bg-1);
+  border-right: 1px solid var(--border);
+}
+
+.vd-side .lp-logo {
+  font-size: 15px;
+  padding: 0 6px;
+  margin-bottom: 12px;
+}
+
+.vd-nav {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 7px;
+  border-radius: 7px;
+  font-size: 8.5px;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.vd-nav svg {
+  width: 12px;
+  min-width: 12px;
+}
+
+/* Without this a long item ("Session Replay") overflows the sidebar column
+   and is painted over by the main panel, which reads as a broken label. */
+.vd-nav .n {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vd-nav.on {
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  font-weight: 600;
+}
+
+.vd-main {
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  min-width: 0;
+}
+
+.vd-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.vd-head .h {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: -0.02em;
+}
+
+.vd-date {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  padding: 5px 9px;
+  font-size: 8.5px;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.vd-date svg {
+  width: 11px;
+  color: var(--text-muted);
+}
+
+.vd-date em {
+  font-style: normal;
+  color: var(--text-faint);
+  margin-left: 2px;
+}
+
+/* Column flex so the body can claim the leftover height — otherwise cards in
+   the same row stretch but their contents sit at different heights. */
+.vd-card {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 9px;
+  min-width: 0;
+}
+
+/* ---- KPI row ---- */
+
+.vd-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 7px;
+}
+
+.vd-kpi .top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 8.5px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.vd-kpi .ic {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  border-radius: 5px;
+  background: var(--accent);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vd-kpi .ic svg {
+  width: 11px;
+}
+
+.vd-kpi .mid {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 6px;
+  margin: 4px 0 3px;
+}
+
+.vd-kpi .mid b {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: -0.025em;
+}
+
+.vd-kpi .spark {
+  width: 42%;
+  stroke: var(--accent);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.vd-kpi .dl {
+  display: block;
+  font-size: 7.5px;
+  color: var(--text-faint);
+  line-height: 1.4;
+}
+
+.vd-kpi .dl em {
+  font-style: normal;
+  font-weight: 700;
+  color: var(--good);
+}
+
+/* ---- chart + donut rows ---- */
+
+.vd-r2 {
+  display: grid;
+  grid-template-columns: 1.38fr 1fr;
+  gap: 7px;
+}
+
+/* Uneven, as in the artwork — the two cards carrying long labels get the
+   width, so nothing has to truncate at this scale. */
+.vd-r3 {
+  display: grid;
+  grid-template-columns: 0.85fr 1.05fr 1.15fr;
+  gap: 7px;
+}
+
+.vd-card .ct {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 9.5px;
+  margin-bottom: 8px;
+}
+
+.vd-card .ct em {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 8px;
+  color: var(--text-muted);
+}
+
+/* Grid, not flex: the x-axis labels share a column with the plot, so they
+   line up with it instead of being offset by a guessed padding. */
+.vd-plot {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 104px auto;
+  column-gap: 6px;
+  row-gap: 5px;
+}
+
+.vd-plot .ax {
+  position: relative;
+  width: 13px;
+  font-size: 7px;
+  color: var(--text-faint);
+}
+
+.vd-plot .ax i {
+  position: absolute;
+  right: 0;
+  transform: translateY(-50%);
+  font-style: normal;
+}
+
+.vd-graph {
+  position: relative;
+  min-width: 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.vd-graph svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.vd-gl line {
+  stroke: var(--border);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+/* Positioned in percent against the plot box, so it tracks the stretched
+   line exactly at any width. */
+.vd-dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  transform: translate(-50%, -50%);
+}
+
+.vd-tip {
+  position: absolute;
+  left: 38%;
+  top: 6%;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 6px;
+  box-shadow: var(--shadow-md);
+  white-space: nowrap;
+}
+
+.vd-tip i {
+  display: block;
+  font-style: normal;
+  font-size: 7px;
+  color: var(--text-muted);
+}
+
+.vd-tip b {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--display);
+  font-size: 9px;
+  font-weight: 700;
+  margin-top: 1px;
+}
+
+.vd-tip em {
+  width: 5px;
+  height: 5px;
+  border-radius: 1px;
+  background: var(--accent);
+}
+
+.vd-tip s {
+  text-decoration: none;
+  font-family: var(--body);
+  font-weight: 400;
+  font-size: 7px;
+  color: var(--text-muted);
+}
+
+.vd-xax {
+  grid-column: 2;
+  display: flex;
+  justify-content: space-between;
+  font-size: 7px;
+  color: var(--text-faint);
+}
+
+.vd-xax i {
+  font-style: normal;
+}
+
+.vd-split {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+}
+
+.vd-donut {
+  position: relative;
+  width: 36%;
+  max-width: 84px;
+  flex-shrink: 0;
+}
+
+.vd-r3 .vd-donut {
+  width: 38%;
+  max-width: 86px;
+}
+
+.vd-donut svg {
+  width: 100%;
+  display: block;
+}
+
+.vd-donut circle {
+  fill: none;
+  stroke-width: 7;
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+/* Slice ramp — strongest first, matching the artwork's fade. */
+.vd-donut .s0,
+.vd-legend .s0 {
+  stroke: var(--accent);
+  background: var(--accent);
+}
+
+.vd-donut .s1,
+.vd-legend .s1 {
+  stroke: #5cabf7;
+  background: #5cabf7;
+}
+
+.vd-donut .s2,
+.vd-legend .s2 {
+  stroke: #93c6fa;
+  background: #93c6fa;
+}
+
+.vd-donut .s3,
+.vd-legend .s3 {
+  stroke: #b9dbfc;
+  background: #b9dbfc;
+}
+
+.vd-donut .s4,
+.vd-legend .s4 {
+  stroke: #dcecfe;
+  background: #dcecfe;
+}
+
+.vd-donut .c {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.2;
+}
+
+.vd-donut .c b {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: -0.02em;
+}
+
+.vd-donut .c i {
+  font-style: normal;
+  font-size: 7px;
+  color: var(--text-muted);
+}
+
+.vd-legend {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 7.5px;
+  color: var(--text);
+}
+
+.vd-legend > span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.vd-legend .d {
+  width: 7px;
+  height: 7px;
+  min-width: 7px;
+  border-radius: 50%;
+}
+
+/* Same rule as the row lists: the label gives way, the figure never does —
+   otherwise a long name pushes the percentage out through the card padding. */
+.vd-legend .n {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vd-legend b {
+  flex-shrink: 0;
+  font-weight: 600;
+}
+
+.vd-rows {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 7.5px;
+  color: var(--text-muted);
+}
+
+.vd-rows > span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.vd-rows > span:last-child {
+  border-bottom: none;
+}
+
+/* The label truncates so the figure beside it is never the part that's cut. */
+.vd-rows .n {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vd-rows b {
+  flex-shrink: 0;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.vd-rows.flags > span {
+  padding: 4px 0;
+}
+
+.vd-rows .fl {
+  width: 13px;
+  min-width: 13px;
+  line-height: 0;
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px var(--border);
+}
+
+.vd-map {
+  width: 22%;
+  flex-shrink: 0;
+  fill: #cfe3fa;
+}
+
+/* ---- status bar ---- */
+
+.vd-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 3px 0 0 6%;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 9px 12px;
+  box-shadow: var(--shadow-sm);
+}
+
+.vd-status .ic {
+  width: 26px;
+  height: 26px;
+  min-width: 26px;
+  border-radius: 8px;
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vd-status .ic svg {
+  width: 15px;
+}
+
+.vd-status .ic.soft {
+  border-radius: 50%;
+  margin-left: 2px;
+}
+
+.vd-status .tx b {
+  display: block;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 11px;
+}
+
+.vd-status .tx i {
+  display: block;
+  font-style: normal;
+  font-size: 8.5px;
+  color: var(--text-muted);
+}
+
+.vd-status .sep {
+  width: 1px;
+  align-self: stretch;
+  background: var(--border);
+  margin-left: auto;
+}
+
+.vd-status .last i {
+  display: block;
+  font-style: normal;
+  font-size: 8.5px;
+  color: var(--text-muted);
+}
+
+.vd-status .last b {
+  display: block;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 10.5px;
+  color: var(--accent);
+}
+
+/* ---- floating confirmation card + arrow ---- */
+
+/* Top edge sits below the sidebar's last nav item, so the card overlaps the
+   window without swallowing the menu — as in the artwork. */
+.vd-float {
+  position: absolute;
+  left: 0;
+  top: 44%;
+  width: 26%;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 14px 12px;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+  z-index: 3;
+}
+
+.vd-float .lp-tick .dot svg {
+  width: 22px;
+}
+
+.vd-float .t {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 12.5px;
+  letter-spacing: -0.02em;
+}
+
+.vd-float p {
+  font-size: 9.5px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin: 5px 0 11px;
+}
+
+.vd-checks {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  text-align: left;
+  margin-bottom: 12px;
+}
+
+.vd-checks > span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 9px;
+  font-weight: 500;
+}
+
+.vd-checks .ic {
+  width: 19px;
+  height: 19px;
+  min-width: 19px;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vd-checks .ic svg {
+  width: 11px;
+}
+
+.vd-checks .n {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vd-checks > span > b {
+  margin-left: auto;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--good);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+}
+
+.vd-float .b1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: var(--accent);
+  color: #ffffff;
+  border-radius: 8px;
+  padding: 9px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.vd-arrow {
+  position: absolute;
+  left: 12%;
+  bottom: 2px;
+  width: 21%;
+  height: 90px;
+  color: var(--accent-deep);
+  z-index: 1;
+}
+
+/* ------------------------------------------ stage mock: session replay */
+
+/* Violet, only inside the replay viewport — that's the recorded page's own
+   brand in the artwork, not this site's. */
+.sr {
+  --vio: #5b5bd6;
+  position: relative;
+  padding-left: 27%;
+  padding-bottom: 22px;
+}
+
+.sr-app {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+.sr-bar {
+  display: flex;
+  gap: 6px;
+  padding: 9px 12px;
+}
+
+.sr-bar i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.sr-bar .r {
+  background: #ff5f57;
+}
+
+.sr-bar .y {
+  background: #febc2e;
+}
+
+.sr-bar .g {
+  background: #28c840;
+}
+
+.sr-body {
+  display: grid;
+  grid-template-columns: 94px 1fr;
+  border-top: 1px solid var(--border);
+}
+
+.sr-side {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 10px 7px;
+  border-right: 1px solid var(--border);
+}
+
+.sr-side .lp-logo {
+  font-size: 15px;
+  padding: 0 5px;
+  margin-bottom: 10px;
+}
+
+.sr-side .vd-nav {
+  font-size: 7.5px;
+  padding: 5px 6px;
+  gap: 6px;
+}
+
+.sr-side .vd-nav svg {
+  width: 11px;
+  min-width: 11px;
+}
+
+/* ---- "tracking active" card under the nav ---- */
+
+/* Auto on both sides centres it in whatever space the nav leaves. */
+.sr-track {
+  margin: auto 0;
+  padding: 9px 8px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  box-shadow: var(--shadow-sm);
+}
+
+.sr-track .th {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 7.5px;
+  white-space: nowrap;
+}
+
+.sr-track .pill {
+  font-size: 7px;
+  padding: 2px 6px;
+}
+
+.sr-track .spark {
+  display: block;
+  width: 100%;
+  margin: 7px 0;
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.sr-track .tl,
+.sr-track .ts {
+  display: block;
+  font-size: 6.5px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.sr-track .tn {
+  display: block;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 1.2;
+}
+
+.sr-track .avs {
+  display: flex;
+  align-items: center;
+  margin-top: 7px;
+}
+
+.sr-track .avs i {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  margin-left: -4px;
+  border: 1.5px solid #ffffff;
+  background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+  color: #ffffff;
+  font-style: normal;
+  font-size: 6.5px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sr-track .avs i:first-of-type {
+  margin-left: 0;
+}
+
+.sr-track .avs b {
+  margin-left: 4px;
+  font-size: 7px;
+  color: var(--text-muted);
+}
+
+/* ---- main column ---- */
+
+.sr-main {
+  padding: 11px 9px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+/* Four KPI cards across a narrower main column than the analytics tab, so
+   the type steps down to keep every label on one line. */
+.sr .vd-kpi .top {
+  font-size: 7px;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.sr .vd-kpi .ic {
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  border-radius: 4px;
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+}
+
+.sr .vd-kpi .ic svg {
+  width: 10px;
+}
+
+.sr .vd-kpi .mid b {
+  font-size: 13px;
+}
+
+.sr .vd-kpi .dl {
+  font-size: 6.5px;
+  white-space: nowrap;
+}
+
+.sr .vd-card {
+  padding: 8px;
+}
+
+.sr .vd-card .ct {
+  font-size: 8.5px;
+  margin-bottom: 6px;
+}
+
+.sr-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+}
+
+.sr-head .ht {
+  flex: 1;
+  min-width: 0;
+}
+
+.sr-head .ht b {
+  display: block;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: -0.02em;
+}
+
+.sr-head .ht i {
+  display: block;
+  font-style: normal;
+  font-size: 8px;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+
+.sr-head .vd-date {
+  font-size: 7.5px;
+  padding: 5px 7px;
+  gap: 5px;
+}
+
+.sr-head .vd-date svg {
+  width: 10px;
+}
+
+.sr-mid {
+  display: grid;
+  grid-template-columns: 1.85fr 1fr;
+  gap: 7px;
+  align-items: start;
+}
+
+.sr-col {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+/* ---- the player ---- */
+
+.sr-player {
+  padding: 0;
+  overflow: hidden;
+}
+
+.sr-player .ph {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 9px;
+  border-bottom: 1px solid var(--border);
+  font-size: 6.5px;
+  color: var(--text-muted);
+  min-width: 0;
+}
+
+.sr-player .ph .mo {
+  color: var(--text-muted);
+  line-height: 0;
+}
+
+.sr-player .ph .mo svg {
+  width: 11px;
+}
+
+.sr-player .ph b {
+  font-family: var(--display);
+  font-size: 8.5px;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.sr-player .ph em {
+  font-style: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sr-player .ph .fl {
+  width: 11px;
+  min-width: 11px;
+  line-height: 0;
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px var(--border);
+}
+
+/* ---- the recorded page inside the viewport ---- */
+
+.sr-view {
+  background: linear-gradient(160deg, #fbfcff, #f3f6fd);
+  padding: 8px;
+}
+
+.sr-pnav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.sr-pnav .lg {
+  font-size: 6.5px;
+  font-weight: 700;
+  color: var(--vio);
+  white-space: nowrap;
+}
+
+.sr-pnav .lk {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 7px;
+  overflow: hidden;
+}
+
+.sr-pnav .lk i {
+  font-style: normal;
+  font-size: 6px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.sr-pnav .gs {
+  background: var(--vio);
+  color: #ffffff;
+  font-size: 6px;
+  font-weight: 600;
+  border-radius: 4px;
+  padding: 3px 6px;
+  white-space: nowrap;
+}
+
+.sr-phero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  align-items: start;
+}
+
+.sr-pcopy {
+  position: relative;
+  padding-bottom: 16px;
+}
+
+.sr-pcopy .h {
+  display: block;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 11px;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+
+.sr-pcopy .h em {
+  font-style: normal;
+  color: var(--vio);
+}
+
+.sr-pcopy .p {
+  display: block;
+  font-size: 6px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin: 5px 0 7px;
+}
+
+.sr-pcopy .b {
+  display: inline-block;
+  background: var(--vio);
+  color: #ffffff;
+  font-size: 6.5px;
+  font-weight: 600;
+  border-radius: 5px;
+  padding: 5px 8px;
+}
+
+/* Cursor with its click ripple, sitting beside the button. */
+.sr-pcopy .cur {
+  position: absolute;
+  right: 6%;
+  bottom: 0;
+  width: 30px;
+  height: 30px;
+}
+
+.sr-pcopy .cur i {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(91, 91, 214, 0.3), rgba(91, 91, 214, 0.05) 70%);
+}
+
+.sr-pcopy .cur svg {
+  position: absolute;
+  right: 3px;
+  bottom: 2px;
+  width: 13px;
+  fill: #0b1220;
+  stroke: #ffffff;
+  stroke-width: 1.2;
+}
+
+.sr-pviz {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.sr-pcard {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px;
+  box-shadow: var(--shadow-sm);
+  min-width: 0;
+}
+
+.sr-pcard .l {
+  display: block;
+  font-size: 5px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sr-pcard .v {
+  display: block;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: -0.02em;
+}
+
+.sr-pcard .u {
+  display: block;
+  font-size: 5.5px;
+  color: var(--good);
+}
+
+.sr-pcard .ch {
+  position: relative;
+  height: 34px;
+  margin-top: 3px;
+}
+
+.sr-pcard .ch svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.sr-pcard .ch .stroke {
+  fill: none;
+  stroke: var(--vio);
+  stroke-width: 1.8;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.sr-pcard .pt {
+  position: absolute;
+  width: 3.5px;
+  height: 3.5px;
+  border-radius: 50%;
+  background: var(--vio);
+  transform: translate(-50%, -50%);
+}
+
+.sr-prow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+}
+
+.sr-pcard.mid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.sr-pcard .dn {
+  width: 30px;
+}
+
+.sr-pcard .dn circle {
+  fill: none;
+  stroke-width: 5;
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+.sr-pcard .dn .t {
+  stroke: #e7e9f6;
+}
+
+.sr-pcard .dn .f {
+  stroke: var(--vio);
+  stroke-linecap: round;
+}
+
+.sr-pcard .dn text {
+  font-family: var(--display);
+  font-size: 9px;
+  font-weight: 700;
+  fill: var(--text);
+  text-anchor: middle;
+}
+
+/* ---- transport controls ---- */
+
+.sr-ctrl {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: #101828;
+  padding: 7px 9px;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 8px;
+}
+
+.sr-ctrl i {
+  font-style: normal;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.sr-ctrl .pl {
+  font-size: 9px;
+}
+
+.sr-ctrl .sp {
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 4px;
+  padding: 2px 5px;
+  font-size: 7px;
+}
+
+.sr-ctrl .tk {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  height: 3px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.sr-ctrl .tk .fill {
+  position: absolute;
+  inset: 0 70% 0 0;
+  border-radius: 3px;
+  background: #ffffff;
+}
+
+.sr-ctrl .tk .m {
+  position: absolute;
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.sr-ctrl .tm {
+  font-family: var(--mono);
+  font-size: 7px;
+  white-space: nowrap;
+}
+
+/* SVG rather than ⛶ / 🔊 — the emoji renders full-colour on some platforms
+   and as tofu on others. */
+.sr-ctrl .sv {
+  line-height: 0;
+}
+
+.sr-ctrl .sv svg {
+  width: 11px;
+}
+
+.m.click,
+.sr-leg b.click {
+  background: #3b82f6;
+}
+
+.m.scroll,
+.sr-leg b.scroll {
+  background: #22c55e;
+}
+
+.m.drop,
+.sr-leg b.drop {
+  background: #f97316;
+}
+
+.m.input,
+.sr-leg b.input {
+  background: #8b5cf6;
+}
+
+.sr-leg {
+  display: flex;
+  gap: 10px;
+  padding: 7px 9px;
+  font-size: 7px;
+  color: var(--text-muted);
+}
+
+.sr-leg i {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-style: normal;
+}
+
+.sr-leg b {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+
+/* ---- session events + info ---- */
+
+.sr-ev {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 7px;
+}
+
+.sr-ev > span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+}
+
+.sr-ev .tm {
+  font-family: var(--mono);
+  font-style: normal;
+  font-size: 6.5px;
+  color: var(--text-faint);
+  flex-shrink: 0;
+}
+
+.sr-ev .ic {
+  width: 13px;
+  height: 13px;
+  min-width: 13px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+}
+
+.sr-ev .ic svg {
+  width: 8px;
+}
+
+.sr-ev .ic.start {
+  background: #e6f6ee;
+  color: var(--good);
+}
+
+.sr-ev .ic.end {
+  background: #fdeaea;
+  color: #d64545;
+}
+
+.sr-ev .n {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text);
+}
+
+.sr-inf {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 7px;
+}
+
+.sr-inf > span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.sr-inf i {
+  font-style: normal;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.sr-inf b {
+  margin-left: auto;
+  font-weight: 500;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---- bottom row ---- */
+
+.sr-bot {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 7px;
+  align-items: start;
+}
+
+.sr-tab {
+  display: flex;
+  flex-direction: column;
+  font-size: 6.5px;
+}
+
+.sr-tab .hd,
+.sr-tab .rw {
+  display: grid;
+  grid-template-columns: 1fr 1.95fr 0.6fr 0.9fr 1.7fr 0.75fr;
+  gap: 3px;
+  align-items: center;
+  padding: 4px 0;
+}
+
+.sr-tab .hd {
+  color: var(--text-faint);
+  border-bottom: 1px solid var(--border);
+}
+
+.sr-tab .rw {
+  border-bottom: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+.sr-tab .rw:last-child {
+  border-bottom: none;
+}
+
+.sr-tab i {
+  font-style: normal;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sr-tab .id {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.sr-tab .lo {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sr-tab .lo .fl {
+  width: 11px;
+  min-width: 11px;
+  line-height: 0;
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px var(--border);
+}
+
+.sr-tab .lo .n {
+  font-weight: 400;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sr-tab .ac {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-faint);
+}
+
+.sr-tab .ac .pl {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 6px;
+}
+
+.sr-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 7px;
+}
+
+.sr-entry > span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+}
+
+.sr-entry .n {
+  width: 40%;
+  font-style: normal;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sr-entry .tk {
+  flex: 1;
+  min-width: 0;
+  height: 5px;
+  border-radius: 3px;
+  background: var(--bg-2);
+}
+
+.sr-entry .tk b {
+  display: block;
+  height: 100%;
+  border-radius: 3px;
+  background: var(--accent);
+}
+
+.sr-entry .v {
+  font-style: normal;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* ---- floating card + arrow ---- */
+
+.sr-float {
+  position: absolute;
+  left: 0;
+  top: 14%;
+  width: 24%;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 14px 12px;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+  z-index: 3;
+}
+
+.sr-float .lp-tick .dot {
+  font-size: 18px;
+  padding-left: 3px;
+}
+
+.sr-float .t {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 12.5px;
+  letter-spacing: -0.02em;
+}
+
+.sr-float p {
+  font-size: 9.5px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin: 5px 0 11px;
+}
+
+.sr-float .vd-checks > span {
+  font-size: 8px;
+  gap: 6px;
+}
+
+.sr-float .b1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  background: var(--accent);
+  color: #ffffff;
+  border-radius: 9px;
+  padding: 10px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.sr-float .b1 .pl {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1.2px solid #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 6px;
+  font-style: normal;
+  padding-left: 1px;
+}
+
+/* Aimed at the "Tracking Active" card in the sidebar, as in the artwork. */
+.sr-arrow {
+  position: absolute;
+  left: 9%;
+  bottom: 21%;
+  width: 21%;
+  height: 96px;
+  color: var(--accent-deep);
+  z-index: 1;
+}
+
+/* ---------------------------------------------- stage mock: CTA clicks */
+
+/* Reuses the analytics chassis (.vd-*); only the pieces below differ. */
+
+/* Two-line header, as on the session replay tab. */
+.vd-head .ht {
+  flex: 1;
+  min-width: 0;
+}
+
+.vd-head .ht b {
+  display: block;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: -0.02em;
+}
+
+.vd-head .ht i {
+  display: block;
+  font-style: normal;
+  font-size: 8px;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+
+/* Wider than the analytics tab: four KPI labels here are long, and the
+   artwork puts the window closer to the card besides. */
+.cta .vd-app {
+  width: 86%;
+  margin-left: 14%;
+}
+
+/* This tab's menu carries "Session Replay", so the rail needs to be wider
+   and the type a step smaller than the analytics tab's. */
+.cta .vd-body {
+  grid-template-columns: 100px 1fr;
+}
+
+.cta .vd-nav {
+  font-size: 7px;
+  gap: 6px;
+}
+
+.cta .vd-nav svg {
+  width: 11px;
+  min-width: 11px;
+}
+
+.cta .vd-head {
+  align-items: flex-start;
+  gap: 7px;
+}
+
+.cta .vd-kpi .top {
+  font-size: 7px;
+  gap: 5px;
+}
+
+/* "CTR (Click Through Rate)" is long enough to need the ellipsis. */
+.cta .vd-kpi .top .n {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cta .vd-kpi .ic {
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  border-radius: 4px;
+}
+
+.cta .vd-kpi .ic svg {
+  width: 10px;
+}
+
+.cta .vd-kpi .mid b {
+  font-size: 13.5px;
+}
+
+.cta .vd-kpi .dl {
+  font-size: 6.5px;
+  white-space: nowrap;
+}
+
+.cta .spark circle {
+  fill: var(--accent);
+  stroke: none;
+}
+
+/* "Button Interactions Captured" needs the extra couple of pixels. */
+.cta .vd-checks > span {
+  font-size: 8.5px;
+  gap: 6px;
+}
+
+/* The "Clicks ⌄" picker in the chart card's title row. */
+.vd-card .ct .sel {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  padding: 3px 6px;
+  font-size: 7.5px;
+  color: var(--text);
+}
+
+.vd-card .ct .sel b {
+  color: var(--text-faint);
+  font-weight: 400;
+}
+
+/* ---- the two tables ---- */
+
+.ct-r3 {
+  display: grid;
+  grid-template-columns: 1.08fr 1fr;
+  gap: 7px;
+  align-items: start;
+}
+
+.ct-tab {
+  display: flex;
+  flex-direction: column;
+  font-size: 7px;
+}
+
+.ct-tab .hd,
+.ct-tab .rw {
+  display: grid;
+  gap: 5px;
+  align-items: center;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.ct-tab.el .hd,
+.ct-tab.el .rw {
+  grid-template-columns: 2.3fr 0.85fr 1.2fr 1.5fr;
+}
+
+.ct-tab.pg .hd,
+.ct-tab.pg .rw {
+  grid-template-columns: 1.85fr 0.8fr 1.2fr 0.7fr;
+}
+
+.ct-tab .hd {
+  color: var(--text-faint);
+}
+
+.ct-tab .rw {
+  color: var(--text-muted);
+}
+
+.ct-tab .rw:last-child {
+  border-bottom: none;
+}
+
+.ct-tab i {
+  font-style: normal;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* element cell: icon tile + name over its path */
+.ct-tab .el {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow: visible;
+}
+
+.ct-tab .el .ic {
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  border-radius: 5px;
+  background: var(--accent);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ct-tab .el .ic svg {
+  width: 10px;
+}
+
+.ct-tab .el .tx {
+  min-width: 0;
+  font-weight: 400;
+}
+
+.ct-tab .el .tx s {
+  display: block;
+  text-decoration: none;
+  font-weight: 600;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ct-tab .el .tx u {
+  display: block;
+  text-decoration: none;
+  font-size: 6.5px;
+  color: var(--text-faint);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* CTR cell: figure then bar */
+.ct-tab .ctr {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  overflow: visible;
+}
+
+.ct-tab .ctr .v {
+  font-weight: 600;
+  color: var(--text);
+  flex-shrink: 0;
+}
+
+.ct-tab .tk {
+  flex: 1;
+  min-width: 0;
+  height: 4px;
+  border-radius: 3px;
+  background: var(--bg-2);
+  overflow: hidden;
+}
+
+.ct-tab .tk s,
+.ct-tab .tk b {
+  display: block;
+  height: 100%;
+  border-radius: 3px;
+  background: var(--accent);
+}
+
+.ct-tab .pg {
+  color: var(--text);
+}
+
+.ct-tab .v {
+  font-weight: 600;
+  color: var(--text);
+  text-align: right;
+}
+
+.ct-more {
+  display: block;
+  text-align: center;
+  margin-top: 8px;
+  font-size: 7.5px;
+  font-weight: 600;
+  color: var(--accent-deep);
+}
+
+/* The status bar's title carries the Live pill on this tab. */
+.vd-status .tx b .pill {
+  font-size: 7px;
+  padding: 2px 6px;
+  margin-left: 5px;
+  vertical-align: middle;
+}
+
+/* -------------------------------------------- stage mock: form drop-off */
+
+.fd-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 4px 0;
+}
+
+.fd-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+}
+
+.fd-n {
+  width: 62px;
+  flex-shrink: 0;
+  font-weight: 500;
+}
+
+.fd-t {
+  flex: 1;
+  height: 22px;
+  border-radius: 6px;
+  background: var(--bg-2);
+  overflow: hidden;
+}
+
+.fd-f {
+  display: block;
+  height: 100%;
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-deep));
+  opacity: 0.85;
+}
+
+.fd-row.worst .fd-f {
+  background: linear-gradient(90deg, #e8a33d, #b7791f);
+}
+
+.fd-v {
+  width: 42px;
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 11.5px;
+}
+
+.fd-d {
+  width: 46px;
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--text-faint);
+}
+
+.fd-row.worst .fd-d {
+  color: var(--warn);
+  font-weight: 600;
+}
+
+.fd-flag {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+  padding: 13px 16px;
+  border-radius: 12px;
+  background: #fdf9f1;
+  border: 1px solid #f0e0c4;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
 /* ---------------------------------------------------------- breakpoints */
 
 /* Narrow desktops: the wrap has stopped shrinking but the image box hasn't,
@@ -2594,6 +5627,10 @@ footer {
   .gallery {
     grid-template-columns: 220px 1fr;
     gap: 24px;
+  }
+  .setup-grid {
+    grid-template-columns: 300px 1fr;
+    gap: 22px;
   }
   .spec-row {
     grid-template-columns: repeat(3, 1fr);
@@ -2688,6 +5725,15 @@ footer {
     width: auto;
     border: 1px solid var(--border-strong);
   }
+  /* Accordion above, stage below — the list keeps its own copy visible, so
+     unlike the gallery's tabs it doesn't need to become a scrolling row. */
+  .setup-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .setup-stage {
+    min-height: 0;
+  }
   .compare-grid {
     grid-template-columns: 1fr;
   }
@@ -2774,8 +5820,130 @@ footer {
   .cta-band {
     padding: 26px 20px;
   }
-  .mini-kpis {
+  .mini-kpis,
+  .kpi-3 {
     grid-template-columns: 1fr;
+  }
+  .setup-screen {
+    padding: 14px;
+  }
+  /* Both mocks lose their side-by-side arrangement — the columns get too
+     narrow to read, and the overlaps have nothing left to overlap. */
+  .su,
+  .lp-hero,
+  .lp-feats {
+    grid-template-columns: 1fr;
+  }
+  .lp-browser,
+  .lp-live,
+  .vd-app {
+    width: 100%;
+    margin-left: 0;
+  }
+  .lp-card,
+  .vd-float {
+    position: static;
+    width: 100%;
+    margin-top: 14px;
+  }
+  .lp-arrow,
+  .vd-arrow {
+    display: none;
+  }
+  .lp-dev {
+    margin-top: 0;
+  }
+  .lp-nav {
+    flex-wrap: wrap;
+  }
+  /* The dashboard's own columns collapse too — four KPI cards and three
+     panels can't hold their shape at phone width. */
+  .vd-body {
+    grid-template-columns: 1fr;
+  }
+  .vd-side {
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .vd-side .lp-logo {
+    margin-bottom: 0;
+  }
+  .vd-kpis,
+  .vd-r2,
+  .vd-r3 {
+    grid-template-columns: 1fr 1fr;
+  }
+  .ct-r3 {
+    grid-template-columns: 1fr;
+  }
+  .vd-status {
+    margin-left: 0;
+    flex-wrap: wrap;
+  }
+  .vd-status .sep {
+    display: none;
+  }
+  /* Session replay: the card moves out of its reserved gutter and the app's
+     own three-column interior collapses. */
+  .sr {
+    padding-left: 0;
+  }
+  .sr-float {
+    position: static;
+    width: 100%;
+    margin-top: 14px;
+  }
+  .sr-arrow {
+    display: none;
+  }
+  .sr-body {
+    grid-template-columns: 1fr;
+  }
+  .sr-side {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .sr-side .lp-logo {
+    margin-bottom: 0;
+  }
+  .sr-track {
+    margin-top: 0;
+    width: 100%;
+  }
+  .sr-mid,
+  .sr-bot,
+  .sr-phero {
+    grid-template-columns: 1fr;
+  }
+  /* One column: the overlap and the arrow have nothing left to point across,
+     so the three blocks simply stack. */
+  .su-side,
+  .su-card,
+  .su-stack {
+    grid-column: 1;
+    grid-row: auto;
+  }
+  .su-stack {
+    margin: 20px 0 0;
+  }
+  .su-arrow {
+    display: none;
+  }
+  .su-browser {
+    width: 100%;
+  }
+  .su-live {
+    position: static;
+    width: 100%;
+    margin-top: 14px;
+  }
+  .fd-d {
+    display: none;
   }
 }
 

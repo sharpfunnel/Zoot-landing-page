@@ -154,7 +154,7 @@ export const reviews = [
 ];
 
 export const navLinks = [
-  { href: "#dashboard", label: "Dashboard" },
+  { href: "#setup", label: "Dashboard" },
   { href: "#deliverables", label: "What You Get" },
   { href: "#journey", label: "How It Works" },
   { href: "#stories", label: "Reviews" },
@@ -251,6 +251,121 @@ export const journeySteps = [
   { n: "08", title: "Pixel Fires", body: "Meta Pixel and CAPI confirm the conversion." },
   { n: "09", title: "Reports Generated", body: "Weekly and monthly, sent automatically." },
 ];
+
+/* ------------------------------------------------------- tracking setup */
+
+/**
+ * The seven steps we set up on your page, shown as an accordion beside a mock
+ * of what each one actually does. `panel` names the mock rendered in
+ * tracking-setup.tsx; `url` is the fake address bar above it.
+ *
+ * Step 06 deliberately promises *visibility* of where people abandon, not
+ * capture of what they half-typed. Partial-field capture is a real feature in
+ * some tools, but it collects personal data the visitor never submitted —
+ * don't advertise it here unless your consent notice covers it.
+ */
+export const setupSteps = [
+  {
+    key: "setup",
+    n: "01",
+    label: "Add Setup",
+    body: "One small snippet goes into your site's head, connected to your dashboard. We install it and verify it fires — there's nothing for you to configure or maintain.",
+    url: "dashboard / setup",
+    panel: "setup",
+  },
+  {
+    key: "page",
+    n: "02",
+    label: "Landing page created",
+    body: "A page built around your offer, not a template with your logo dropped in. Fast on mobile, and wired to your dashboard before it ever goes live.",
+    url: "yourbrand.com/3bhk-launch",
+    panel: "page",
+  },
+  {
+    key: "visitors",
+    n: "03",
+    label: "Visitor data tracked",
+    body: "Every visit records its source, campaign, device, city and time on page — so you can see who your ads are actually bringing in, not just how many.",
+    url: "dashboard / visitors",
+    panel: "visitors",
+  },
+  {
+    key: "replay",
+    n: "04",
+    label: "Visitor video tracked",
+    body: "Watch real sessions back like a video. See the scrolling, the hesitation and the repeated clicks that no chart will ever show you.",
+    url: "dashboard / session replay",
+    panel: "replay",
+  },
+  {
+    key: "cta",
+    n: "05",
+    label: "CTA clicks captured",
+    body: "Call, WhatsApp, Book Now, brochure download — every button is counted separately, so you know which offer people actually want.",
+    url: "dashboard / cta clicks",
+    panel: "cta",
+  },
+  {
+    key: "forms",
+    n: "06",
+    label: "Abandoned forms captured",
+    body: "Your form is tracked field by field. You see exactly which question makes people quit — usually one you could simply remove.",
+    url: "dashboard / form analytics",
+    panel: "forms",
+  },
+  {
+    key: "leads",
+    n: "07",
+    label: "Leads captured",
+    body: "Every completed enquiry lands in your dashboard tagged with the ad, platform and date it came from, then goes straight to your team.",
+    url: "dashboard / leads",
+    panel: "leads",
+  },
+];
+
+/**
+ * The snippet shown in the "Add Setup" mock, and the wizard steps beside it.
+ *
+ * ⚠️ Transcribed verbatim from the reference artwork, at the client's request.
+ * Two things to know before launch:
+ *   1. cdn.addsetup.com is a third party, not us. As written, the panel shows
+ *      visitors someone else's install snippet.
+ *   2. The host and project id are placeholders either way.
+ * Swap `open` / `tag` / `close` for the real Zoot snippet when it exists. The
+ * mock is a picture of the setup screen, not a working one — the Copy Code
+ * bar is decorative, so nobody can walk away with a snippet that won't load.
+ */
+export const setupSnippet = {
+  intro: "Place the following code in the <head> section of every page you want to track.",
+  open: "<!-- Add Setup Code -->",
+  tag: '<script async src="https://cdn.addsetup.com/setup.js" data-project="ABC123"></script>',
+  close: "<!-- End Add Setup Code -->",
+  /**
+   * `state` drives the circle: done = solid blue tick, fill = solid blue
+   * number, now = white with a blue ring, idle = greyed out.
+   */
+  wizard: [
+    { n: "1", title: "Create Account", body: "Your account is ready", state: "done" },
+    {
+      n: "2",
+      title: "Add Site Details",
+      body: "Add your website name and domain",
+      state: "fill",
+    },
+    {
+      n: "3",
+      title: "Install Tracking Code",
+      body: "Add the tracking snippet to your website",
+      state: "now",
+    },
+    {
+      n: "4",
+      title: "Start Tracking",
+      body: "All set! We'll start capturing data",
+      state: "idle",
+    },
+  ],
+};
 
 /* ------------------------------------------------------ dashboard gallery */
 
@@ -724,7 +839,7 @@ export const faqs = [
 /* --------------------------------------------------------------- footer */
 
 export const footerSolutions = [
-  { href: "#dashboard", label: "Dashboard gallery" },
+  { href: "#setup", label: "Your setup" },
   { href: "#deliverables", label: "What you get" },
   { href: "#journey", label: "How it works" },
   { href: "#compare", label: "Why us" },

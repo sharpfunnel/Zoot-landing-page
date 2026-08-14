@@ -1,5 +1,4 @@
 import ComparisonTable from "./components/comparison-table";
-import DashboardGallery from "./components/dashboard-gallery";
 import Deliverables from "./components/deliverables";
 import Faq from "./components/faq";
 import FinalCta from "./components/final-cta";
@@ -14,6 +13,7 @@ import SiteFooter from "./components/site-footer";
 import SiteHeader from "./components/site-header";
 import SocialProof from "./components/social-proof";
 import StickyCta from "./components/sticky-cta";
+import TrackingSetup from "./components/tracking-setup";
 import ValueStack from "./components/value-stack";
 import { faqs, site } from "./lib/content";
 
@@ -21,10 +21,14 @@ import { faqs, site } from "./lib/content";
  * Parked, not deleted — these components still exist in app/components/ and
  * can be dropped back in with a single import + tag if you want them:
  *
- *   dashboard-modules   8 module cards      (the gallery already shows these)
- *   lead-table          lead attribution    (the gallery's Leads tab covers it)
+ *   dashboard-gallery   7 dashboard tabs    (superseded by TrackingSetup, which
+ *                                            covers the same ground in more
+ *                                            detail; its #dashboard anchors now
+ *                                            point at #setup)
+ *   dashboard-modules   8 module cards      (TrackingSetup already shows these)
+ *   lead-table          lead attribution    (TrackingSetup's Leads tab covers it)
  *   what-you-get        3 feature rows      (overlaps Deliverables)
- *   three-things        ads/page/dashboard  (overlaps the gallery's tabs)
+ *   three-things        ads/page/dashboard  (overlaps TrackingSetup's tabs)
  *   why-choose-us       10 reason cards     (overlaps Deliverables + comparison)
  *   industries          12 industry cards   (nice-to-have qualifier)
  *   results             3 stat + quote rows (overlaps SocialProof)
@@ -79,11 +83,11 @@ export default function Page() {
       <main>
         {/* Hook → clarity → credibility */}
         <Hero />
+        <TrackingSetup />
         <FlowCard />
         <ProofStrip />
 
         {/* Show the product, then what you receive, then how it works */}
-        <DashboardGallery />
         <Deliverables />
         <Journey />
 
