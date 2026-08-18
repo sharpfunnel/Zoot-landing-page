@@ -13,10 +13,9 @@ export const site = {
   url: "https://zootwebagency.com",
   logo: "https://zootwebagency.com/wp-content/uploads/2025/08/Zoot-Digital-logo-white.png",
   email: "contact@zootdigitalseo.com",
-  // Placeholder, deliberately non-dialable. Swap in the real number before
-  // launch — this one value feeds the nav, the mobile menu, the footer and
-  // the form's confirmation message.
-  phone: "+91 00000 00000",
+  // This one value feeds the nav, the mobile menu, the footer and the form's
+  // confirmation message; `telHref` below strips it down to a dialable link.
+  phone: "+91 90827 29185",
   foundingDate: "2016",
   locality: "Navi Mumbai",
   country: "IN",
@@ -31,29 +30,31 @@ export const mailto = `mailto:${site.email}`;
 export const telHref = `tel:${site.phone.replace(/[^+\d]/g, "")}`;
 
 /* ==========================================================================
-   ⚠️  PLACEHOLDERS — REPLACE BEFORE LAUNCH
+   ⚠️  UNVERIFIED FIGURES — CHECK BEFORE LAUNCH
    ==========================================================================
-   Every figure in this block is invented. They exist so the price-anchoring
-   and urgency layout can be seen working. Publishing them as-is would mean
-   advertising a discount and a deadline that don't exist.
+   `offer.now` and comparison3.cost[0] come straight from pricingPlans, so
+   they're as real as the packages are. The rest of the money on this page is
+   estimated, not researched — plausible market rates, not quotes:
 
-   Replace:  offer.*  ·  valueStack[].value  ·  valueStack total
-             comparison3.rows[].cost  ·  pricingPlans[].price
+     valueStack[].value  ·  offer.worth / offer.saves derived from them
+     comparison3.cost[1] and [2], which are claims about other businesses
+
+   Still placeholders:  offer.bar  ·  offer.countdownHours
+   The scarcity line reads "0 of 00", and the timer restarts on every load,
+   which is a rolling deadline rather than a real one.
    ========================================================================== */
 
 export const offer = {
   /** Scarcity line in the top bar. */
   bar: "Limited build slots — 0 of 00 remaining this month",
-  /** Anchored "was" price, struck through. */
-  was: "₹00,000",
-  /** Headline price. */
-  now: "₹00,000",
-  /** Discount badge. */
-  off: "00% OFF",
-  /** Total value of everything included, for the savings bar. */
-  worth: "₹00,000",
-  /** Amount saved vs buying the parts separately. */
-  saves: "₹00,000",
+  /** The entry package's price, shown in the hero, the sticky bar and the
+      savings bar. Mirrors pricingPlans[0] — keep the two in step. */
+  now: "₹16,999",
+  period: "/mo",
+  /** valueStack totalled, and that total less `now`. Both are arithmetic on
+      the list below, so recompute them if any line item changes. */
+  worth: "₹42,999",
+  saves: "₹26,000",
   /** Hours the countdown runs for. Restarts on load — a real deadline should
       come from a fixed date instead. */
   countdownHours: 24,
@@ -83,18 +84,22 @@ export const specChips = [
 /**
  * "Everything you get, and what it would cost separately." Mirrors the
  * reference's tool-cost breakdown that totals to a single number.
- * All `value` figures are placeholders.
+ *
+ * Monthly figures, so they sit against the packages rather than against a
+ * one-off build. Estimated market rates — see the note above. They sum to
+ * offer.worth (₹42,999); change one and both offer.worth and offer.saves
+ * have to move with it.
  */
 export const valueStack = [
-  { title: "Custom landing page design & build", value: "₹00,000" },
-  { title: "Private analytics dashboard", value: "₹00,000" },
-  { title: "Lead CRM with ad attribution", value: "₹00,000" },
-  { title: "Heatmaps & session recording", value: "₹00,000" },
-  { title: "Meta Pixel + Conversion API setup", value: "₹00,000" },
-  { title: "Funnel & form analytics", value: "₹00,000" },
-  { title: "Campaign dashboard (ROAS & ROI)", value: "₹00,000" },
-  { title: "Automated weekly & monthly reports", value: "₹00,000" },
-  { title: "Performance & error monitoring", value: "₹00,000" },
+  { title: "Custom landing page design & build", value: "₹12,000" },
+  { title: "Private analytics dashboard", value: "₹6,500" },
+  { title: "Lead CRM with ad attribution", value: "₹5,000" },
+  { title: "Heatmaps & session recording", value: "₹4,000" },
+  { title: "Meta Pixel + Conversion API setup", value: "₹3,500" },
+  { title: "Funnel & form analytics", value: "₹3,000" },
+  { title: "Campaign dashboard (ROAS & ROI)", value: "₹4,500" },
+  { title: "Automated weekly & monthly reports", value: "₹2,500" },
+  { title: "Performance & error monitoring", value: "₹1,999" },
 ];
 
 /* --------------------------------------------------- 3-way comparison */
@@ -114,7 +119,7 @@ export const comparison3 = {
     { feature: "Performance monitoring", values: [true, false, false] },
     { feature: "One team, one invoice", values: [true, true, false] },
   ],
-  cost: ["₹00,000", "₹00,000", "₹00,000 + your time"],
+  cost: ["₹16,999/mo", "₹35,000+/mo", "₹12,000/mo + your time"],
 };
 
 /* --------------------------------------------------------- review wall */
@@ -770,30 +775,59 @@ export const processSteps = [
 
 export const pricingPlans = [
   {
-    title: "Landing Page + Dashboard",
-    body: "Perfect if you already run ads and just need the page and tracking done properly.",
+    title: "Starter Launch",
+    price: "₹16,999",
+    period: "/mo",
+    body: "Get your first campaign live on a page built to convert, with tracking wired in from day one.",
     checks: [
-      "Custom-designed landing page",
-      "Your own live dashboard, 20+ tools",
-      "Heatmaps, funnels, forms & error tracking",
-      "Weekly & monthly reports",
+      "Conversion-focused landing page",
+      "Meta Ads campaign setup",
+      "Audience targeting",
+      "Basic conversion tracking",
+      "Ad copy & creative direction",
+      "Campaign monitoring",
     ],
-    cta: "Get a Custom Quote",
+    cta: "Start with Starter",
     featured: false,
     badge: null as string | null,
   },
   {
-    title: "Full Growth Package",
-    body: "Everything above, and we run your Meta & Google ads for you.",
+    title: "Growth Engine",
+    price: "₹19,999",
+    period: "/mo",
+    body: "Once the first campaign works, this is the one that scales it — more segments, retargeting and monthly optimisation.",
     checks: [
-      "Everything in Landing Page + Dashboard",
-      "Full Meta & Google Ads management",
-      "Audience & creative testing, retargeting",
-      "Real estate lead campaigns, our specialty",
+      "Everything in Starter",
+      "Advanced campaign structure",
+      "Multiple audience segments",
+      "Retargeting campaigns",
+      "Conversion optimization",
+      "Advanced tracking",
+      "Performance monitoring",
+      "Monthly optimization",
     ],
-    cta: "Get a Custom Quote",
+    cta: "Choose Growth Engine",
     featured: true,
     badge: "MOST POPULAR",
+  },
+  {
+    title: "Scale Boost",
+    price: "₹24,999",
+    period: "/mo",
+    body: "For campaigns already bringing in leads, where the work is testing, lead quality and spending more without paying more per lead.",
+    checks: [
+      "Everything in Growth",
+      "Advanced retargeting",
+      "A/B testing",
+      "Landing page optimization",
+      "Lead-quality optimization",
+      "Continuous campaign optimization",
+      "Budget scaling strategy",
+      "Detailed performance insights",
+    ],
+    cta: "Scale with Scale Boost",
+    featured: false,
+    badge: null as string | null,
   },
 ];
 

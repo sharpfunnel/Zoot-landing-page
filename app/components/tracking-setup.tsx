@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { setupAds, setupSnippet, setupSteps } from "../lib/content";
 import { Eyebrow } from "./ui";
 
@@ -10,14 +10,15 @@ import { Eyebrow } from "./ui";
  * Simplified marks for the two ad platforms. Approximations of third-party
  * logos, drawn to sit at ~20px in the illustration — not official assets.
  */
-/* Two rounded legs and the green dot at the foot of the left one. The apexes
-   are offset a little so the blue leg doesn't bury the yellow one, and the
-   legs are drawn as strokes — rotated rects drifted at small sizes. */
+/* The "A" mark: two round-capped legs at mirrored angles with the green dot at
+   the foot of the yellow one. The yellow leg starts a little below the blue
+   apex so the blue caps it cleanly and only the yellow's point shows through,
+   and the dot is drawn a touch wider than the leg so it hides that leg's cap. */
 const GoogleAdsMark = () => (
   <svg className="su-brand" viewBox="0 0 24 24" fill="none" strokeLinecap="round">
-    <path d="M11.2 4.6L6 14.2" stroke="#FBBC04" strokeWidth="6.6" />
-    <path d="M13 4.6L18.2 14.6" stroke="#4285F4" strokeWidth="6.6" />
-    <circle cx="5.8" cy="17.9" r="3.9" fill="#34A853" stroke="none" />
+    <path d="M11.9 5.6L4.35 18.6" stroke="#FBBC04" strokeWidth="7.4" />
+    <path d="M12.45 4.9L20.15 18.6" stroke="#4285F4" strokeWidth="7.4" />
+    <circle cx="4.35" cy="18.6" r="3.95" fill="#34A853" stroke="none" />
   </svg>
 );
 
@@ -701,6 +702,108 @@ const ICONS: Record<string, React.ReactElement> = {
       <circle cx="12.2" cy="12.2" r="1.2" />
     </svg>
   ),
+  check: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="14" height="14" rx="3.6" />
+      <path d="M6.7 10.2l2.4 2.4 4.3-4.9" />
+    </svg>
+  ),
+  x: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinecap="round" strokeWidth="2.1">
+      <path d="M6.2 6.2l7.6 7.6M13.8 6.2l-7.6 7.6" />
+    </svg>
+  ),
+  help: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="10" cy="10" r="7" />
+      <path d="M8.2 8.1a1.9 1.9 0 113 1.9c-.6.4-1.2.8-1.2 1.7" />
+      <path d="M10 14.3v.2" />
+    </svg>
+  ),
+  xcircle: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinecap="round">
+      <circle cx="10" cy="10" r="7" />
+      <path d="M7.8 7.8l4.4 4.4M12.2 7.8l-4.4 4.4" />
+    </svg>
+  ),
+  bulb: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M7.3 12.9a4.9 4.9 0 115.4 0v1.7H7.3z" />
+      <path d="M8.4 17h3.2" />
+    </svg>
+  ),
+  /* The floating card's badge: a white form with the accent-blue cross on it.
+     `cut` and `cut-f` are painted in the tile's own blue by the .fm rules —
+     currentColor is white here, so the knock-outs can't use it. */
+  formx: (
+    <svg viewBox="0 0 20 20" fill="none">
+      <rect x="4.2" y="2.2" width="11.6" height="15.6" rx="1.8" fill="currentColor" />
+      <path
+        className="cut"
+        d="M6.9 6.4h6.2M6.9 9.2h6.2M6.9 12h2.2"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      <circle className="cut-f" cx="12.3" cy="13.6" r="3.4" />
+      <path
+        d="M11.1 12.4l2.4 2.4M13.5 12.4l-2.4 2.4"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+    </svg>
+  ),
+  dollar: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinecap="round">
+      <circle cx="10" cy="10" r="7" />
+      <path d="M12.1 7.6c-.4-.8-1.2-1.2-2.1-1.2-1.2 0-2 .6-2 1.6 0 2.3 4.2 1 4.2 3.4 0 1.1-.9 1.8-2.2 1.8-1 0-1.8-.4-2.2-1.3" />
+      <path d="M10 5.1v9.8" />
+    </svg>
+  ),
+  bell: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinejoin="round">
+      <path d="M5.4 14.2V9.4a4.6 4.6 0 019.2 0v4.8l1.2 1.6H4.2z" />
+      <path d="M8.4 15.8a1.7 1.7 0 003.2 0" strokeLinecap="round" />
+    </svg>
+  ),
+  send: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinejoin="round">
+      <path d="M17.2 3.2L2.6 8.5l5.6 2.3 2.3 5.6z" />
+      <path d="M8.2 10.8l3.4-3.4" strokeLinecap="round" />
+    </svg>
+  ),
+  download: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M10 3.2v8.4M6.4 8.4L10 12l3.6-3.6" />
+      <path d="M3.6 13.6v2.2a1 1 0 001 1h10.8a1 1 0 001-1v-2.2" />
+    </svg>
+  ),
+  sliders: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinecap="round">
+      <path d="M3 6h3.4M9.4 6H17M3 14h7.6M13.6 14H17" />
+      <circle cx="8" cy="6" r="1.6" />
+      <circle cx="12.2" cy="14" r="1.6" />
+    </svg>
+  ),
+  idcard: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinejoin="round">
+      <rect x="2.8" y="3.6" width="14.4" height="12.8" rx="2.4" />
+      <circle cx="10" cy="8.6" r="1.9" />
+      <path d="M6.8 14c0-1.7 1.4-2.7 3.2-2.7s3.2 1 3.2 2.7" />
+    </svg>
+  ),
+  /* The leads badge: a horseshoe magnet drawing two visitors in. `cut` is
+     painted in the tile's own colour to notch the pole tips apart. */
+  magnet: (
+    <svg viewBox="0 0 20 20" fill="none">
+      <path d="M3.3 16.6V9.7a3.7 3.7 0 017.4 0v6.9" stroke="currentColor" strokeWidth="2.8" />
+      <path className="cut" d="M3.3 14.8h7.4" strokeWidth="1.3" />
+      <circle cx="16" cy="5" r="1.65" fill="currentColor" />
+      <path d="M13.3 9.6c0-1.6 1.2-2.6 2.7-2.6s2.7 1 2.7 2.6z" fill="currentColor" />
+      <circle cx="15.6" cy="12.2" r="1.4" fill="currentColor" />
+      <path d="M13.3 16.3c0-1.4 1-2.2 2.3-2.2s2.3.8 2.3 2.2z" fill="currentColor" />
+    </svg>
+  ),
 };
 
 const VD_NAV = [
@@ -839,9 +942,11 @@ const VD_CHECKS = [
 function Donut({
   slices,
   total,
+  label = "Total",
 }: {
   slices: readonly (readonly [string, string, number])[];
   total: string;
+  label?: string;
 }) {
   const offsets = slices.map((_, i) =>
     slices.slice(0, i).reduce((sum, [, , pct]) => sum + pct, 0),
@@ -865,7 +970,7 @@ function Donut({
       </svg>
       <span className="c">
         <b>{total}</b>
-        <i>Total</i>
+        <i>{label}</i>
       </span>
     </div>
   );
@@ -1888,85 +1993,562 @@ function CtaPanel() {
   );
 }
 
-const FIELDS = [
-  { name: "Name", pct: 100, drop: 0 },
-  { name: "Phone", pct: 84, drop: 16 },
-  { name: "Email", pct: 71, drop: 13 },
-  { name: "Budget", pct: 33, drop: 38 },
-  { name: "Submit", pct: 29, drop: 4 },
+const FM_NAV = [
+  ["home", "Overview"],
+  ["users", "Visitors"],
+  ["target", "Events"],
+  ["page", "Forms"],
+  ["play", "Recordings"],
+  ["funnel", "Funnels"],
+  ["bars", "Reports"],
+  ["gear", "Settings"],
 ];
 
+/* The last two rise as well, but a rise in abandonment is bad news — hence
+   the tone flag rather than colouring every delta green. */
+const FM_KPIS = [
+  ["page", "Total Forms", "28", "12.5%", "good"],
+  ["check", "Submitted Forms", "18", "18.6%", "good"],
+  ["x", "Abandoned Forms", "10", "25.0%", "bad"],
+  ["trend", "Abandonment Rate", "35.7%", "6.7%", "bad"],
+];
+
+/* Abandonments per day. The axis tops out at 10, so y = 120 − 12 × value. */
+const FM_POINTS = [
+  [0, 72],
+  [25, 64.8],
+  [50, 45.6],
+  [75, 60],
+  [100, 75.6],
+  [125, 67.2],
+  [150, 58.8],
+  [175, 54],
+  [200, 54],
+  [225, 63.6],
+  [250, 44.4],
+  [275, 28.8],
+  [300, 9.6],
+];
+const FM_LINE = asPath(FM_POINTS);
+const FM_AREA = `${FM_LINE}L300 120L0 120Z`;
+const FM_DOTS = asPoints(FM_POINTS, 300, 120);
+
+const FM_FORMS = [
+  ["Contact Form", "40% (4)", 40],
+  ["Lead Generation Form", "30% (3)", 30],
+  ["Newsletter Signup", "20% (2)", 20],
+  ["Request a Quote", "10% (1)", 10],
+] as const;
+
+const FM_TABLE = [
+  ["Contact Form", "4", "44.4%"],
+  ["Lead Generation Form", "3", "37.5%"],
+  ["Newsletter Signup", "2", "28.6%"],
+  ["Request a Quote", "1", "20.0%"],
+];
+
+const FM_REASONS = [
+  ["clock", "Left on Field", "Users left after filling some fields.", "60% (6)"],
+  ["help", "Validation Errors", "Users faced errors and didn't submit.", "20% (2)"],
+  ["xcircle", "Closed or Navigated Away", "Users closed the form or left the page.", "20% (2)"],
+];
+
+const FM_CHECKS = [
+  ["page", "Abandoned Forms Tracked"],
+  ["users", "User Interactions Captured"],
+  ["clock", "Drop-off Points Identified"],
+  ["target", "Recovery Opportunities Found"],
+];
+
+/**
+ * The abandoned-forms dashboard. Shares the app chassis with the analytics and
+ * CTA tabs — same `.vd-*` frame, sidebar, KPI cards, plot and donut — and adds
+ * this tab's own reasons list and recovery banner. Hidden from assistive tech
+ * like the other mocks: every figure in it belongs to the picture.
+ */
 function FormsPanel() {
   return (
-    <>
-      <div className="fd-list">
-        {FIELDS.map((f) => (
-          <div className={f.drop >= 38 ? "fd-row worst" : "fd-row"} key={f.name}>
-            <span className="fd-n">{f.name}</span>
-            <span className="fd-t">
-              <span className="fd-f" style={{ width: `${f.pct}%` }} />
+    <div className="vd fm" aria-hidden="true">
+      <div className="vd-app">
+        <div className="lp-bar">
+          <i className="on" />
+          <i />
+          <i />
+        </div>
+
+        <div className="vd-body">
+          <aside className="vd-side">
+            <span className="lp-logo">H</span>
+            {FM_NAV.map(([icon, label], i) => (
+              <span className={i === 3 ? "vd-nav on" : "vd-nav"} key={label}>
+                {ICONS[icon]}
+                <span className="n">{label}</span>
+              </span>
+            ))}
+          </aside>
+
+          <main className="vd-main">
+            <div className="vd-head">
+              <span className="ht">
+                <b>Forms Overview</b>
+                <i>Track and analyze all form interactions on your site.</i>
+              </span>
+              <span className="vd-date">
+                {ICONS.calendar}
+                May 12 – May 18, 2024
+                <em>⌄</em>
+              </span>
+            </div>
+
+            <div className="vd-kpis">
+              {FM_KPIS.map(([icon, label, value, delta, tone]) => (
+                <div className="vd-card vd-kpi" key={label}>
+                  <span className="top">
+                    <span className="ic">{ICONS[icon]}</span>
+                    <span className="n">{label}</span>
+                  </span>
+                  <span className="mid">
+                    <b>{value}</b>
+                  </span>
+                  <span className="dl">
+                    <em className={tone}>↑ {delta}</em> vs May 5 – May 11
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            <div className="vd-r2">
+              <div className="vd-card">
+                <span className="ct">Abandoned Forms Over Time</span>
+                <div className="vd-plot">
+                  <span className="ax">
+                    {["10", "8", "6", "4", "2", "0"].map((t, i) => (
+                      <i style={{ top: `${(i / 5) * 100}%` }} key={t}>
+                        {t}
+                      </i>
+                    ))}
+                  </span>
+                  <div className="vd-graph">
+                    <svg viewBox="0 0 300 120" preserveAspectRatio="none" className="vd-gl">
+                      {[0, 24, 48, 72, 96].map((y) => (
+                        <line x1="0" y1={y} x2="300" y2={y} key={y} />
+                      ))}
+                    </svg>
+                    <svg viewBox="0 0 300 120" preserveAspectRatio="none" className="lp-line">
+                      <path className="area" d={FM_AREA} />
+                      <path className="stroke" d={FM_LINE} />
+                    </svg>
+                    {FM_DOTS.map((p) => (
+                      <span className="vd-dot" style={p} key={p.left} />
+                    ))}
+                    <span className="vd-tip">
+                      <i>May 16, 2024</i>
+                      <b>
+                        <em /> 7 <s>Abandoned Forms</s>
+                      </b>
+                    </span>
+                  </div>
+                  <span className="vd-xax">
+                    {["May 12", "May 13", "May 14", "May 15", "May 16", "May 17", "May 18"].map(
+                      (d) => (
+                        <i key={d}>{d}</i>
+                      ),
+                    )}
+                  </span>
+                </div>
+              </div>
+
+              <div className="vd-card">
+                <span className="ct">Abandonment by Form</span>
+                <div className="vd-split">
+                  <Donut slices={FM_FORMS} total="10" />
+                  <span className="vd-legend">
+                    {FM_FORMS.map(([name, pct], i) => (
+                      <span key={name}>
+                        <i className={`d s${i}`} />
+                        <span className="n">{name}</span>
+                        <b>{pct}</b>
+                      </span>
+                    ))}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div className="ct-r3">
+              <div className="vd-card">
+                <span className="ct">Top Abandoned Forms</span>
+                <span className="ct-tab fa">
+                  <span className="hd">
+                    <i>Form Name</i>
+                    <i>Abandoned</i>
+                    <i className="rt">Abandonment Rate</i>
+                  </span>
+                  {FM_TABLE.map(([name, count, rate]) => (
+                    <span className="rw" key={name}>
+                      <i className="pg">{name}</i>
+                      <i>{count}</i>
+                      <i className="rt bad">{rate}</i>
+                    </span>
+                  ))}
+                </span>
+              </div>
+
+              <div className="vd-card">
+                <span className="ct">Abandonment Reasons (Detected)</span>
+                <span className="fm-why">
+                  {FM_REASONS.map(([icon, title, sub, share]) => (
+                    <span key={title}>
+                      <i className="ic">{ICONS[icon]}</i>
+                      <span className="tx">
+                        <b>{title}</b>
+                        <em>{sub}</em>
+                      </span>
+                      <span className="v">{share}</span>
+                    </span>
+                  ))}
+                </span>
+              </div>
+            </div>
+
+            <div className="fm-cta">
+              <span className="ic">{ICONS.bulb}</span>
+              <span className="tx">
+                <b>Recover More Leads</b>
+                <i>
+                  Set up smart form recovery and email notifications to convert more abandoned
+                  opportunities.
+                </i>
+              </span>
+              <span className="b">
+                Setup Form Recovery <em>↗</em>
+              </span>
+            </div>
+          </main>
+        </div>
+      </div>
+
+      <div className="vd-float">
+        <span className="lp-tick">
+          <svg className="sparks" viewBox="0 0 96 96" stroke="currentColor" strokeWidth="4">
+            {[10, 48, 82, 128, 168, 200, 232, 300, 336].map((deg) => (
+              <line
+                x1="48"
+                y1="14"
+                x2="48"
+                y2="5"
+                key={deg}
+                transform={`rotate(${deg} 48 48)`}
+                strokeLinecap="round"
+              />
+            ))}
+          </svg>
+          <span className="dot">{ICONS.formx}</span>
+        </span>
+
+        <div className="t">Abandoned Forms Captured!</div>
+        <p>
+          We&apos;ve captured users who started but didn&apos;t submit the form. Review, analyze,
+          and recover lost opportunities.
+        </p>
+
+        <span className="vd-checks">
+          {FM_CHECKS.map(([icon, label]) => (
+            <span key={label}>
+              <i className="ic">{ICONS[icon]}</i>
+              <span className="n">{label}</span>
+              <b>✓</b>
             </span>
-            <span className="fd-v">{f.pct}%</span>
-            <span className="fd-d">{f.drop ? `−${f.drop}%` : "—"}</span>
-          </div>
-        ))}
+          ))}
+        </span>
+
+        <span className="b1">
+          <LinkIcon /> View Abandoned Forms
+        </span>
       </div>
 
-      <div className="fd-flag">
-        <span className="pill pill-amber">Drop-off</span>
-        38% of people quit at <b>Budget</b> — the one field you probably don&apos;t need.
-      </div>
-
-      <div className="setup-foot">
-        <span>412 form starts</span>
-        <span>119 completed</span>
-        <span>293 abandoned</span>
-      </div>
-    </>
+      <svg className="vd-arrow" viewBox="0 0 130 92" fill="none">
+        <path
+          d="M4 78C36 96 96 88 110 16"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeDasharray="7 7"
+          strokeLinecap="round"
+        />
+        <path
+          d="M100 26L110 12L120 26"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </div>
   );
 }
 
-const LEADS = [
-  ["Aditya Sharma", "Facebook · 3BHK Launch Offer", "pill-blue", "New"],
-  ["Ruhi Mehta", "Instagram · Weekend Site Visit", "pill-amber", "Contacted"],
-  ["Priya Nair", "Google · Office Space — Search", "pill-green", "Site Visit"],
-  ["Karan Desai", "Facebook · Retargeting", "pill-blue", "New"],
+const LD_KPIS = [
+  ["users", "Total Leads", "156", "28.4%"],
+  ["check", "Qualified Leads", "98", "24.7%"],
+  ["funnel", "Conversion Rate", "12.6%", "3.2%"],
+  ["dollar", "Leads Value", "$24,680", "31.5%"],
 ];
 
+/* Leads per day. The axis tops out at 80, so y = 120 − 1.5 × value. */
+const LD_POINTS = [
+  [0, 82.5],
+  [21.4, 70.5],
+  [42.9, 52.5],
+  [64.3, 61.5],
+  [85.7, 73.5],
+  [107.1, 63],
+  [128.6, 57],
+  [150, 58.5],
+  [171.4, 63],
+  [192.9, 55.5],
+  [214.3, 57],
+  [235.7, 58.5],
+  [257.1, 37.5],
+  [278.6, 19.5],
+  [300, 4.5],
+];
+const LD_LINE = asPath(LD_POINTS);
+const LD_AREA = `${LD_LINE}L300 120L0 120Z`;
+const LD_DOTS = asPoints(LD_POINTS, 300, 120);
+
+const LD_SOURCES = [
+  ["Website", "45.5% (71)", 45.5],
+  ["Google Ads", "24.4% (38)", 24.4],
+  ["Facebook Ads", "15.4% (24)", 15.4],
+  ["Organic Search", "9.6% (15)", 9.6],
+  ["Referral", "5.1% (8)", 5.1],
+] as const;
+
+const LD_RECENT = [
+  ["John Smith", "john.smith@email.com", "2m ago"],
+  ["Sarah Johnson", "sarah.j@email.com", "15m ago"],
+  ["Michael Brown", "michael.b@email.com", "32m ago"],
+  ["Emily Davis", "emily.d@email.com", "45m ago"],
+];
+
+/* The bars run against a common ceiling rather than the largest status, as in
+   the artwork — "New" reads as most of the pipeline, not all of it. */
+const LD_STATUS = [
+  ["New", "62 (39.7%)", 65],
+  ["Contacted", "48 (30.8%)", 51],
+  ["Qualified", "32 (20.5%)", 34],
+  ["Converted", "14 (9.0%)", 15],
+];
+
+const LD_CHECKS = [
+  ["idcard", "Lead Information Captured"],
+  ["target", "Source Tracking Enabled"],
+  ["shield", "Lead Quality Verified"],
+  ["bell", "Real-time Notifications"],
+  ["send", "Follow-up Ready"],
+];
+
+/**
+ * The leads dashboard. Unlike the other tabs this one has no browser window
+ * around it — the artwork puts the confirmation card beside the panels as a
+ * column of its own rather than overlapping a window, so `.ld` is a two-column
+ * grid instead of the `.vd-app` chassis. The cards, plot, donut and check list
+ * inside it are still the shared `.vd-*` pieces. Hidden from assistive tech
+ * like the other mocks: every figure in it belongs to the picture.
+ */
 function LeadsPanel() {
   return (
-    <>
-      <div className="mini-kpis kpi-3">
-        {[
-          ["Leads (7d)", "97"],
-          ["Conversion rate", "7.6%"],
-          ["Cost per lead", "₹412"],
-        ].map(([l, v]) => (
-          <div className="mini-kpi" key={l}>
-            <div className="l">{l}</div>
-            <div className="v">{v}</div>
-          </div>
-        ))}
-      </div>
+    <div className="ld" aria-hidden="true">
+      <div className="ld-card">
+        <span className="lp-tick">
+          <svg className="sparks" viewBox="0 0 96 96" stroke="currentColor" strokeWidth="4">
+            {[14, 46, 84, 130, 166, 204, 236, 298, 334].map((deg) => (
+              <line
+                x1="48"
+                y1="14"
+                x2="48"
+                y2="5"
+                key={deg}
+                transform={`rotate(${deg} 48 48)`}
+                strokeLinecap="round"
+              />
+            ))}
+          </svg>
+          <span className="dot">{ICONS.magnet}</span>
+        </span>
 
-      <div className="setup-list-box">
-        {LEADS.map(([name, campaign, tone, status]) => (
-          <div className="mini-row" key={name}>
-            <span>
-              <span className="name">{name}</span>
-              <br />
-              <span className="sub">{campaign}</span>
+        <div className="t">
+          Leads
+          <b>Captured!</b>
+        </div>
+        <p>
+          We&apos;ve captured quality leads from your website and turned interest into potential
+          opportunities.
+        </p>
+
+        <span className="vd-checks">
+          {LD_CHECKS.map(([icon, label]) => (
+            <span key={label}>
+              <i className="ic">{ICONS[icon]}</i>
+              <span className="n">{label}</span>
+              <b>✓</b>
             </span>
-            <span className={`pill ${tone}`}>{status}</span>
-          </div>
-        ))}
+          ))}
+        </span>
+
+        <span className="b1">{ICONS.eye} View All Leads</span>
+        <span className="b2">{ICONS.download} Export Leads</span>
       </div>
 
-      <div className="setup-foot">
-        <span>Tagged to the ad</span>
-        <span>Exported to PDF or Excel</span>
+      <div className="ld-main">
+        <span className="ld-h">Lead Summary</span>
+
+        <div className="vd-kpis">
+          {LD_KPIS.map(([icon, label, value, delta]) => (
+            <div className="vd-card vd-kpi" key={label}>
+              <span className="top">
+                <span className="ic">{ICONS[icon]}</span>
+                <span className="n">{label}</span>
+              </span>
+              <span className="mid">
+                <b>{value}</b>
+                <Spark />
+              </span>
+              <span className="dl">
+                <em>↑ {delta}</em> vs last 7 days
+              </span>
+            </div>
+          ))}
+        </div>
+
+        <div className="vd-r2">
+          <div className="vd-card">
+            <span className="ct">
+              Leads Over Time
+              <em className="sel">
+                {ICONS.calendar} Last 7 Days <b>⌄</b>
+              </em>
+              <em className="ib">{ICONS.sliders}</em>
+            </span>
+            <div className="vd-plot">
+              <span className="ax">
+                {["80", "60", "40", "20", "0"].map((t, i) => (
+                  <i style={{ top: `${(i / 4) * 100}%` }} key={t}>
+                    {t}
+                  </i>
+                ))}
+              </span>
+              <div className="vd-graph">
+                <svg viewBox="0 0 300 120" preserveAspectRatio="none" className="vd-gl">
+                  {[0, 30, 60, 90].map((y) => (
+                    <line x1="0" y1={y} x2="300" y2={y} key={y} />
+                  ))}
+                </svg>
+                <svg viewBox="0 0 300 120" preserveAspectRatio="none" className="lp-line">
+                  <path className="area" d={LD_AREA} />
+                  <path className="stroke" d={LD_LINE} />
+                </svg>
+                {LD_DOTS.map((p) => (
+                  <span className="vd-dot" style={p} key={p.left} />
+                ))}
+                <span className="vd-tip">
+                  <i>May 16, 2024</i>
+                  <b>
+                    <em /> 42 <s>Leads</s>
+                  </b>
+                </span>
+              </div>
+              <span className="vd-xax">
+                {["May 12", "May 13", "May 14", "May 15", "May 16", "May 17", "May 18"].map((d) => (
+                  <i key={d}>{d}</i>
+                ))}
+              </span>
+            </div>
+          </div>
+
+          <div className="vd-card">
+            <span className="ct">Leads by Source</span>
+            <div className="vd-split">
+              <Donut slices={LD_SOURCES} total="156" label="Total Leads" />
+              <span className="vd-legend">
+                {LD_SOURCES.map(([name, pct], i) => (
+                  <span key={name}>
+                    <i className={`d s${i}`} />
+                    <span className="n">{name}</span>
+                    <b>{pct}</b>
+                  </span>
+                ))}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div className="ct-r3">
+          <div className="vd-card">
+            <span className="ct">
+              Recent Leads
+              <em className="lk">View All</em>
+            </span>
+            <span className="ld-recent">
+              {LD_RECENT.map(([name, email, ago]) => (
+                <span key={email}>
+                  <i className="av">{ICONS.person}</i>
+                  <span className="tx">
+                    <b>{name}</b>
+                    <em>{email}</em>
+                  </span>
+                  <span className="pill pill-green">New</span>
+                  <span className="ago">{ago}</span>
+                </span>
+              ))}
+            </span>
+          </div>
+
+          <div className="vd-card">
+            <span className="ct">Leads by Status</span>
+            <span className="ld-stat">
+              {LD_STATUS.map(([label, value, w]) => (
+                <span key={label}>
+                  <i className="n">{label}</i>
+                  <i className="tk">
+                    <b style={{ width: `${w}%` }} />
+                  </i>
+                  <i className="v">{value}</i>
+                </span>
+              ))}
+            </span>
+          </div>
+        </div>
+
+        <div className="ld-note">
+          <span className="ic">{ICONS.mail}</span>
+          <span className="tx">
+            <b>Never miss a lead!</b>
+            <i>Get instant email &amp; SMS notifications when new leads are captured.</i>
+          </span>
+          <span className="b">
+            Manage Notifications {ICONS.gear}
+          </span>
+        </div>
       </div>
-    </>
+
+      <svg className="ld-arrow" viewBox="0 0 130 92" fill="none">
+        <path
+          d="M4 78C36 96 96 88 110 16"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeDasharray="7 7"
+          strokeLinecap="round"
+        />
+        <path
+          d="M100 26L110 12L120 26"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </div>
   );
 }
 
@@ -1982,10 +2564,76 @@ function StagePanel({ kind }: { kind: string }) {
 
 /* ---------------------------------------------------------- section */
 
+/**
+ * Scales the open mock down until it fits the stage, which is pinned to the
+ * accordion's height beside it.
+ *
+ * The mock is laid out at `1 / --k` of the frame's width and scaled back by
+ * `--k`, so the whole picture zooms rather than any part of it reflowing —
+ * but that means widening it changes its height, so `--k` and the height each
+ * depend on the other. Hence the loop: it settles in two or three passes.
+ * `offsetHeight` reads the untransformed layout height, which is what the
+ * ratio needs.
+ *
+ * The stylesheet carries a starting `--k` per mock, so first paint is already
+ * close and this only has to correct for the actual width and font metrics.
+ * Below the stacking breakpoint the mock isn't positioned, and there's no
+ * column left to match heights with, so it's left alone.
+ */
+const MIN_K = 0.4;
+
+function fitStage(screen: HTMLElement | null) {
+  const el = screen?.firstElementChild as HTMLElement | null;
+  if (!screen || !el) return;
+
+  if (getComputedStyle(el).position !== "absolute") {
+    el.style.removeProperty("--k");
+    return;
+  }
+
+  const pad = parseFloat(getComputedStyle(screen).getPropertyValue("--pad")) || 0;
+  const avail = screen.clientHeight - pad * 2;
+  if (avail <= 0) return;
+
+  /* Clamped and best-of rather than trusting the loop to land: a mock whose
+     own height tracked its width would have no fixed point here, and running
+     the ratio off a cliff is worse than settling for a slightly small one. */
+  let k = parseFloat(getComputedStyle(el).getPropertyValue("--k")) || 1;
+  let best = 0;
+  for (let i = 0; i < 5; i++) {
+    el.style.setProperty("--k", String(k));
+    const natural = el.offsetHeight;
+    if (natural * k <= avail) best = Math.max(best, k);
+    const next = Math.min(1, Math.max(MIN_K, (avail / natural) * k));
+    const settled = Math.abs(next - k) < 0.002;
+    k = next;
+    if (settled) break;
+  }
+  el.style.setProperty("--k", String(best || MIN_K));
+}
+
 export default function TrackingSetup() {
   const [active, setActive] = useState(0);
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
+  const screen = useRef<HTMLDivElement | null>(null);
   const step = setupSteps[active];
+
+  const fit = useCallback(() => fitStage(screen.current), []);
+
+  /* Before paint, so a freshly switched mock is never shown at the wrong
+     size — it remounts on every tab change, hence the dependency. */
+  useLayoutEffect(fit, [fit, active]);
+
+  /* The frame's height is fixed but its width isn't, and a mock's height
+     moves with its width. Fonts land after first paint and shift it again. */
+  useEffect(() => {
+    const el = screen.current;
+    if (!el) return;
+    const ro = new ResizeObserver(fit);
+    ro.observe(el);
+    document.fonts?.ready.then(fit);
+    return () => ro.disconnect();
+  }, [fit]);
 
   /* Roving tabindex means only the selected tab is in the tab order, so the
      arrow keys have to do the rest — without this the other five would be
@@ -2075,7 +2723,7 @@ export default function TrackingSetup() {
             </div>
 
             {/* Re-keyed so the mock remounts and its bars re-fill on change. */}
-            <div className="setup-screen" key={step.key}>
+            <div className="setup-screen" key={step.key} ref={screen}>
               <StagePanel kind={step.panel} />
             </div>
           </div>

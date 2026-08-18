@@ -37,9 +37,9 @@ export default function StickyCta() {
       <div className="sticky-inner">
         <div className="sticky-copy">
           <div className="sticky-price">
-            <span className="was">{offer.was}</span>
+            <span className="from">From</span>
             <span className="now">{offer.now}</span>
-            <span className="off">{offer.off}</span>
+            <span className="per">{offer.period}</span>
           </div>
           <div className="b">Free demo, no obligation — we reply the same day.</div>
         </div>

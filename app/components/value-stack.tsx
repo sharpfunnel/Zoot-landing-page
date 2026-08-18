@@ -9,8 +9,8 @@ export default function ValueStack() {
           <Eyebrow center>What It&apos;s Worth</Eyebrow>
           <h2>Everything included, and what it costs separately</h2>
           <p>
-            Bought piece by piece from different suppliers, this is what the same stack would run
-            you. You get all of it in one build.
+            Bought piece by piece from separate suppliers, this is roughly what the same stack
+            costs every month. Every package includes all of it.
           </p>
         </div>
 
@@ -26,18 +26,27 @@ export default function ValueStack() {
           ))}
           <div className="stack-total">
             <span>Total value</span>
-            <span>{offer.worth}</span>
+            <span>
+              {offer.worth}
+              <em>{offer.period}</em>
+            </span>
           </div>
         </div>
 
         <div className="savings-bar" data-anim="fade-up">
           <div>
             <div className="l">You pay</div>
-            <div className="v">{offer.now}</div>
+            <div className="v">
+              {offer.now}
+              <span>{offer.period}</span>
+            </div>
           </div>
           <div style={{ textAlign: "right" }}>
             <div className="l">You save</div>
-            <div className="v">{offer.saves}</div>
+            <div className="v">
+              {offer.saves}
+              <span>{offer.period}</span>
+            </div>
           </div>
         </div>
       </div>

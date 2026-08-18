@@ -9,8 +9,8 @@ export default function Pricing() {
           <Eyebrow center>Pricing</Eyebrow>
           <h2>Choose How You Want to Start</h2>
           <p>
-            Every business is different, so pricing is based on your scope and goals — get a free
-            custom quote either way.
+            Three packages, priced monthly. Start where your campaigns are today and move up when
+            the numbers say it&apos;s time — no lock-in either way.
           </p>
         </div>
 
@@ -19,10 +19,14 @@ export default function Pricing() {
             <div
               className={plan.featured ? "offer-card featured" : "offer-card"}
               key={plan.title}
-              data-anim={i === 0 ? "from-left" : "from-right"}
+              data-anim={i === 0 ? "from-left" : i === 1 ? "fade-up" : "from-right"}
             >
               {plan.badge ? <span className="badge-top">{plan.badge}</span> : null}
               <h3>{plan.title}</h3>
+              <p className="offer-price">
+                {plan.price}
+                <span>{plan.period}</span>
+              </p>
               <p>{plan.body}</p>
               <CheckList items={plan.checks} />
               <a
@@ -37,7 +41,7 @@ export default function Pricing() {
         </div>
 
         <p className="table-note" data-anim="fade-up">
-          No fixed packages forced on you — we quote it once we understand your traffic and goals.
+          Ad spend is billed separately, straight to Meta — these are management fees only.
         </p>
       </div>
     </section>

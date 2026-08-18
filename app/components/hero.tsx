@@ -39,14 +39,14 @@ export default function Hero() {
             tagged with the exact ad, platform and date it came from.
           </p>
 
-          {/* Price anchoring, as on the reference pages. All figures are
-              placeholders — see the offer block in content.ts. */}
+          {/* The entry package's price, not an anchored discount — there
+              isn't one to anchor against. See the offer block in content.ts. */}
           <div className="price-anchor" data-anim="fade-up">
-            <span className="price-was">{offer.was}</span>
+            <span className="price-from">From</span>
             <span className="price-now">{offer.now}</span>
-            <span className="price-off">{offer.off}</span>
+            <span className="price-per">{offer.period}</span>
             <span className="price-note">
-              Complete build — landing page, dashboard and tracking included.
+              Landing page, dashboard and tracking included — three packages, billed monthly.
             </span>
           </div>
 

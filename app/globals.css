@@ -973,15 +973,15 @@ nav {
 
 .offer-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
 }
 
 .offer-card {
   background: #ffffff;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 34px;
+  padding: 30px 26px;
   box-shadow: var(--shadow-md);
   display: flex;
   flex-direction: column;
@@ -1010,7 +1010,28 @@ nav {
 
 .offer-card h3 {
   font-size: 20px;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
+}
+
+/* Child selector, or the generic `.offer-card > p` below outranks it and the
+   figure comes out at body size. Baseline-aligned so "/mo" rides the price
+   rather than centring against it. */
+.offer-card > .offer-price {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 32px;
+  letter-spacing: -0.03em;
+  margin-bottom: 12px;
+}
+
+.offer-card > .offer-price span {
+  font-family: var(--body);
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--text-muted);
 }
 
 .offer-card > p {
@@ -2049,10 +2070,16 @@ tbody td.lead-name {
   margin-bottom: 20px;
 }
 
-.price-was {
-  font-size: 17px;
-  color: var(--text-faint);
-  text-decoration: line-through;
+/* Baseline, not centre: "From" and "/mo" sit on the price's own line rather
+   than floating against the middle of a 40px figure. */
+.price-anchor {
+  align-items: baseline;
+  gap: 8px;
+}
+
+.price-from {
+  font-size: 15px;
+  color: var(--text-muted);
 }
 
 .price-now {
@@ -2063,14 +2090,13 @@ tbody td.lead-name {
   color: var(--text);
 }
 
-.price-off {
-  background: #e6f6ee;
-  color: var(--good);
-  font-family: var(--mono);
-  font-size: 11.5px;
+/* Pulled back against the figure: the row's 8px gap is right between "From"
+   and the price, but leaves "/mo" looking detached from it. */
+.price-per {
+  margin-left: -4px;
+  font-size: 15px;
   font-weight: 500;
-  padding: 5px 11px;
-  border-radius: 100px;
+  color: var(--text-muted);
 }
 
 .price-note {
@@ -2292,6 +2318,15 @@ tbody td.lead-name {
   white-space: nowrap;
 }
 
+/* The total is monthly like every line above it, so it says so. */
+.stack-total em {
+  font-family: var(--body);
+  font-style: normal;
+  font-size: 13px;
+  font-weight: 500;
+  opacity: 0.75;
+}
+
 .stack-total {
   display: flex;
   align-items: center;
@@ -2332,6 +2367,15 @@ tbody td.lead-name {
   font-size: 26px;
   font-weight: 700;
   letter-spacing: -0.02em;
+}
+
+/* Both figures are monthly, so each carries its own period rather than the
+   section leaving the reader to infer it. */
+.savings-bar .v span {
+  font-family: var(--body);
+  font-size: 13px;
+  font-weight: 500;
+  opacity: 0.85;
 }
 
 /* ------------------------------------------------------ comparison table */
@@ -2463,25 +2507,16 @@ tbody td.lead-name {
   gap: 8px;
 }
 
-.sticky-price .was {
+.sticky-price .from,
+.sticky-price .per {
   font-size: 12.5px;
-  color: var(--text-faint);
-  text-decoration: line-through;
+  color: var(--text-muted);
 }
 
 .sticky-price .now {
   font-family: var(--display);
   font-weight: 700;
   font-size: 19px;
-}
-
-.sticky-price .off {
-  font-family: var(--mono);
-  font-size: 10.5px;
-  background: #e6f6ee;
-  color: var(--good);
-  padding: 2px 8px;
-  border-radius: 100px;
 }
 
 /* --------------------------------------------------------------- footer */
@@ -2576,7 +2611,11 @@ footer {
 
 /* ------------------------------------------------------- tracking setup */
 
+/* `--stage-h` is the accordion's own height at this width — the stage is
+   pinned to it so the two columns end on the same line, and each mock is
+   scaled to fit rather than setting the height itself. */
 .setup-grid {
+  --stage-h: 543px;
   display: grid;
   grid-template-columns: 320px 1fr;
   gap: 26px;
@@ -2686,12 +2725,14 @@ footer {
 /* ------------------------------------------------ tracking setup — stage */
 
 .setup-stage {
+  display: flex;
+  flex-direction: column;
+  height: var(--stage-h);
   background: #ffffff;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow-lg);
   overflow: hidden;
-  min-height: 460px;
 }
 
 .setup-stage:focus-visible {
@@ -2700,6 +2741,7 @@ footer {
 }
 
 .setup-chrome {
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -2736,40 +2778,55 @@ footer {
   text-overflow: ellipsis;
 }
 
+/* The mock is taken out of the flow so it can't push the frame taller, then
+   laid out at `1 / --k` of the frame's width and scaled back down — the whole
+   picture zooms out rather than any part of it reflowing. Each mock carries
+   its own `--k` below, since their natural heights differ. */
 .setup-screen {
-  padding: 20px;
+  --pad: 20px;
+  position: relative;
+  flex: 1;
+  min-height: 0;
 }
 
-/* A class rather than an inline style, so the 720px rule can still collapse
-   it — an inline grid-template-columns would outrank the media query. */
-.kpi-3 {
-  grid-template-columns: repeat(3, 1fr);
+.setup-screen > * {
+  position: absolute;
+  top: var(--pad);
+  left: var(--pad);
+  width: calc((100% - var(--pad) * 2) / var(--k, 1));
+  transform: scale(var(--k, 1));
+  transform-origin: top left;
 }
 
-.setup-list-box {
-  background: var(--bg-1);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 6px 16px;
-  margin-top: 14px;
+/* Solved against the 448px the frame leaves, by measuring each mock at the
+   width its own `--k` gives it — widening reflows some of them, so the two
+   depend on each other. Re-measure if a mock gains or loses a row. */
+.su {
+  --k: 0.725;
 }
 
-.setup-foot {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 16px;
+.lp {
+  --k: 0.98;
 }
 
-.setup-foot span {
-  font-family: var(--mono);
-  font-size: 10.5px;
-  letter-spacing: 0.05em;
-  color: var(--text-muted);
-  background: var(--bg-1);
-  border: 1px solid var(--border);
-  border-radius: 100px;
-  padding: 5px 12px;
+.vd {
+  --k: 0.7;
+}
+
+.sr {
+  --k: 0.66;
+}
+
+.vd.cta {
+  --k: 0.59;
+}
+
+.vd.fm {
+  --k: 0.7;
+}
+
+.ld {
+  --k: 0.79;
 }
 
 /* -------------------------------------------- stage mock: setup wizard */
@@ -3135,9 +3192,12 @@ footer {
   padding: 15px 15px 4px;
 }
 
+/* Fixed height, not an aspect ratio: the stage scales each mock to fit its
+   frame by laying it out wider, and a height that tracked the width would
+   grow right back as it did — there'd be no size that fits. */
 .su-thumb {
   width: 43%;
-  aspect-ratio: 4 / 3;
+  height: 104px;
   border-radius: 9px;
   background: #61a5f7;
   display: flex;
@@ -5820,80 +5880,672 @@ footer {
   vertical-align: middle;
 }
 
-/* -------------------------------------------- stage mock: form drop-off */
+/* ----------------------------------------- stage mock: abandoned forms */
 
-.fd-list {
+/* Reuses the analytics chassis (.vd-*) and the CTA tab's two-column table
+   row (.ct-r3 / .ct-tab); only the pieces below differ. */
+
+/* Eight short menu items, so the rail is narrower than the CTA tab's. */
+.fm .vd-body {
+  grid-template-columns: 92px 1fr;
+}
+
+.fm .vd-nav {
+  font-size: 7.5px;
+}
+
+.fm .vd-head {
+  align-items: flex-start;
+}
+
+.fm .vd-kpi .top {
+  font-size: 7.5px;
+}
+
+/* No sparkline on this tab — the figure has the row to itself. */
+.fm .vd-kpi .mid {
+  margin: 5px 0 3px;
+}
+
+.fm .vd-kpi .dl {
+  font-size: 7px;
+  white-space: nowrap;
+}
+
+/* A rise in abandonment isn't good news, so these two deltas go red while
+   keeping the same upward arrow. */
+.fm .vd-kpi .dl em.bad {
+  color: #d64545;
+}
+
+/* Nearly even, as in the artwork — the donut card carries four form names,
+   so it can't give the plot as much width as the other tabs do. */
+.fm .vd-r2 {
+  grid-template-columns: 1.15fr 1fr;
+}
+
+/* Smaller than the other tabs' so "Lead Generation Form" clears the ring
+   without truncating. */
+.fm .vd-donut {
+  width: 31%;
+}
+
+/* Six gridlines here rather than five, and the tooltip sits over the middle
+   of the week instead of its left third. */
+.fm .vd-tip {
+  left: 44%;
+}
+
+.fm .vd-tip em {
+  border-radius: 50%;
+}
+
+/* ---- the abandoned-forms table ---- */
+
+.ct-tab.fa .hd,
+.ct-tab.fa .rw {
+  grid-template-columns: 1.9fr 1fr 1.2fr;
+}
+
+.ct-tab .rt {
+  text-align: right;
+}
+
+.ct-tab .bad {
+  font-weight: 600;
+  color: #d64545;
+}
+
+/* ---- detected reasons ---- */
+
+/* The two cards square off along their bottom edge, so the three reasons
+   spread over whatever height the four-row table sets. */
+.fm .ct-r3 {
+  align-items: stretch;
+}
+
+.fm-why {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 4px 0;
+  justify-content: space-around;
+  gap: 8px;
 }
 
-.fd-row {
+.fm-why > span {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 13px;
+  gap: 7px;
+  min-width: 0;
 }
 
-.fd-n {
-  width: 62px;
-  flex-shrink: 0;
-  font-weight: 500;
+.fm-why .ic {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  border-radius: 6px;
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.fd-t {
+.fm-why .ic svg {
+  width: 12px;
+}
+
+/* The label gives way, the share never does — same rule as the row lists. */
+.fm-why .tx {
   flex: 1;
-  height: 22px;
-  border-radius: 6px;
-  background: var(--bg-2);
-  overflow: hidden;
+  min-width: 0;
 }
 
-.fd-f {
+.fm-why .tx b {
   display: block;
-  height: 100%;
-  border-radius: 6px;
-  background: linear-gradient(90deg, var(--accent), var(--accent-deep));
-  opacity: 0.85;
-}
-
-.fd-row.worst .fd-f {
-  background: linear-gradient(90deg, #e8a33d, #b7791f);
-}
-
-.fd-v {
-  width: 42px;
-  text-align: right;
-  font-family: var(--mono);
-  font-size: 11.5px;
-}
-
-.fd-d {
-  width: 46px;
-  text-align: right;
-  font-family: var(--mono);
-  font-size: 11.5px;
-  color: var(--text-faint);
-}
-
-.fd-row.worst .fd-d {
-  color: var(--warn);
+  font-size: 7.5px;
   font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.fd-flag {
+.fm-why .tx em {
+  display: block;
+  font-style: normal;
+  font-size: 6.5px;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fm-why .v {
+  flex-shrink: 0;
+  font-size: 7.5px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* ---- recovery banner ---- */
+
+.fm-cta {
   display: flex;
   align-items: center;
   gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 16px;
-  padding: 13px 16px;
-  border-radius: 12px;
-  background: #fdf9f1;
-  border: 1px solid #f0e0c4;
-  font-size: 13px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 9px 11px;
+}
+
+.fm-cta .ic {
+  width: 26px;
+  height: 26px;
+  min-width: 26px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fm-cta .ic svg {
+  width: 15px;
+}
+
+.fm-cta .tx {
+  flex: 1;
+  min-width: 0;
+}
+
+.fm-cta .tx b {
+  display: block;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 10px;
+}
+
+.fm-cta .tx i {
+  display: block;
+  font-style: normal;
+  font-size: 8px;
+  line-height: 1.45;
   color: var(--text-muted);
+  margin-top: 1px;
+}
+
+.fm-cta .b {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  background: var(--accent);
+  color: #ffffff;
+  border-radius: 7px;
+  padding: 7px 10px;
+  font-size: 8px;
+  font-weight: 600;
+}
+
+.fm-cta .b em {
+  font-style: normal;
+}
+
+/* ---- floating card ---- */
+
+/* Low enough that its top edge clears the eighth menu item — the card covers
+   most of the rail where the two meet, so anything higher buries a label. */
+.fm .vd-float {
+  top: 46%;
+}
+
+.fm .vd-float .t {
+  line-height: 1.25;
+}
+
+/* "Recovery Opportunities Found" is the longest of the four. */
+.fm .vd-checks > span {
+  font-size: 8.5px;
+  gap: 6px;
+}
+
+/* The badge's cross reads through the white form, so it's painted in the
+   tile's own blue — currentColor is white inside .lp-tick .dot. */
+.fm .lp-tick .cut {
+  stroke: var(--accent);
+}
+
+.fm .lp-tick .cut-f {
+  fill: var(--accent);
+}
+
+/* --------------------------------------------- stage mock: leads captured */
+
+/* The one tab whose artwork has no browser window: the confirmation card is a
+   column beside the panels rather than an overlay on top of them. Everything
+   inside the right column is still the shared .vd-* kit. */
+
+.ld {
+  position: relative;
+  display: grid;
+  grid-template-columns: 26% 1fr;
+  align-items: start;
+  gap: 14px;
+  padding-bottom: 40px;
+}
+
+.ld-main {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.ld-h {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 12.5px;
+  letter-spacing: -0.02em;
+  margin-bottom: 1px;
+}
+
+/* ---- the confirmation card ---- */
+
+.ld-card {
+  background: linear-gradient(180deg, #f8fbff 0%, #eef4fd 100%);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 16px 13px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+
+/* White with a ring rather than the solid blue disc the other tabs use. */
+.ld-card .lp-tick {
+  width: 50px;
+  height: 50px;
+  margin: 2px auto 11px;
+}
+
+.ld-card .lp-tick .dot {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  color: var(--accent);
+  box-shadow: var(--shadow-sm);
+}
+
+.ld-card .lp-tick .dot svg {
+  width: 26px;
+}
+
+/* The magnet's poles are notched apart in the disc's own white. */
+.ld-card .lp-tick .cut {
+  stroke: #ffffff;
+}
+
+.ld-card .t {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+}
+
+.ld-card .t b {
+  display: block;
+  color: var(--accent);
+}
+
+.ld-card p {
+  font-size: 9.5px;
+  line-height: 1.55;
+  color: var(--text-muted);
+  margin: 7px 0 13px;
+}
+
+.ld-card .vd-checks {
+  gap: 9px;
+  margin-bottom: 13px;
+}
+
+/* "Lead Information Captured" is the longest of the five. */
+.ld-card .vd-checks > span {
+  font-size: 8px;
+  gap: 7px;
+}
+
+/* Round tiles here, not the rounded squares of the other tabs. */
+.ld-card .vd-checks .ic {
+  width: 21px;
+  height: 21px;
+  min-width: 21px;
+  border-radius: 50%;
+}
+
+.ld-card .b1,
+.ld-card .b2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: 9px;
+  padding: 9px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.ld-card .b1 {
+  background: var(--accent);
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+/* Outlined secondary — the export is the lesser of the two actions. */
+.ld-card .b2 {
+  background: #ffffff;
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+}
+
+.ld-card .b1 svg,
+.ld-card .b2 svg {
+  width: 13px;
+}
+
+/* ---- panels ---- */
+
+/* Plain sparklines — the artwork drops the endpoint dot the CTA tab carries. */
+.ld .spark circle {
+  display: none;
+}
+
+/* Soft tiles: this tab's KPI icons sit on tinted squares rather than solid
+   blue ones, so the four cards read lighter than the other dashboards'. */
+.ld .vd-kpi .ic {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  border-radius: 6px;
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+}
+
+.ld .vd-kpi .ic svg {
+  width: 12px;
+}
+
+.ld .vd-kpi .top {
+  font-size: 8px;
+}
+
+.ld .vd-kpi .mid b {
+  font-size: 14.5px;
+}
+
+.ld .vd-kpi .dl {
+  font-size: 7px;
+  white-space: nowrap;
+}
+
+.ld .vd-r2 {
+  grid-template-columns: 1.2fr 1fr;
+}
+
+.ld .vd-donut {
+  width: 34%;
+}
+
+/* The title row carries two controls, so the picker stops short of the icon
+   button instead of the row's right edge. */
+.ld .vd-card .ct .sel {
+  margin-left: auto;
+  gap: 4px;
+}
+
+.ld .vd-card .ct .sel svg {
+  width: 10px;
+  color: var(--text-muted);
+}
+
+.ld .vd-card .ct .ib {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 5px;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  color: var(--text-muted);
+}
+
+.ld .vd-card .ct .ib svg {
+  width: 11px;
+}
+
+.ld .vd-card .ct .lk {
+  font-size: 8px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* The tooltip points at its dot on this tab. */
+.ld .vd-tip {
+  left: 42%;
+}
+
+.ld .vd-tip em {
+  border-radius: 50%;
+}
+
+.ld .vd-tip::after {
+  content: "";
+  position: absolute;
+  left: 16px;
+  bottom: -4px;
+  width: 7px;
+  height: 7px;
+  background: #ffffff;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  transform: rotate(45deg);
+}
+
+/* ---- recent leads ---- */
+
+.ld-recent {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.ld-recent > span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+}
+
+.ld-recent .av {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ld-recent .av svg {
+  width: 13px;
+}
+
+.ld-recent .tx {
+  flex: 1;
+  min-width: 0;
+}
+
+.ld-recent .tx b {
+  display: block;
+  font-size: 8px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ld-recent .tx em {
+  display: block;
+  font-style: normal;
+  font-size: 7px;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ld-recent .pill {
+  flex-shrink: 0;
+  font-size: 6.5px;
+  padding: 2px 7px;
+}
+
+.ld-recent .ago {
+  flex-shrink: 0;
+  font-size: 7px;
+  color: var(--text-faint);
+}
+
+/* ---- leads by status ---- */
+
+.ld-stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 9px;
+}
+
+.ld-stat > span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  font-size: 7.5px;
+}
+
+.ld-stat .n {
+  width: 46px;
+  min-width: 46px;
+  font-style: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ld-stat .tk {
+  flex: 1;
+  min-width: 0;
+  height: 6px;
+  border-radius: 4px;
+  background: var(--accent-soft);
+  overflow: hidden;
+}
+
+.ld-stat .tk b {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: var(--accent);
+}
+
+.ld-stat .v {
+  flex-shrink: 0;
+  font-style: normal;
+  font-weight: 600;
+  text-align: right;
+}
+
+/* ---- notifications banner ---- */
+
+/* Tinted rather than white — it's a prompt, not another panel of figures. */
+.ld-note {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--accent-soft);
+  border: 1px solid #d8e8fb;
+  border-radius: 10px;
+  padding: 9px 11px;
+}
+
+.ld-note .ic {
+  width: 26px;
+  height: 26px;
+  min-width: 26px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ld-note .ic svg {
+  width: 14px;
+}
+
+.ld-note .tx {
+  flex: 1;
+  min-width: 0;
+}
+
+.ld-note .tx b {
+  display: block;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 10px;
+}
+
+.ld-note .tx i {
+  display: block;
+  font-style: normal;
+  font-size: 8px;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+
+.ld-note .b {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  background: #ffffff;
+  border: 1px solid var(--border-strong);
+  border-radius: 7px;
+  padding: 7px 10px;
+  font-size: 8px;
+  font-weight: 600;
+}
+
+.ld-note .b svg {
+  width: 11px;
+  color: var(--text-muted);
+}
+
+/* Below the card rather than across it — the card is a column here, so the
+   arrow has the gutter under it to itself. */
+.ld-arrow {
+  position: absolute;
+  left: 9%;
+  bottom: 0;
+  width: 17%;
+  height: 76px;
+  color: var(--accent-deep);
 }
 
 /* ---------------------------------------------------------- breakpoints */
@@ -5942,6 +6594,13 @@ footer {
   .result-row {
     grid-template-columns: 1fr;
     gap: 40px;
+  }
+  /* Three plans don't fit here — at this width each column is too narrow for
+     an eight-item list, and dropping to two would orphan the third. */
+  .offer-grid {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+    margin: 0 auto;
   }
   .feature-row .visual-first,
   .result-row .visual-first {
@@ -6020,8 +6679,16 @@ footer {
     grid-template-columns: 1fr;
     gap: 24px;
   }
+  /* Nothing left to match heights with, and the full-width column gives the
+     mocks room to draw at their own size, so the frame goes back to the flow. */
   .setup-stage {
-    min-height: 0;
+    height: auto;
+  }
+  .setup-screen > * {
+    position: static;
+    width: auto;
+    transform: none;
+    margin: var(--pad);
   }
   .compare-grid {
     grid-template-columns: 1fr;
@@ -6109,12 +6776,11 @@ footer {
   .cta-band {
     padding: 26px 20px;
   }
-  .mini-kpis,
-  .kpi-3 {
+  .mini-kpis {
     grid-template-columns: 1fr;
   }
   .setup-screen {
-    padding: 14px;
+    --pad: 14px;
   }
   /* Both mocks lose their side-by-side arrangement — the columns get too
      narrow to read, and the overlaps have nothing left to overlap. */
@@ -6146,8 +6812,11 @@ footer {
     flex-wrap: wrap;
   }
   /* The dashboard's own columns collapse too — four KPI cards and three
-     panels can't hold their shape at phone width. */
-  .vd-body {
+     panels can't hold their shape at phone width. The tab variants are named
+     as well, or their own wider rails would outrank this one. */
+  .vd-body,
+  .cta .vd-body,
+  .fm .vd-body {
     grid-template-columns: 1fr;
   }
   .vd-side {
@@ -6161,11 +6830,24 @@ footer {
   }
   .vd-kpis,
   .vd-r2,
+  .ld .vd-r2,
   .vd-r3 {
     grid-template-columns: 1fr 1fr;
   }
   .ct-r3 {
     grid-template-columns: 1fr;
+  }
+  /* Leads: the card stops being a column and becomes a block above the
+     panels, so its arrow has nothing left to point across. */
+  .ld {
+    grid-template-columns: 1fr;
+    padding-bottom: 0;
+  }
+  .ld-arrow {
+    display: none;
+  }
+  .ld-note {
+    flex-wrap: wrap;
   }
   .vd-status {
     margin-left: 0;
@@ -6248,8 +6930,10 @@ footer {
     width: 100%;
     margin-top: 14px;
   }
-  .fd-d {
-    display: none;
+  /* The recovery banner's button drops under its copy rather than squeezing
+     both into a phone-width row. */
+  .fm-cta {
+    flex-wrap: wrap;
   }
 }
 
