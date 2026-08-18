@@ -2380,7 +2380,13 @@ tbody td.lead-name {
 
 /* ------------------------------------------------------ comparison table */
 
+/* Positioned so it becomes the containing block for the `.sr-only` span in
+   every cell. Those are absolutely positioned, and while the wrap was static
+   they resolved against an ancestor instead — which put them outside its
+   overflow, ~600px out at the far end of the scrolling table, and left the
+   whole page pannable to the right on a phone. */
 .cmp-wrap {
+  position: relative;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   overflow-x: auto;
@@ -6781,6 +6787,25 @@ footer {
   .sticky-actions .btn {
     flex: 1;
     padding: 12px 10px;
+    font-size: 12.5px;
+  }
+  /* Three across leaves ~100px each on a 360px phone, which is narrower than
+     "Book Free Demo" can set. The quote link is the one that goes, since
+     #pricing is a tap away in the menu and the other two can't be reached
+     any other way from here. */
+  .sticky-quote {
+    display: none;
+  }
+  /* Room for the CTA and the menu button to be told apart: the rail was 30px
+     of padding with 12px between two tap targets, which invites a mis-tap. */
+  nav {
+    padding: 16px 18px;
+  }
+  .nav-actions {
+    gap: 16px;
+  }
+  .nav-actions .btn-sm {
+    padding: 10px 16px;
     font-size: 12.5px;
   }
   .form-card,

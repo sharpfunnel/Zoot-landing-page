@@ -47,7 +47,12 @@ export default function StickyCta() {
           <a href="#demo" className="btn btn-accent btn-sm" data-ripple tabIndex={show ? 0 : -1}>
             Book Free Demo
           </a>
-          <a href="#pricing" className="btn btn-ghost btn-sm" data-ripple tabIndex={show ? 0 : -1}>
+          <a
+            href="#pricing"
+            className="btn btn-ghost btn-sm sticky-quote"
+            data-ripple
+            tabIndex={show ? 0 : -1}
+          >
             Get Quote
           </a>
           <a
