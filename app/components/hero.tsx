@@ -30,8 +30,8 @@ export default function Hero() {
           </div>
 
           <h1 data-anim="fade-up">
-            Stop guessing.{" "}
-            <span className="accent">Start seeing which ads actually bring you leads.</span>
+            Grow Your Business.{" "}
+            <span className="accent">Know What&apos;s Driving Growth.</span>
           </h1>
 
           <p className="lead" data-anim="fade-up">
