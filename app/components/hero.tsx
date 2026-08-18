@@ -44,7 +44,7 @@ export default function Hero() {
           </div>
 
           <h1 data-anim="fade-up">
-            For Business Ready to Turn Marketing Into{" "}
+            For Businesses Ready to Turn Marketing Into{" "}
             <span className="accent">Growth, Not Just Traffic.</span>
           </h1>
 
