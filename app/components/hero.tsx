@@ -44,8 +44,8 @@ export default function Hero() {
           </div>
 
           <h1 data-anim="fade-up">
-            For Businesses Ready to Turn{" "}
-            <span className="accent">Meta &amp; Google Ads Into More Leads.</span>
+            Grow Your Business With{" "}
+            <span className="accent">Meta &amp; Google Ads, by Real-Time Tracking.</span>
           </h1>
 
           <p className="lead" data-anim="fade-up">
