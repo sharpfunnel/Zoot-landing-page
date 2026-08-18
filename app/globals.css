@@ -529,18 +529,19 @@ nav {
   animation: hero-float 6s ease-in-out infinite;
 }
 
-/* Placed into the gaps the composite leaves: it carries its own callouts
-   across the top and right, so these sit low and stagger diagonally rather
-   than landing on "More Leads" or "Smarter Campaigns". */
+/* Stacked in the band between the copy and the laptop, clear of the machine
+   itself — over the screen they competed with a dashboard full of its own
+   figures and didn't read. The composite's own callouts take the top and the
+   right, so this strip is what's left. */
 .hero-marks .mark-a {
-  left: 55%;
-  top: 44%;
+  left: 45%;
+  top: 52%;
 }
 
 /* Offset in phase as well as position, so the two never bob in lockstep. */
 .hero-marks .mark-b {
-  left: 68%;
-  top: 63%;
+  left: 45%;
+  top: 66%;
   animation-delay: -3s;
 }
 
