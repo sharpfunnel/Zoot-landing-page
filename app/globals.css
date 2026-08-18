@@ -6657,10 +6657,8 @@ footer {
     order: 1;
     width: 100%;
   }
-  /* 3, so the platform badges can take 2 and land between the copy and the
-     composite rather than above the badge pills the copy already opens with. */
   .hero-bg {
-    order: 3;
+    order: 2;
     position: relative;
     top: auto;
     right: auto;
@@ -6686,28 +6684,11 @@ footer {
   .hero-copy {
     max-width: none;
   }
-  /* The composite drops below the copy here, so there's nothing left to float
-     over — the badges become a row in the flow instead. */
+  /* The composite drops below the copy here, so the badges have no laptop to
+     sit on — and as a row in the flow they only repeated the badge pills the
+     copy already opens with. They come off with it. */
   .hero-marks {
-    position: static;
-    transform: none;
-    width: 100%;
-    aspect-ratio: auto;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    order: 2;
-    margin: 26px auto 0;
-    padding: 0 30px;
-    width: 100%;
-    max-width: var(--maxw);
-  }
-  .hero-marks li {
-    position: static;
-    animation: none;
-    font-size: 13px;
-    padding: 9px 15px 9px 12px;
-    box-shadow: var(--shadow-sm);
+    display: none;
   }
   .step-grid {
     grid-template-columns: repeat(2, 1fr);
