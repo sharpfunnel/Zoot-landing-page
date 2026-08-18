@@ -1,7 +1,7 @@
 import Image from "next/image";
 import heroLaptop from "../assets/hero-laptop.png";
 import { heroBadges, heroChecks, heroTrust, offer } from "../lib/content";
-import { Tick } from "./ui";
+import { GoogleAdsMark, MetaMark, Tick } from "./ui";
 
 export default function Hero() {
   return (
@@ -20,6 +20,20 @@ export default function Hero() {
           className="hero-bg-img"
         />
       </div>
+
+      {/* Over the composite on a wide screen, a row under the copy on a narrow
+          one. Named rather than decorative: which platforms we run is real
+          information, not ornament. */}
+      <ul className="hero-marks" aria-label="Platforms we run campaigns on">
+        <li className="mark-a">
+          <MetaMark className="hm-i meta" />
+          Meta Ads
+        </li>
+        <li className="mark-b">
+          <GoogleAdsMark className="hm-i" />
+          Google Ads
+        </li>
+      </ul>
 
       <div className="wrap">
         <div className="hero-copy">

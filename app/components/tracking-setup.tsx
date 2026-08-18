@@ -2,39 +2,9 @@
 
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { setupAds, setupSnippet, setupSteps } from "../lib/content";
-import { Eyebrow } from "./ui";
+import { Eyebrow, GoogleAdsMark, MetaMark } from "./ui";
 
 /* -------------------------------------------------------------- mocks */
-
-/**
- * Simplified marks for the two ad platforms. Approximations of third-party
- * logos, drawn to sit at ~20px in the illustration — not official assets.
- */
-/* The "A" mark: two round-capped legs at mirrored angles with the green dot at
-   the foot of the yellow one. The yellow leg starts a little below the blue
-   apex so the blue caps it cleanly and only the yellow's point shows through,
-   and the dot is drawn a touch wider than the leg so it hides that leg's cap. */
-const GoogleAdsMark = () => (
-  <svg className="su-brand" viewBox="0 0 24 24" fill="none" strokeLinecap="round">
-    <path d="M11.9 5.6L4.35 18.6" stroke="#FBBC04" strokeWidth="7.4" />
-    <path d="M12.45 4.9L20.15 18.6" stroke="#4285F4" strokeWidth="7.4" />
-    <circle cx="4.35" cy="18.6" r="3.95" fill="#34A853" stroke="none" />
-  </svg>
-);
-
-/* One continuous lemniscate with a thick stroke and tight loops, so it reads
-   as a single ribbon. Thin, round loops just read as "∞". */
-const MetaMark = () => (
-  <svg className="su-brand meta" viewBox="0 0 32 20">
-    <path
-      d="M10 5c3.2 0 4.5 2.9 6 5s2.8 5 6 5c2.9 0 4.7-2.2 4.7-5S24.9 5 22 5c-3.2 0-4.5 2.9-6 5s-2.8 5-6 5C7.1 15 5.3 12.8 5.3 10S7.1 5 10 5z"
-      fill="none"
-      stroke="#0081FB"
-      strokeWidth="4.2"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
 
 /** The small illustration beside each wizard step. */
 const SU_ART: Record<string, React.ReactElement> = {

@@ -499,6 +499,71 @@ nav {
   z-index: 1;
 }
 
+/* ---- floating platform badges ---- */
+
+/* Above the composite but out of the copy's column, which stops at 560px —
+   these start past 56% so they can't land on a heading that has wrapped. */
+.hero-marks {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  list-style: none;
+  pointer-events: none;
+}
+
+.hero-marks li {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 10px 18px 10px 14px;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 14px;
+  white-space: nowrap;
+  box-shadow: var(--shadow-lg);
+  animation: hero-float 6s ease-in-out infinite;
+}
+
+/* Placed into the gaps the composite leaves: it carries its own callouts
+   across the top and right, so these sit low and stagger diagonally rather
+   than landing on "More Leads" or "Smarter Campaigns". */
+.hero-marks .mark-a {
+  left: 55%;
+  top: 44%;
+}
+
+/* Offset in phase as well as position, so the two never bob in lockstep. */
+.hero-marks .mark-b {
+  left: 68%;
+  top: 63%;
+  animation-delay: -3s;
+}
+
+.hero-marks .hm-i {
+  width: 21px;
+  min-width: 21px;
+}
+
+.hero-marks .hm-i.meta {
+  width: 26px;
+  min-width: 26px;
+}
+
+@keyframes hero-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}
+
 .hero-badges {
   display: flex;
   flex-wrap: wrap;
@@ -690,55 +755,7 @@ nav {
   margin: 0 auto 14px;
 }
 
-/* ----------------------------------------------------- logo strip + stats */
-
-.logo-strip {
-  padding: 40px 0;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-}
-
-.logo-strip .label {
-  text-align: center;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--text-faint);
-  margin-bottom: 26px;
-}
-
-.logo-marquee {
-  overflow: hidden;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
-}
-
-.logo-track {
-  display: flex;
-  width: max-content;
-  animation: marquee 38s linear infinite;
-}
-
-.logo-marquee:hover .logo-track,
-.logo-marquee:focus-within .logo-track {
-  animation-play-state: paused;
-}
-
-.logo-track span {
-  font-family: var(--display);
-  font-weight: 700;
-  font-size: 17px;
-  color: var(--text-faint);
-  padding: 0 32px;
-  white-space: nowrap;
-}
-
-@keyframes marquee {
-  to {
-    transform: translateX(-50%);
-  }
-}
+/* ---------------------------------------------------------------- stats */
 
 .stats-row {
   display: grid;
@@ -6631,8 +6648,10 @@ footer {
     order: 1;
     width: 100%;
   }
+  /* 3, so the platform badges can take 2 and land between the copy and the
+     composite rather than above the badge pills the copy already opens with. */
   .hero-bg {
-    order: 2;
+    order: 3;
     position: relative;
     top: auto;
     right: auto;
@@ -6657,6 +6676,26 @@ footer {
   }
   .hero-copy {
     max-width: none;
+  }
+  /* The composite drops below the copy here, so there's nothing left to float
+     over — the badges become a row in the flow instead. */
+  .hero-marks {
+    position: static;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    order: 2;
+    margin: 26px auto 0;
+    padding: 0 30px;
+    width: 100%;
+    max-width: var(--maxw);
+  }
+  .hero-marks li {
+    position: static;
+    animation: none;
+    font-size: 13px;
+    padding: 9px 15px 9px 12px;
+    box-shadow: var(--shadow-sm);
   }
   .step-grid {
     grid-template-columns: repeat(2, 1fr);

@@ -187,14 +187,8 @@ export const heroChecks = [
 
 /* ------------------------------------------------------- proof / stats */
 
-export const clientLogos = [
-  "NORTHPEAK",
-  "VELOURA",
-  "ARGON CO",
-  "BRIGHTFERRY",
-  "KESTRA",
-  "HALIFORM",
-];
+/* The invented client names that fed the "Trusted by" marquee are gone with
+   it — they named companies that aren't clients. */
 
 /**
  * Headline numbers.
