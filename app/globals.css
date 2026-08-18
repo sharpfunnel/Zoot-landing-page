@@ -501,11 +501,17 @@ nav {
 
 /* ---- floating platform badges ---- */
 
-/* Above the composite but out of the copy's column, which stops at 560px —
-   these start past 56% so they can't land on a heading that has wrapped. */
+/* The same box as .hero-bg, so the badges are placed against the composite
+   rather than against the section. The section grows as the heading wraps
+   and the image stays centred in it, so a percentage of the section drifts
+   off the laptop as the width changes; a percentage of this doesn't. */
 .hero-marks {
   position: absolute;
-  inset: 0;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  width: min(1450px, 76%);
+  aspect-ratio: 1677 / 938;
   z-index: 2;
   list-style: none;
   pointer-events: none;
@@ -533,15 +539,17 @@ nav {
    itself — over the screen they competed with a dashboard full of its own
    figures and didn't read. The composite's own callouts take the top and the
    right, so this strip is what's left. */
+/* The laptop's top-right corner: under the arrow, right of the composite's
+   own "Smarter Campaigns" card and above its "Accurate Tracking" one. */
 .hero-marks .mark-a {
-  left: 45%;
-  top: 52%;
+  right: 1%;
+  top: 22%;
 }
 
 /* Offset in phase as well as position, so the two never bob in lockstep. */
 .hero-marks .mark-b {
-  left: 45%;
-  top: 66%;
+  left: 30%;
+  top: 80%;
   animation-delay: -3s;
 }
 
@@ -6682,6 +6690,9 @@ footer {
      over — the badges become a row in the flow instead. */
   .hero-marks {
     position: static;
+    transform: none;
+    width: 100%;
+    aspect-ratio: auto;
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
