@@ -2789,7 +2789,12 @@ footer {
   min-height: 0;
 }
 
-.setup-screen > * {
+/* `.setup-stage` in front only for the specificity: every mock root but .su
+   sets `position: relative` for its own float card, further down the sheet,
+   and at equal weight that was winning — leaving them unpositioned and the
+   fit pass skipping them. Absolute still gives those children a containing
+   block, so they don't move. */
+.setup-stage .setup-screen > * {
   position: absolute;
   top: var(--pad);
   left: var(--pad);
@@ -6673,22 +6678,28 @@ footer {
     width: auto;
     border: 1px solid var(--border-strong);
   }
-  /* Accordion above, stage below — the list keeps its own copy visible, so
-     unlike the gallery's tabs it doesn't need to become a scrolling row. */
+  /* One column, and the stage moves out of the right-hand column to sit
+     directly under whichever step is open — `display: contents` lifts the
+     seven items into this grid so `order` can interleave the two. The list
+     keeps its own copy visible, so unlike the gallery's tabs it doesn't need
+     to become a scrolling row. */
   .setup-grid {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 10px;
   }
-  /* Nothing left to match heights with, and the full-width column gives the
-     mocks room to draw at their own size, so the frame goes back to the flow. */
+  .setup-list {
+    display: contents;
+  }
+  /* No second column left to match, so the frame just takes a height that
+     suits the width — the mock scales into whatever it's given. */
+  .setup-grid {
+    --stage-h: 440px;
+  }
   .setup-stage {
-    height: auto;
+    margin: 6px 0 14px;
   }
-  .setup-screen > * {
-    position: static;
-    width: auto;
-    transform: none;
-    margin: var(--pad);
+  .setup-screen {
+    --pad: 12px;
   }
   .compare-grid {
     grid-template-columns: 1fr;
@@ -6779,161 +6790,15 @@ footer {
   .mini-kpis {
     grid-template-columns: 1fr;
   }
+  /* Nothing here reflows the mocks for a narrow screen any more. They keep
+     their full-width layout and the stage scales the whole picture down to
+     fit, so a rule that stacked their columns would only make them taller
+     and then smaller again. It just gets a shorter frame to scale into. */
+  .setup-grid {
+    --stage-h: 300px;
+  }
   .setup-screen {
-    --pad: 14px;
-  }
-  /* Both mocks lose their side-by-side arrangement — the columns get too
-     narrow to read, and the overlaps have nothing left to overlap. */
-  .su,
-  .lp-hero,
-  .lp-feats {
-    grid-template-columns: 1fr;
-  }
-  .lp-browser,
-  .lp-live,
-  .vd-app {
-    width: 100%;
-    margin-left: 0;
-  }
-  .lp-card,
-  .vd-float {
-    position: static;
-    width: 100%;
-    margin-top: 14px;
-  }
-  .lp-arrow,
-  .vd-arrow {
-    display: none;
-  }
-  .lp-dev {
-    margin-top: 0;
-  }
-  .lp-nav {
-    flex-wrap: wrap;
-  }
-  /* The dashboard's own columns collapse too — four KPI cards and three
-     panels can't hold their shape at phone width. The tab variants are named
-     as well, or their own wider rails would outrank this one. */
-  .vd-body,
-  .cta .vd-body,
-  .fm .vd-body {
-    grid-template-columns: 1fr;
-  }
-  .vd-side {
-    flex-direction: row;
-    flex-wrap: wrap;
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
-  .vd-side .lp-logo {
-    margin-bottom: 0;
-  }
-  .vd-kpis,
-  .vd-r2,
-  .ld .vd-r2,
-  .vd-r3 {
-    grid-template-columns: 1fr 1fr;
-  }
-  .ct-r3 {
-    grid-template-columns: 1fr;
-  }
-  /* Leads: the card stops being a column and becomes a block above the
-     panels, so its arrow has nothing left to point across. */
-  .ld {
-    grid-template-columns: 1fr;
-    padding-bottom: 0;
-  }
-  .ld-arrow {
-    display: none;
-  }
-  .ld-note {
-    flex-wrap: wrap;
-  }
-  .vd-status {
-    margin-left: 0;
-    flex-wrap: wrap;
-  }
-  .vd-status .sep {
-    display: none;
-  }
-  /* Session replay: the card moves out of its reserved gutter and the app's
-     own three-column interior collapses. */
-  .sr {
-    padding-left: 0;
-  }
-  .sr-float {
-    position: static;
-    width: 100%;
-    margin-top: 14px;
-  }
-  .sr-arrow {
-    display: none;
-  }
-  .sr-body {
-    grid-template-columns: 1fr;
-  }
-  .sr-side {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
-  .sr-side .lp-logo {
-    margin-bottom: 0;
-  }
-  .sr-track {
-    margin-top: 0;
-    width: 100%;
-  }
-  .sr-mid,
-  .sr-bot,
-  .sr-phero {
-    grid-template-columns: 1fr;
-  }
-  /* One column: the overlap and the arrow have nothing left to point across,
-     so the three blocks simply stack. */
-  .su-side,
-  .su-card,
-  .su-stack,
-  .su-ads {
-    grid-column: 1;
-    grid-row: auto;
-  }
-  .su-stack {
-    margin: 20px 0 0;
-  }
-  .su-ads,
-  .su-connect,
-  .su-accounts {
-    grid-template-columns: 1fr;
-  }
-  .su-connect {
-    flex-wrap: wrap;
-  }
-  .su-accounts .acc + .acc {
-    border-left: none;
-    border-top: 1px solid var(--border);
-    padding: 14px 0 0;
-  }
-  .su-art {
-    display: none;
-  }
-  .su-arrow {
-    display: none;
-  }
-  .su-browser {
-    width: 100%;
-  }
-  .su-live {
-    position: static;
-    width: 100%;
-    margin-top: 14px;
-  }
-  /* The recovery banner's button drops under its copy rather than squeezing
-     both into a phone-width row. */
-  .fm-cta {
-    flex-wrap: wrap;
+    --pad: 9px;
   }
 }
 

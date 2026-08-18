@@ -2580,7 +2580,9 @@ function StagePanel({ kind }: { kind: string }) {
  * Below the stacking breakpoint the mock isn't positioned, and there's no
  * column left to match heights with, so it's left alone.
  */
-const MIN_K = 0.4;
+/* Low enough for a phone frame, where the mock has to shrink a long way to
+   fit; it only ever bites if a mock can't fit at any scale. */
+const MIN_K = 0.16;
 
 function fitStage(screen: HTMLElement | null) {
   const el = screen?.firstElementChild as HTMLElement | null;
@@ -2595,21 +2597,24 @@ function fitStage(screen: HTMLElement | null) {
   const avail = screen.clientHeight - pad * 2;
   if (avail <= 0) return;
 
-  /* Clamped and best-of rather than trusting the loop to land: a mock whose
-     own height tracked its width would have no fixed point here, and running
-     the ratio off a cliff is worse than settling for a slightly small one. */
-  let k = parseFloat(getComputedStyle(el).getPropertyValue("--k")) || 1;
-  let best = 0;
-  for (let i = 0; i < 5; i++) {
-    el.style.setProperty("--k", String(k));
-    const natural = el.offsetHeight;
-    if (natural * k <= avail) best = Math.max(best, k);
-    const next = Math.min(1, Math.max(MIN_K, (avail / natural) * k));
-    const settled = Math.abs(next - k) < 0.002;
-    k = next;
-    if (settled) break;
+  /* Unscaled if it already fits — most mocks do on a wide screen. */
+  el.style.setProperty("--k", "1");
+  if (el.offsetHeight <= avail) return;
+
+  /* Bisection rather than iterating height/avail directly: a smaller scale
+     lays the mock out wider, which makes it shorter, so the naive ratio
+     overshoots and settles well under the height it was given. The scaled
+     height only ever rises with `--k`, though, so halving the interval finds
+     the largest one that fits. */
+  let lo = MIN_K;
+  let hi = 1;
+  for (let i = 0; i < 9; i++) {
+    const mid = (lo + hi) / 2;
+    el.style.setProperty("--k", String(mid));
+    if (el.offsetHeight * mid <= avail) lo = mid;
+    else hi = mid;
   }
-  el.style.setProperty("--k", String(best || MIN_K));
+  el.style.setProperty("--k", String(lo));
 }
 
 export default function TrackingSetup() {
@@ -2671,8 +2676,15 @@ export default function TrackingSetup() {
             aria-label="What we set up and track"
             onKeyDown={onKeyDown}
           >
+            {/* Odd slots are left free for the stage, which takes the one
+                after the open step — see the 1080px rules, where the list
+                becomes `display: contents` and the two interleave. */}
             {setupSteps.map((item, i) => (
-              <div className={i === active ? "setup-item open" : "setup-item"} key={item.key}>
+              <div
+                className={i === active ? "setup-item open" : "setup-item"}
+                key={item.key}
+                style={{ order: i * 2 }}
+              >
                 <button
                   type="button"
                   role="tab"
@@ -2711,6 +2723,7 @@ export default function TrackingSetup() {
             id="setup-stage"
             aria-labelledby={`setup-tab-${step.key}`}
             tabIndex={0}
+            style={{ order: active * 2 + 1 }}
           >
             <div className="setup-chrome">
               <span className="setup-dots" aria-hidden="true">
