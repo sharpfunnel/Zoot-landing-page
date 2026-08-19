@@ -817,6 +817,12 @@ export const dashboardViews = [
     view: "forms",
     body: "How many people saw each form, how many began it and how many finished — and the field they gave up on last, so you know which question to cut.",
   },
+  {
+    key: "heatmap",
+    label: "Heatmap",
+    view: "heatmap",
+    body: "Your page with the clicks painted over it, so the buttons people press and the ones they ignore are visible at a glance — plus scroll depth and hover.",
+  },
 ];
 
 /* --------------------------------------------------------------- pricing */

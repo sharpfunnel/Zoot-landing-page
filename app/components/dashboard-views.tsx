@@ -176,6 +176,31 @@ const I: Record<string, React.ReactElement> = {
       <path d="M7.8 13.6h2l.7 3h-2z" />
     </svg>
   ),
+  rows: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinecap="round">
+      <path d="M3 5.4h14M3 10h14M3 14.6h9" />
+    </svg>
+  ),
+  hand: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinejoin="round">
+      <path d="M7.4 9.6V4.8a1.4 1.4 0 012.8 0v4.2" />
+      <path d="M10.2 9v-.8a1.4 1.4 0 012.8 0V9.6" />
+      <path d="M13 9.8a1.4 1.4 0 012.8 0v2.6a5 5 0 01-5 5H10a4 4 0 01-3.2-1.6L4.4 12.6a1.4 1.4 0 012-1.9l1 .9" />
+    </svg>
+  ),
+  tablet: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinejoin="round">
+      <rect x="3.6" y="2.8" width="12.8" height="14.4" rx="1.8" />
+      <path d="M8.8 14.8h2.4" strokeLinecap="round" />
+    </svg>
+  ),
+  info: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinecap="round">
+      <circle cx="10" cy="10" r="7.2" />
+      <path d="M10 9.2v4.2" />
+      <path d="M10 6.4v.2" />
+    </svg>
+  ),
 };
 
 /* --------------------------------------------------------------- data */
@@ -1304,12 +1329,297 @@ function FormsView({ onPick }: Picker) {
   );
 }
 
+
+/* Where the heat sits over the page, as a share of the frame: left, top,
+   diameter in px and how hot. Ordered back to front, so the hottest spots
+   are painted last. */
+const HM_BLOBS = [
+  [14, 12, 26, 1],
+  [26, 34, 22, 1],
+  [44, 17, 20, 1],
+  [50, 46, 24, 1],
+  [62, 14, 22, 1],
+  [72, 28, 20, 1],
+  [80, 22, 24, 1],
+  [92, 40, 22, 1],
+  [7, 56, 20, 1],
+  [33, 62, 22, 1],
+  [78, 58, 24, 1],
+  [95, 66, 20, 1],
+  [17, 70, 22, 1],
+  [60, 70, 20, 1],
+  [40, 24, 30, 2],
+  [5, 21, 34, 3],
+  [20, 21, 40, 3],
+  [9, 27, 34, 3],
+  [18, 27, 38, 4],
+  [34, 6, 34, 3],
+  [40, 6, 30, 2],
+  [47, 6, 30, 2],
+  [65, 6, 32, 3],
+  [53, 22, 30, 4],
+  [58, 45, 30, 3],
+  [86, 32, 34, 3],
+  [87, 57, 26, 3],
+  [93, 6, 46, 5],
+  [13, 46, 52, 5],
+  [30, 46, 26, 2],
+  [56, 75, 30, 3],
+  [12, 88, 32, 3],
+  [37, 88, 32, 3],
+  [62, 88, 32, 3],
+  [88, 88, 32, 3],
+] as const;
+
+const HM_LEGEND = [
+  ["l1", "Low interaction"],
+  ["l2", "Medium interaction"],
+  ["l3", "High interaction"],
+  ["l4", "Very High interaction"],
+  ["l5", "Highest interaction"],
+] as const;
+
+const HM_TOP = [
+  ["Get a Free Consultation (Button)", "142"],
+  ["Get Started (Header Button)", "97"],
+  ["View Our Services (Button)", "76"],
+  ["Pricing", "58"],
+  ["Contact (Navigation)", "49"],
+  ["Home (Navigation)", "43"],
+  ["Traffic Sources Chart", "36"],
+  ["About Us (Navigation)", "31"],
+  ["Services (Navigation)", "29"],
+  ["Our Core Services Heading", "27"],
+];
+
+const HM_NAV = ["Home", "Services", "About Us", "Pricing", "Blog", "Contact"];
+
+const HM_SERVICES = ["SEO Optimization", "Paid Advertising", "Social Media Marketing", "Web Development"];
+
+const HM_SOURCES = [
+  ["Organic Search", "45%", 45],
+  ["Direct", "25%", 25],
+  ["Referral", "15%", 15],
+  ["Social Media", "10%", 10],
+  ["Email", "5%", 5],
+] as const;
+
+/* The line in the little "Visitors Over Time" card, in a 120x50 box. */
+const HM_LINE = "M2 44L14 38L26 40L38 30L50 26L62 30L74 20L86 16L98 12L110 8L118 6";
+const HM_LINE2 = "M2 47L14 44L26 45L38 39L50 37L62 39L74 33L86 30L98 27L110 23L118 21";
+
+/**
+ * The Heatmap view: the client's own page underneath, with the click density
+ * painted over it. The page below the heat is a mock of a generic landing
+ * page rather than a screenshot — nothing here is an image file, so it stays
+ * sharp and its copy stays editable like every other view.
+ */
+function HeatmapView({ onPick }: Picker) {
+  return (
+    <div className="dv hm" aria-hidden="true">
+      <Rail active="Heatmap" onPick={onPick} />
+
+      <div className="dv-body">
+        <div className="dv-head">
+          <span className="ht">
+            <b>Heatmap</b>
+            <i>Where visitors click, how far they scroll, what they hover</i>
+          </span>
+          <span className="ctl">
+            <s className="seg hm-mode">
+              <em className="on">{I.tap} Click</em>
+              <em>{I.rows} Scroll</em>
+              <em>{I.hand} Hover</em>
+            </s>
+          </span>
+        </div>
+
+        <div className="hm-bar">
+          <span className="sel site">
+            Draft Site (your-site.vercel.app)
+            {I.link}
+            <em>⌄</em>
+          </span>
+          <span className="sel">
+            Last 7 days<em>⌄</em>
+          </span>
+          <span className="sel">
+            All traffic sources<em>⌄</em>
+          </span>
+          <span className="sel">
+            All countries<em>⌄</em>
+          </span>
+          <span className="dev">
+            <i className="on">{I.monitor}</i>
+            <i>{I.tablet}</i>
+            <i>{I.phone}</i>
+          </span>
+        </div>
+
+        <div className="hm-r">
+          <div className="hm-stage">
+            <div className="hm-page">
+              <span className="pg-nav">
+                <b className="lg">
+                  <s />
+                  YOUR SITE
+                </b>
+                <span className="lk">
+                  {HM_NAV.map((n) => (
+                    <em key={n}>{n}</em>
+                  ))}
+                </span>
+                <s className="cta">Get Started</s>
+              </span>
+
+              <span className="pg-hero">
+                <span className="cp">
+                  <em className="eb">DIGITAL SOLUTIONS</em>
+                  <b className="h1">
+                    We Help Businesses
+                    <i>Grow Online</i>
+                  </b>
+                  <p>
+                    Our data-driven strategies and creative solutions help you attract more
+                    customers and scale your business.
+                  </p>
+                  <span className="btns">
+                    <s className="p">Get a Free Consultation</s>
+                    <s className="g">View Our Services</s>
+                  </span>
+                  <span className="tr">
+                    <i className="avs">
+                      <b />
+                      <b />
+                      <b />
+                      <b />
+                    </i>
+                    <span className="tx">
+                      <b>Trusted by 500+ businesses</b>
+                      <em>★★★★★ 4.8/5 average rating</em>
+                    </span>
+                  </span>
+                </span>
+
+                <span className="cards">
+                  <span className="cd kpi">
+                    <em>Total Visitors</em>
+                    <span className="rw">
+                      <b>18,254</b>
+                      <s>↑ 24.6%</s>
+                    </span>
+                  </span>
+
+                  <span className="cd chart">
+                    <em>Visitors Over Time</em>
+                    <span className="plot">
+                      <i className="ax">
+                        <s>20K</s>
+                        <s>15K</s>
+                        <s>10K</s>
+                        <s>5K</s>
+                        <s>0</s>
+                      </i>
+                      <svg viewBox="0 0 120 50" preserveAspectRatio="none">
+                        <path d={HM_LINE2} className="b" />
+                        <path d={HM_LINE} className="a" />
+                      </svg>
+                    </span>
+                    <i className="xax">
+                      {["May 1", "May 8", "May 15", "May 22", "May 29", "Jun 5"].map((d) => (
+                        <s key={d}>{d}</s>
+                      ))}
+                    </i>
+                  </span>
+
+                  <span className="cd don">
+                    <em>Traffic Sources</em>
+                    <span className="ring">
+                      <Ring slices={HM_SOURCES} total="18,254" label="Visitors" />
+                    </span>
+                    <span className="lg2">
+                      {HM_SOURCES.map(([name, pct], i) => (
+                        <i key={name}>
+                          <b className={`d h${i}`} />
+                          <s className="n">{name}</s>
+                          <s>{pct}</s>
+                        </i>
+                      ))}
+                    </span>
+                  </span>
+                </span>
+              </span>
+
+              <span className="pg-svc">
+                <em className="eb">OUR CORE SERVICES</em>
+                <b>
+                  Solutions That <i>Drive</i> Results
+                </b>
+                <span className="row">
+                  {HM_SERVICES.map((sv) => (
+                    <s key={sv}>
+                      <i className="ic">{I.spark}</i>
+                      {sv}
+                    </s>
+                  ))}
+                </span>
+              </span>
+            </div>
+
+            {HM_BLOBS.map(([l, t, size, level], i) => (
+              <span
+                className={`hm-blob l${level}`}
+                key={i}
+                style={{ left: `${l}%`, top: `${t}%`, width: size, height: size }}
+              />
+            ))}
+          </div>
+
+          <div className="hm-side">
+            <div className="dv-card hm-legend">
+              <span className="ttl">Intensity legend</span>
+              {HM_LEGEND.map(([lv, label]) => (
+                <span className="rw" key={lv}>
+                  <i className={`d ${lv}`} />
+                  {label}
+                </span>
+              ))}
+            </div>
+
+            <div className="dv-card hm-top">
+              <span className="ttl">Top clicked</span>
+              {HM_TOP.map(([label, n]) => (
+                <span className="rw" key={label}>
+                  <i>{label}</i>
+                  <b>{n}</b>
+                </span>
+              ))}
+            </div>
+
+            <div className="hm-count">
+              {I.spark}
+              1,247 interactions captured in this range.
+            </div>
+          </div>
+        </div>
+
+        <p className="ct-note hm-foot">
+          {I.info}
+          This is your draft site heatmap. Data is captured from real visitor behaviour on this
+          draft URL.
+        </p>
+      </div>
+    </div>
+  );
+}
+
 function View({ kind, onPick }: { kind: string } & Picker) {
   if (kind === "leads") return <LeadsView onPick={onPick} />;
   if (kind === "sessions") return <SessionsView onPick={onPick} />;
   if (kind === "funnels") return <FunnelsView onPick={onPick} />;
   if (kind === "ctas") return <CtasView onPick={onPick} />;
   if (kind === "forms") return <FormsView onPick={onPick} />;
+  if (kind === "heatmap") return <HeatmapView onPick={onPick} />;
   return <OverviewView onPick={onPick} />;
 }
 

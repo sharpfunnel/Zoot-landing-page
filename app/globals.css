@@ -9210,6 +9210,690 @@ footer {
   color: #d64545;
 }
 
+/* ---- the heatmap view ---- */
+
+.hm-mode em {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.hm-mode em svg {
+  width: 12px;
+}
+
+/* ---- filter bar ---- */
+
+.hm-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.hm-bar .sel {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: #ffffff;
+  border: 1px solid var(--border-strong);
+  border-radius: 9px;
+  padding: 9px 12px;
+  font-size: 11px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.hm-bar .sel.site {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.hm-bar .sel svg {
+  width: 12px;
+  color: var(--accent);
+}
+
+.hm-bar .sel em {
+  font-style: normal;
+  color: var(--text-faint);
+  margin-left: auto;
+}
+
+.hm-bar .dev {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: auto;
+  background: #ffffff;
+  border: 1px solid var(--border-strong);
+  border-radius: 9px;
+  padding: 3px;
+}
+
+.hm-bar .dev i {
+  display: block;
+  border-radius: 6px;
+  padding: 5px 9px;
+  color: var(--text-faint);
+}
+
+.hm-bar .dev i svg {
+  width: 14px;
+  display: block;
+}
+
+.hm-bar .dev .on {
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+}
+
+/* ---- stage + sidebar ---- */
+
+.hm-r {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 12px;
+  align-items: start;
+}
+
+/* The heat is painted over the page, so the two share one positioned box. */
+.hm-stage {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  min-width: 0;
+}
+
+.hm-blob {
+  position: absolute;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.hm-blob.l1 {
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.75) 0%, rgba(59, 130, 246, 0) 68%);
+}
+
+.hm-blob.l2 {
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.75) 0%, rgba(34, 197, 94, 0) 68%);
+}
+
+.hm-blob.l3 {
+  background: radial-gradient(
+    circle,
+    rgba(250, 204, 21, 0.85) 0%,
+    rgba(74, 222, 128, 0.45) 42%,
+    rgba(34, 197, 94, 0) 72%
+  );
+}
+
+.hm-blob.l4 {
+  background: radial-gradient(
+    circle,
+    rgba(249, 115, 22, 0.9) 0%,
+    rgba(250, 204, 21, 0.55) 40%,
+    rgba(34, 197, 94, 0) 74%
+  );
+}
+
+.hm-blob.l5 {
+  background: radial-gradient(
+    circle,
+    rgba(239, 68, 68, 0.92) 0%,
+    rgba(249, 115, 22, 0.6) 34%,
+    rgba(250, 204, 21, 0.35) 56%,
+    rgba(34, 197, 94, 0) 78%
+  );
+}
+
+/* ---- the page underneath ---- */
+
+.hm-page {
+  font-size: 8px;
+  line-height: 1.4;
+}
+
+.hm-page .pg-nav {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #0b1020;
+  padding: 11px 16px;
+}
+
+.hm-page .lg {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #ffffff;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+}
+
+.hm-page .lg s {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 2.5px solid #6ea8fe;
+  border-right-color: transparent;
+  text-decoration: none;
+}
+
+.hm-page .pg-nav .lk {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+}
+
+.hm-page .pg-nav .lk em {
+  font-style: normal;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 9px;
+}
+
+.hm-page .cta {
+  text-decoration: none;
+  background: linear-gradient(135deg, #4f7dfb, #7b5cf5);
+  color: #ffffff;
+  border-radius: 7px;
+  padding: 7px 14px;
+  font-size: 9px;
+  font-weight: 600;
+}
+
+/* ---- hero ---- */
+
+.hm-page .pg-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  background: radial-gradient(120% 100% at 20% 0%, #101a36 0%, #05070f 62%);
+  padding: 22px 16px 26px;
+}
+
+.hm-page .eb {
+  display: block;
+  font-style: normal;
+  font-family: var(--mono);
+  font-size: 7px;
+  letter-spacing: 0.16em;
+  color: #7b8cff;
+  margin-bottom: 7px;
+}
+
+.hm-page .h1 {
+  display: block;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+}
+
+.hm-page .h1 i {
+  display: block;
+  font-style: normal;
+  background: linear-gradient(90deg, #ffffff 34%, #6f8cff 62%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hm-page .cp p {
+  font-size: 8.5px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.72);
+  margin: 8px 0 14px;
+  max-width: 88%;
+}
+
+.hm-page .btns {
+  display: flex;
+  gap: 9px;
+  margin-bottom: 16px;
+}
+
+.hm-page .btns s {
+  text-decoration: none;
+  border-radius: 8px;
+  padding: 9px 14px;
+  font-size: 9px;
+  font-weight: 600;
+}
+
+.hm-page .btns .p {
+  background: linear-gradient(135deg, #4f7dfb, #7b5cf5);
+  color: #ffffff;
+}
+
+.hm-page .btns .g {
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  color: #ffffff;
+}
+
+.hm-page .tr {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.hm-page .avs {
+  display: flex;
+}
+
+.hm-page .avs b {
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  border: 1.5px solid #0b1020;
+  background: linear-gradient(135deg, #7c8cff, #4f7dfb);
+  margin-left: -5px;
+}
+
+.hm-page .avs b:first-child {
+  margin-left: 0;
+}
+
+.hm-page .tr .tx b {
+  display: block;
+  color: #ffffff;
+  font-size: 8px;
+  font-weight: 600;
+}
+
+.hm-page .tr .tx em {
+  display: block;
+  font-style: normal;
+  font-size: 7.5px;
+  color: #f5c451;
+}
+
+/* ---- the three dark cards ---- */
+
+.hm-page .cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr;
+  gap: 9px;
+  min-width: 0;
+}
+
+.hm-page .cd {
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 9px;
+  padding: 10px;
+  min-width: 0;
+}
+
+.hm-page .cd em {
+  display: block;
+  font-style: normal;
+  font-size: 7.5px;
+  color: rgba(255, 255, 255, 0.66);
+  margin-bottom: 6px;
+}
+
+.hm-page .kpi .rw {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.hm-page .kpi b {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 15px;
+  color: #ffffff;
+}
+
+.hm-page .kpi s {
+  text-decoration: none;
+  font-size: 7.5px;
+  color: #4ade80;
+}
+
+.hm-page .don {
+  grid-row: 1 / span 2;
+  grid-column: 2;
+}
+
+.hm-page .chart {
+  grid-column: 1;
+}
+
+.hm-page .plot {
+  display: flex;
+  gap: 5px;
+  height: 52px;
+}
+
+.hm-page .plot .ax {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 5.5px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.hm-page .plot .ax s {
+  text-decoration: none;
+}
+
+.hm-page .plot svg {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+}
+
+.hm-page .plot path {
+  fill: none;
+  stroke-width: 1.6;
+  vector-effect: non-scaling-stroke;
+}
+
+.hm-page .plot .a {
+  stroke: #7b5cf5;
+}
+
+.hm-page .plot .b {
+  stroke: #4fc3f7;
+}
+
+.hm-page .xax {
+  display: flex;
+  justify-content: space-between;
+  font-size: 5.5px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: 4px;
+  padding-left: 20px;
+}
+
+.hm-page .xax s {
+  text-decoration: none;
+}
+
+/* The ring reuses the shared component, recoloured for the dark card. */
+.hm-page .ring .dv-ring {
+  width: 100%;
+  max-width: 92px;
+  margin: 0 auto 8px;
+}
+
+.hm-page .ring .dv-ring circle {
+  stroke-width: 7;
+}
+
+.hm-page .ring .dv-ring .s0 {
+  stroke: #4f6ef7;
+}
+
+.hm-page .ring .dv-ring .s1 {
+  stroke: #7b5cf5;
+}
+
+.hm-page .ring .dv-ring .s2 {
+  stroke: #22d3a7;
+}
+
+.hm-page .ring .dv-ring .s3 {
+  stroke: #f5c451;
+}
+
+.hm-page .ring .dv-ring .s4 {
+  stroke: #f59e0b;
+}
+
+.hm-page .ring .dv-ring .c b {
+  font-size: 11px;
+  color: #ffffff;
+}
+
+.hm-page .ring .dv-ring .c i {
+  font-size: 6.5px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.hm-page .lg2 {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.hm-page .lg2 i {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-style: normal;
+  font-size: 7px;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.hm-page .lg2 s {
+  text-decoration: none;
+}
+
+.hm-page .lg2 .n {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hm-page .lg2 .d {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.hm-page .lg2 .h0 {
+  background: #4f6ef7;
+}
+
+.hm-page .lg2 .h1 {
+  background: #7b5cf5;
+}
+
+.hm-page .lg2 .h2 {
+  background: #22d3a7;
+}
+
+.hm-page .lg2 .h3 {
+  background: #f5c451;
+}
+
+.hm-page .lg2 .h4 {
+  background: #f59e0b;
+}
+
+/* ---- the light services band ---- */
+
+/* Block, or the band is an inline box: its background paints around the line
+   fragments and leaves a notch where the hero ends. */
+.hm-page .pg-svc {
+  display: block;
+  background: #f6f8fc;
+  padding: 20px 16px 24px;
+  text-align: center;
+}
+
+.hm-page .pg-svc .eb {
+  color: var(--accent);
+}
+
+.hm-page .pg-svc > b {
+  display: block;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: -0.02em;
+  color: #0b1220;
+  margin-bottom: 16px;
+}
+
+.hm-page .pg-svc > b i {
+  font-style: normal;
+  color: var(--accent);
+}
+
+.hm-page .pg-svc .row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.hm-page .pg-svc .row s {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 8px;
+  font-size: 8.5px;
+  font-weight: 600;
+  color: #0b1220;
+}
+
+.hm-page .pg-svc .ic {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hm-page .pg-svc .ic svg {
+  width: 14px;
+}
+
+/* ---- sidebar ---- */
+
+.hm-side {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.hm-side .ttl {
+  display: block;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 11px;
+}
+
+.hm-legend .rw {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: 4px 0;
+}
+
+.hm-legend .d {
+  width: 10px;
+  height: 10px;
+  min-width: 10px;
+  border-radius: 50%;
+}
+
+.hm-legend .l1 {
+  background: #3b82f6;
+}
+
+.hm-legend .l2 {
+  background: #22c55e;
+}
+
+.hm-legend .l3 {
+  background: #facc15;
+}
+
+.hm-legend .l4 {
+  background: #f97316;
+}
+
+.hm-legend .l5 {
+  background: #ef4444;
+}
+
+.hm-top .rw {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.hm-top .rw:last-child {
+  border-bottom: none;
+}
+
+.hm-top .rw i {
+  flex: 1;
+  min-width: 0;
+  font-style: normal;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hm-top .rw b {
+  flex-shrink: 0;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.hm-count {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--accent-soft);
+  border-radius: 10px;
+  padding: 11px 13px;
+  font-size: 11px;
+  color: var(--accent-deep);
+}
+
+.hm-count svg {
+  width: 14px;
+  min-width: 14px;
+}
+
+.hm-foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hm-foot svg {
+  width: 14px;
+  min-width: 14px;
+  color: var(--accent);
+}
+
 /* ---------------------------------------------------------- breakpoints */
 
 /* Narrow desktops: the wrap has stopped shrinking but the image box hasn't,
@@ -9261,6 +9945,10 @@ footer {
     min-width: 1040px;
   }
   .fn-r {
+    grid-template-columns: 1fr;
+  }
+  /* The heatmap's sidebar drops under the page it annotates. */
+  .hm-r {
     grid-template-columns: 1fr;
   }
   .dv-tab {
