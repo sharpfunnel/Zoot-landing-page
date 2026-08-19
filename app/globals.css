@@ -10549,6 +10549,173 @@ footer {
   font-weight: 600;
 }
 
+/* ---- the errors view ---- */
+
+.er-tbl {
+  display: flex;
+  flex-direction: column;
+  font-size: 11.5px;
+}
+
+.er-tbl .hd,
+.er-tbl .rw {
+  display: grid;
+  grid-template-columns: 0.62fr 2.6fr 2.25fr 0.34fr 1.3fr 0.5fr 1fr;
+  gap: 10px;
+  align-items: center;
+  padding: 12px 13px;
+  border-bottom: 1px solid var(--border);
+}
+
+.er-tbl .hd {
+  background: var(--bg-1);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+/* Every column sorts, so every header carries the caret. */
+.er-tbl .hd i {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.er-tbl .srt {
+  width: 11px;
+  min-width: 11px;
+  display: block;
+  color: var(--border-strong);
+}
+
+.er-tbl .srt svg {
+  width: 11px;
+  display: block;
+}
+
+.er-tbl .rw:last-child {
+  border-bottom: none;
+}
+
+.er-tbl i {
+  font-style: normal;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-muted);
+}
+
+.er-tbl .r {
+  text-align: right;
+}
+
+/* Two kinds only: a script that threw, or a file that never arrived. */
+.er-tbl .kd {
+  display: inline-block;
+  border-radius: 100px;
+  padding: 3px 10px;
+  font-size: 10px;
+  font-weight: 600;
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  border: 1px solid #d3e7fb;
+}
+
+.er-tbl .msg {
+  color: var(--text);
+  font-weight: 500;
+  white-space: normal;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 1.4;
+}
+
+.er-tbl .src {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-faint);
+}
+
+.er-tbl .br {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  overflow: hidden;
+}
+
+.er-tbl .br .ic {
+  width: 15px;
+  min-width: 15px;
+  display: block;
+}
+
+.er-tbl .br .ic svg {
+  width: 15px;
+  display: block;
+}
+
+.er-tbl .br .fb {
+  color: #1877f2;
+}
+
+.er-tbl .br .ig {
+  color: #c13584;
+}
+
+.er-tbl .br .un {
+  color: var(--text-faint);
+}
+
+.er-tbl .cnt,
+.er-tbl .seen {
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* ---- the pager ---- */
+
+.er-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+.er-foot .pg {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.er-foot .pg i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  border: 1px solid var(--border-strong);
+  border-radius: 7px;
+  background: #ffffff;
+  font-style: normal;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.er-foot .pg .on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+  font-weight: 600;
+}
+
 /* ---------------------------------------------------------- breakpoints */
 
 /* Narrow desktops: the wrap has stopped shrinking but the image box hasn't,

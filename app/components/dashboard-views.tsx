@@ -208,6 +208,31 @@ const I: Record<string, React.ReactElement> = {
       <path d="M10 4.4v.8M15.6 10h-.8M10 15.6v-.8M4.4 10h.8" />
     </svg>
   ),
+  /* The two-way caret every sortable column header carries. */
+  sort: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M7 8.2L10 5.2l3 3M13 11.8L10 14.8l-3-3" />
+    </svg>
+  ),
+  facebook: (
+    <svg viewBox="0 0 20 20" fill="currentColor">
+      <path d="M10 2.2a7.8 7.8 0 00-1.2 15.5v-5.5H6.8V10h2v-1.5c0-2 1.2-3.1 3-3.1.9 0 1.8.16 1.8.16V7.3h-1c-1 0-1.3.6-1.3 1.25V10h2.2l-.35 2.2h-1.85v5.5A7.8 7.8 0 0010 2.2z" />
+    </svg>
+  ),
+  instagram: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinejoin="round">
+      <rect x="3.2" y="3.2" width="13.6" height="13.6" rx="4" />
+      <circle cx="10" cy="10" r="3.4" />
+      <path d="M13.9 6.1v.1" strokeLinecap="round" strokeWidth="2" />
+    </svg>
+  ),
+  question: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="10" cy="10" r="7.2" />
+      <path d="M8.2 8.1a1.9 1.9 0 013 1.9c-.6.4-1.2.8-1.2 1.7" />
+      <path d="M10 14.3v.2" />
+    </svg>
+  ),
 };
 
 /* --------------------------------------------------------------- data */
@@ -1948,6 +1973,185 @@ function PerfView({ onPick }: Picker) {
   );
 }
 
+
+/**
+ * What actually broke, newest and noisiest first. The two client domains in
+ * the design were a real customer's, so the page and the asset paths here are
+ * this site's own placeholder host instead.
+ */
+const ER_ROWS = [
+  ["js", "Script error.", "–", "ig", "Instagram · Android", "14", "8h ago"],
+  [
+    "js",
+    "Uncaught Error: Error invoking postMessage: Java object is gone",
+    "iabjs://navigation_performance_logger_android:1",
+    "fb",
+    "Facebook · Android",
+    "14",
+    "Yesterday",
+  ],
+  [
+    "js",
+    "Uncaught Error: Error invoking postMessage: Java exception was raised during …",
+    "iabjs://navigation_performance_logger_android:1",
+    "ig",
+    "Instagram · Android",
+    "4",
+    "Yesterday",
+  ],
+  [
+    "asset",
+    "Failed to load <script>",
+    "https://connect.facebook.net/signals/config/137…",
+    "un",
+    "Unknown · Unknown",
+    "3",
+    "6d ago",
+  ],
+  [
+    "js",
+    "Uncaught Error: Error invoking enableButtonsClickedMetaDataLogging: Java ob…",
+    "iabjs://navigation_performance_logger_android:1",
+    "fb",
+    "Facebook · Android",
+    "2",
+    "11h ago",
+  ],
+  [
+    "asset",
+    "Failed to load <img>",
+    "/_next/image?url=%2Frenders%2Fhero-3bhk.jpg&w=384…",
+    "un",
+    "Unknown · Unknown",
+    "1",
+    "3d ago",
+  ],
+  [
+    "asset",
+    "Failed to load <script>",
+    "https://connect.facebook.net/signals/config/137…",
+    "un",
+    "Unknown · Unknown",
+    "1",
+    "3d ago",
+  ],
+  [
+    "asset",
+    "Failed to load <script>",
+    "https://www.googletagmanager.com/gtm.js?id=GTM-…",
+    "un",
+    "Unknown · Unknown",
+    "1",
+    "3d ago",
+  ],
+  ["asset", "Failed to load <link>", "–", "un", "Unknown · Unknown", "1", "3d ago"],
+  [
+    "js",
+    "Uncaught Error: Error invoking enableDidUserTypeOnKeyboardLogging: Java o…",
+    "iabjs://navigation_performance_logger_android:1",
+    "ig",
+    "Instagram · Android",
+    "1",
+    "3d ago",
+  ],
+  [
+    "js",
+    "TypeError: null is not an object (evaluating 'e.contentWindow.postMessage')",
+    "https://yourbrand.com/?utm_source=…",
+    "un",
+    "Unknown · Unknown",
+    "1",
+    "4d ago",
+  ],
+  [
+    "asset",
+    "Failed to load <script>",
+    "https://connect.facebook.net/signals/config/137…",
+    "un",
+    "Unknown · Unknown",
+    "1",
+    "6d ago",
+  ],
+] as const;
+
+const ER_COLS = ["Kind", "Message", "Source", "Page", "Browser", "Count", "Last seen"];
+
+/**
+ * The Errors view: JavaScript errors, unhandled rejections and assets that
+ * failed to load, grouped by message so a single fault reads as one row with
+ * a count rather than a hundred.
+ */
+function ErrorsView({ onPick }: Picker) {
+  return (
+    <div className="dv er" aria-hidden="true">
+      <Rail active="Errors" onPick={onPick} />
+
+      <div className="dv-body">
+        <div className="dv-head">
+          <span className="ht">
+            <b>Errors</b>
+            <i>JavaScript errors, unhandled rejections and failed asset loads</i>
+          </span>
+          <span className="ctl">
+            <s className="seg">
+              <em>7d</em>
+              <em className="on">30d</em>
+              <em>90d</em>
+              <em>All</em>
+            </s>
+            <s className="exp">
+              {I.down}
+              Export
+            </s>
+          </span>
+        </div>
+
+        <div className="dv-card lv-tblwrap">
+          <span className="er-tbl">
+            <span className="hd">
+              {ER_COLS.map((c) => (
+                <i key={c}>
+                  {c}
+                  <b className="srt">{I.sort}</b>
+                </i>
+              ))}
+            </span>
+            {ER_ROWS.map(([kind, msg, src, br, brand, count, seen], i) => (
+              <span className="rw" key={`${msg}${i}`}>
+                <i>
+                  <b className={kind === "js" ? "kd js" : "kd as"}>
+                    {kind === "js" ? "JS" : "Asset"}
+                  </b>
+                </i>
+                <i className="msg">{msg}</i>
+                <i className="src">{src}</i>
+                <i>/</i>
+                <i className="br">
+                  <b className={`ic ${br}`}>
+                    {br === "fb" ? I.facebook : br === "ig" ? I.instagram : I.question}
+                  </b>
+                  {brand}
+                </i>
+                <i className="r cnt">{count}</i>
+                <i className="seen">{seen}</i>
+              </span>
+            ))}
+          </span>
+        </div>
+
+        <div className="er-foot">
+          <span className="sh">Showing 1 to 12 of 12 errors</span>
+          <span className="pg">
+            <i>‹</i>
+            <i className="on">1</i>
+            <i>›</i>
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function View({ kind, onPick }: { kind: string } & Picker) {
   if (kind === "leads") return <LeadsView onPick={onPick} />;
   if (kind === "sessions") return <SessionsView onPick={onPick} />;
@@ -1956,6 +2160,7 @@ function View({ kind, onPick }: { kind: string } & Picker) {
   if (kind === "forms") return <FormsView onPick={onPick} />;
   if (kind === "heatmap") return <HeatmapView onPick={onPick} />;
   if (kind === "performance") return <PerfView onPick={onPick} />;
+  if (kind === "errors") return <ErrorsView onPick={onPick} />;
   return <OverviewView onPick={onPick} />;
 }
 

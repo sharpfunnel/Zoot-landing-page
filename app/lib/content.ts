@@ -829,6 +829,12 @@ export const dashboardViews = [
     view: "performance",
     body: "Core Web Vitals measured on real visits rather than a lab test, with the spread behind each number and how it breaks down by device.",
   },
+  {
+    key: "errors",
+    label: "Errors",
+    view: "errors",
+    body: "Anything that broke on a real visit — scripts that threw, images that never loaded, tags that failed — grouped so one fault reads as one row.",
+  },
 ];
 
 /* --------------------------------------------------------------- pricing */
