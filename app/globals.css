@@ -8565,7 +8565,8 @@ footer {
    mock further up this sheet, and `.ld` sets `display: grid` — which turned
    this cell into a grid and sat the name beside its id. */
 .lv-tbl .lv-ld b,
-.lv-tbl .lv-sr b {
+.lv-tbl .lv-sr b,
+.sv-tbl .lv-sr b {
   display: block;
   font-weight: 600;
   color: var(--text);
@@ -8574,7 +8575,8 @@ footer {
 }
 
 .lv-tbl .lv-ld em,
-.lv-tbl .lv-sr em {
+.lv-tbl .lv-sr em,
+.sv-tbl .lv-sr em {
   display: block;
   font-style: normal;
   font-size: 9.5px;
@@ -8584,7 +8586,8 @@ footer {
   margin-top: 1px;
 }
 
-.lv-tbl .lv-sr b {
+.lv-tbl .lv-sr b,
+.sv-tbl .lv-sr b {
   font-weight: 500;
   color: var(--accent-deep);
 }
@@ -8661,6 +8664,228 @@ footer {
 
 .lv-tbl .capi .send svg {
   width: 11px;
+}
+
+/* ---- the sessions view ---- */
+
+.sv-kpis {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+
+/* The live-visitor tile flags itself rather than carrying a delta. */
+.lv-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+  font-style: normal;
+  font-family: var(--mono);
+  font-size: 8.5px;
+  letter-spacing: 0.08em;
+  color: var(--good);
+}
+
+.lv-live::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--good);
+}
+
+/* The device filter, beside the search box. */
+.lv-bar .seg {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: #ffffff;
+  border: 1px solid var(--border-strong);
+  border-radius: 9px;
+  padding: 3px;
+}
+
+.lv-bar .seg em {
+  font-style: normal;
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.lv-bar .seg .on {
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  font-weight: 600;
+}
+
+/* ---- the table ---- */
+
+.sv-tbl {
+  display: flex;
+  flex-direction: column;
+  font-size: 10px;
+}
+
+.sv-tbl .hd,
+.sv-tbl .rw {
+  display: grid;
+  grid-template-columns:
+    1.15fr 1fr 1.3fr 0.7fr 1.45fr 0.72fr 0.42fr 0.72fr 0.5fr 0.78fr 0.6fr 0.6fr 0.7fr;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.sv-tbl .hd {
+  background: var(--bg-1);
+  font-family: var(--mono);
+  font-size: 8.5px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.sv-tbl .rw:last-child {
+  border-bottom: none;
+}
+
+.sv-tbl i,
+.sv-tbl em {
+  font-style: normal;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-muted);
+}
+
+.sv-tbl .r {
+  text-align: right;
+}
+
+/* location: flag, country code, city */
+.sv-tbl .loc {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  overflow: visible;
+}
+
+.sv-tbl .fl {
+  width: 14px;
+  min-width: 14px;
+  border-radius: 2px;
+  display: block;
+}
+
+.sv-tbl .fl.gl {
+  color: var(--text-faint);
+}
+
+.sv-tbl .loc b {
+  font-family: var(--mono);
+  font-size: 8.5px;
+  font-weight: 500;
+  color: var(--text-faint);
+}
+
+.sv-tbl .loc em {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text);
+}
+
+.sv-tbl .ip {
+  font-family: var(--mono);
+  font-size: 9.5px;
+}
+
+/* device: a small glyph then the platform and browser */
+.sv-tbl .dev {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  overflow: visible;
+}
+
+.sv-tbl .dev .ic {
+  width: 13px;
+  min-width: 13px;
+  color: var(--text-faint);
+  display: block;
+}
+
+.sv-tbl .dev em {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sv-tbl .prm {
+  font-weight: 500;
+  color: var(--accent-deep);
+}
+
+.pill-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #e6f6ee;
+  color: var(--good);
+  border-radius: 100px;
+  padding: 3px 8px;
+  font-size: 9.5px;
+  font-weight: 600;
+}
+
+.pill-live::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--good);
+}
+
+.pill-form {
+  display: inline-block;
+  background: #fdf3e2;
+  color: var(--warn);
+  border: 1px solid #f3e2c2;
+  border-radius: 6px;
+  padding: 2px 7px;
+  font-size: 9.5px;
+  font-weight: 600;
+}
+
+.sv-tbl .watch {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid var(--border-strong);
+  border-radius: 7px;
+  padding: 4px 9px;
+  font-size: 9.5px;
+  font-weight: 600;
+  color: var(--accent-deep);
+  white-space: nowrap;
+}
+
+.sv-tbl .watch svg {
+  width: 9px;
+}
+
+/* Wider than the other views, so it sets what the frame scrolls to. */
+.sv .lv-tblwrap {
+  overflow-x: auto;
+}
+
+.sv-tbl {
+  min-width: 1320px;
 }
 
 /* ---------------------------------------------------------- breakpoints */

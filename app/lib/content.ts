@@ -793,6 +793,12 @@ export const dashboardViews = [
     view: "leads",
     body: "Every form submission as a row: what they asked about, where they came from, and whether the conversion made it back to Meta.",
   },
+  {
+    key: "sessions",
+    label: "Sessions",
+    view: "sessions",
+    body: "One row per visit — city, device, campaign, how far they scrolled and how long they stayed — with the recording of each one a click away.",
+  },
 ];
 
 /* --------------------------------------------------------------- pricing */

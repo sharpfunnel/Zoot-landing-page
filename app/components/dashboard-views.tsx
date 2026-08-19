@@ -142,6 +142,28 @@ const I: Record<string, React.ReactElement> = {
       <path d="M8.2 10.8l3.4-3.4" strokeLinecap="round" />
     </svg>
   ),
+  live: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinecap="round">
+      <path d="M3.4 8.4v3.2M6.8 5.6v8.8M10 3.2v13.6M13.2 6.8v6.4M16.6 9v2" />
+    </svg>
+  ),
+  monitor: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinejoin="round">
+      <rect x="2.6" y="4" width="14.8" height="9.6" rx="1.4" />
+      <path d="M7.4 17h5.2M10 13.6V17" strokeLinecap="round" />
+    </svg>
+  ),
+  phone: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinejoin="round">
+      <rect x="5.8" y="2.4" width="8.4" height="15.2" rx="1.8" />
+      <path d="M8.8 15.2h2.4" strokeLinecap="round" />
+    </svg>
+  ),
+  play: (
+    <svg viewBox="0 0 20 20" fill="currentColor">
+      <path d="M6.6 4.2l9.4 5.8-9.4 5.8z" />
+    </svg>
+  ),
 };
 
 /* --------------------------------------------------------------- data */
@@ -783,8 +805,189 @@ function LeadsView() {
   );
 }
 
+
+/* Simplified flags — inline SVG, since emoji flags don't render on Windows. */
+const SV_FLAGS: Record<string, React.ReactElement> = {
+  IN: (
+    <svg viewBox="0 0 16 12" className="fl">
+      <rect width="16" height="4" fill="#ff9933" />
+      <rect y="4" width="16" height="4" fill="#ffffff" />
+      <rect y="8" width="16" height="4" fill="#138808" />
+      <circle cx="8" cy="6" r="1.5" fill="none" stroke="#0a3d91" strokeWidth="0.7" />
+    </svg>
+  ),
+  US: (
+    <svg viewBox="0 0 16 12" className="fl">
+      <rect width="16" height="12" fill="#ffffff" />
+      {[0, 2, 4, 6, 8, 10].map((y) => (
+        <rect y={y} width="16" height="1.4" fill="#b22234" key={y} />
+      ))}
+      <rect width="7" height="6.4" fill="#3c3b6e" />
+    </svg>
+  ),
+  XX: (
+    <svg viewBox="0 0 16 12" className="fl gl" fill="none" stroke="currentColor" strokeWidth="1">
+      <circle cx="8" cy="6" r="4.6" />
+      <path d="M3.4 6h9.2M8 1.4c2.4 2.6 2.4 6.6 0 9.2-2.4-2.6-2.4-6.6 0-9.2z" />
+    </svg>
+  ),
+};
+
+const SV_KPIS = [
+  ["pulse", "Total Sessions", "10,351", null],
+  ["live", "Live Visitors", "8", "live"],
+  ["repeat", "Returning", "1,245", null],
+  ["clock", "Avg Duration", "4m 37s", null],
+  ["exit", "Bounce Rate", "42.7%", null],
+] as const;
+
+/**
+ * Invented sessions. The design came from a live dashboard, so the IP
+ * addresses and campaign name in it were a real audience's — the addresses
+ * here are from the ranges reserved for documentation (192.0.2.0/24,
+ * 198.51.100.0/24, 203.0.113.0/24), which can never belong to anyone.
+ */
+const SV_ROWS = [
+  ["IN", "Mumbai", "203.0.113.24", "win", "Windows · Chrome", "Direct", null, null, "1", "3s", "0%", null, "29m ago"],
+  ["XX", "—", "—", null, "— — —", "Direct", null, null, "1", "3s", "75%", null, "1h ago"],
+  ["IN", "Mumbai", "198.51.100.76", "mob", "Android · Facebook", "Facebook", "3BHK Launch — Leads", "facebook/paid_social", "1", "3s", "75%", null, "2h ago"],
+  ["US", "Forest City", "192.0.2.127", null, "— — —", "Direct", null, null, "1", "5s", "0%", null, "2h ago"],
+  ["US", "Social Circle", "192.0.2.184", "mob", "iOS · Mobile Safari", "Direct", null, null, "1", "25s", "0%", null, "2h ago"],
+  ["US", "Ashburn", "192.0.2.19", "win", "Windows · Chrome", "Direct", null, null, "0", "0s", "0%", null, "2h ago"],
+  ["IN", "Nagpur", "203.0.113.65", null, "— — —", "Facebook", "3BHK Launch — Leads", "facebook/paid_social", "1", "20s", "75%", null, "2h ago"],
+  ["XX", "—", "—", null, "— — —", "Direct", null, null, "1", "26m 32s", "100%", null, "2h ago"],
+  ["IN", "Mumbai", "203.0.113.24", "win", "Windows · Chrome", "Direct", null, null, "1", "1h 50m", "0%", "Form", "4h ago"],
+  ["IN", "Mumbai", "203.0.113.24", "win", "Windows · Chrome", "Direct", null, null, "1", "9s", "0%", null, "4h ago"],
+  ["IN", "Supaul", "198.51.100.158", "mob", "Android · Facebook", "Facebook", "3BHK Launch — Leads", "facebook/paid_social", "1", "6s", "0%", null, "5h ago"],
+  ["IN", "Pothia", "203.0.113.148", "mob", "Android · Facebook", "Facebook", "3BHK Launch — Leads", "facebook/paid_social", "1", "9s", "75%", null, "5h ago"],
+  ["IN", "Noida", "198.51.100.183", "mob", "Android · Facebook", "Facebook", "3BHK Launch — Leads", "facebook/paid_social", "1", "3s", "75%", null, "6h ago"],
+  ["IN", "Patna", "203.0.113.140", "mob", "Android · Instagram", "Facebook", "3BHK Launch — Leads", "facebook/paid_social", "3", "9s", "75%", null, "6h ago"],
+  ["IN", "Jaipur", "198.51.100.134", "mob", "Android · Facebook", "Facebook", "3BHK Launch — Leads", "facebook/paid_social", "1", "3s", "75%", null, "7h ago"],
+  ["IN", "Varanasi", "203.0.113.15", "mob", "Android · Facebook", "Facebook", "3BHK Launch — Leads", "facebook/paid_social", "1", "3s", "75%", null, "7h ago"],
+  ["IN", "New Delhi", "198.51.100.220", "mob", "Android · Facebook", "Facebook", "3BHK Launch — Leads", "facebook/paid_social", "1", "1s", "0%", null, "7h ago"],
+  ["IN", "Delhi", "203.0.113.19", "mob", "Android · Facebook", "Facebook", "3BHK Launch — Leads", "facebook/paid_social", "1", "39s", "100%", null, "7h ago"],
+] as const;
+
+/**
+ * The Sessions view: one row per visit, with the replay control on the end.
+ * The widest of the views — thirteen columns — so it sets the width the
+ * frame scrolls to on a narrow screen.
+ */
+function SessionsView() {
+  return (
+    <div className="dv sv" aria-hidden="true">
+      <Rail active="Sessions" />
+
+      <div className="dv-body">
+        <div className="dv-head">
+          <span className="ht">
+            <b>Sessions</b>
+            <i>Every visitor session, with replay</i>
+          </span>
+          <span className="ctl">
+            <s className="exp">
+              {I.down}
+              Export
+            </s>
+          </span>
+        </div>
+
+        <div className="sv-kpis">
+          {SV_KPIS.map(([icon, label, value, tone]) => (
+            <div className="dv-card lv-kpi" key={label}>
+              <span className="top">
+                <i className="ic">{I[icon]}</i>
+                <b className="n">{label}</b>
+                {tone ? <em className="lv-live">LIVE</em> : null}
+              </span>
+              <span className="v">{value}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="lv-bar">
+          <span className="srch">
+            {I.search}
+            Search session, visitor, city, IP...
+          </span>
+          <span className="seg">
+            {["All", "Desktop", "Mobile", "Tablet"].map((t, i) => (
+              <em className={i === 0 ? "on" : undefined} key={t}>
+                {t}
+              </em>
+            ))}
+          </span>
+          <span className="cnt">200 sessions</span>
+        </div>
+
+        <div className="dv-card lv-tblwrap">
+          <span className="sv-tbl">
+            <span className="hd">
+              <i>Location</i>
+              <i>IP address</i>
+              <i>Device</i>
+              <i>Source</i>
+              <i>Campaign / UTM</i>
+              <i>Params</i>
+              <i className="r">Pages</i>
+              <i className="r">Duration</i>
+              <i className="r">Scroll</i>
+              <i>Engagement</i>
+              <i>Status</i>
+              <i>Time</i>
+              <i>Replay</i>
+            </span>
+            {SV_ROWS.map((r, i) => {
+              const [cc, city, ip, dev, devLabel, src, camp, utm, pages, dur, scroll, eng, time] =
+                r;
+              return (
+                <span className="rw" key={`${ip}${i}`}>
+                  <i className="loc">
+                    {SV_FLAGS[cc]}
+                    <b>{cc === "XX" ? "" : cc}</b>
+                    <em>{city}</em>
+                  </i>
+                  <i className="ip">{ip}</i>
+                  <i className="dev">
+                    {dev ? <b className="ic">{dev === "win" ? I.monitor : I.phone}</b> : null}
+                    <em>{devLabel}</em>
+                  </i>
+                  <i>{src}</i>
+                  <i className="lv-sr">
+                    {camp ? (
+                      <>
+                        <b>{camp}</b>
+                        <em>{utm}</em>
+                      </>
+                    ) : (
+                      "—"
+                    )}
+                  </i>
+                  <i>{camp ? <b className="prm">11 params</b> : "—"}</i>
+                  <i className="r">{pages}</i>
+                  <i className="r">{dur}</i>
+                  <i className="r">{scroll}</i>
+                  <i>{eng ? <b className="pill-form">{eng}</b> : "—"}</i>
+                  <i>
+                    <b className="pill-live">Live</b>
+                  </i>
+                  <i className="cr">{time}</i>
+                  <i>
+                    <b className="watch">{I.play} Watch</b>
+                  </i>
+                </span>
+              );
+            })}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function View({ kind }: { kind: string }) {
   if (kind === "leads") return <LeadsView />;
+  if (kind === "sessions") return <SessionsView />;
   return <OverviewView />;
 }
 
