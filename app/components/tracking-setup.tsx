@@ -774,6 +774,80 @@ const ICONS: Record<string, React.ReactElement> = {
       <path d="M13.3 16.3c0-1.4 1-2.2 2.3-2.2s2.3.8 2.3 2.2z" fill="currentColor" />
     </svg>
   ),
+  whatsapp: (
+    <svg viewBox="0 0 20 20" fill="currentColor">
+      <path d="M10 2.4a7.5 7.5 0 00-6.4 11.4l-1 3.8 3.9-1a7.5 7.5 0 103.5-14.2zm0 1.6a5.9 5.9 0 014.9 9.2 5.9 5.9 0 01-7.6 1.9l-.4-.2-2 .5.5-1.9-.2-.4A5.9 5.9 0 0110 4z" />
+      <path d="M7.7 6.6c.2 0 .3 0 .4.3l.6 1.4c0 .2 0 .3-.1.4l-.4.5c-.1.1-.2.2 0 .4a6 6 0 002.8 2.3c.2 0 .3 0 .4-.1l.5-.6c.1-.1.2-.1.4 0l1.3.7c.2.1.2.2.2.4 0 .5-.4 1.1-.9 1.2-.5.1-1 .2-2.6-.5a8.4 8.4 0 01-3.5-3.5c-.6-1.2-.4-2 0-2.5.2-.3.6-.4.9-.4z" />
+    </svg>
+  ),
+  bolt: (
+    <svg viewBox="0 0 20 20" fill="currentColor">
+      <path d="M11.4 2.2L4.6 11h4l-.9 6.8L15 8.6h-4z" />
+    </svg>
+  ),
+  megaphone: (
+    <svg viewBox="0 0 20 20" fill="currentColor">
+      <path d="M14.6 3.2v13.6L7.4 13.4v-.2H6a3 3 0 010-6h1.4v-.2z" />
+      <path d="M16.2 6.6a3.6 3.6 0 010 6.8z" />
+      <path d="M7.2 14.2h2.2l.8 3.2H8z" />
+    </svg>
+  ),
+  /* Small round check badge beside a verified name. */
+  verified: (
+    <svg viewBox="0 0 20 20" fill="currentColor">
+      <circle cx="10" cy="10" r="8" />
+      <path d="M6.4 10.2l2.4 2.4 4.6-5" fill="none" stroke="#ffffff" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ),
+  kebab: (
+    <svg viewBox="0 0 20 20" fill="currentColor">
+      <circle cx="10" cy="4.4" r="1.5" />
+      <circle cx="10" cy="10" r="1.5" />
+      <circle cx="10" cy="15.6" r="1.5" />
+    </svg>
+  ),
+  back: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.1">
+      <path d="M12.4 4.4L6.8 10l5.6 5.6" />
+    </svg>
+  ),
+  phoneCall: (
+    <svg viewBox="0 0 20 20" fill="currentColor">
+      <path d="M6.2 3c.4 0 .6.2.8.5l1.2 2.6c.1.3 0 .6-.2.8l-1 .9c-.2.2-.3.4-.1.7a10 10 0 004.6 4.6c.3.2.5 0 .7-.1l.9-1c.2-.2.5-.3.8-.2l2.6 1.2c.3.2.5.4.5.8 0 1-.8 2.2-1.8 2.4-1 .2-2.1.3-5.3-1.5A15 15 0 013.9 8.6C2.6 5.8 3.2 4.4 3.8 3.8 4.4 3.2 5.4 3 6.2 3z" />
+    </svg>
+  ),
+  smile: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinecap="round">
+      <circle cx="10" cy="10" r="7.2" />
+      <path d="M7 11.6a3.6 3.6 0 006 0" />
+      <circle cx="7.6" cy="8.2" r="0.9" fill="currentColor" stroke="none" />
+      <circle cx="12.4" cy="8.2" r="0.9" fill="currentColor" stroke="none" />
+    </svg>
+  ),
+  clip: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M14.6 9.4l-5 5a3 3 0 01-4.2-4.2l5.6-5.6a2 2 0 012.8 2.8l-5.6 5.6a1 1 0 01-1.4-1.4l5-5" />
+    </svg>
+  ),
+  camera: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinejoin="round">
+      <path d="M2.8 6.8h2.6l1.2-1.8h6.8l1.2 1.8h2.6v9H2.8z" />
+      <circle cx="10" cy="11" r="2.8" />
+    </svg>
+  ),
+  mic: (
+    <svg viewBox="0 0 20 20" fill="currentColor">
+      <rect x="7.6" y="2.6" width="4.8" height="9" rx="2.4" />
+      <path
+        d="M5 9.6a5 5 0 0010 0"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+      />
+      <path d="M9.2 14.6h1.6v2.8H9.2z" />
+    </svg>
+  ),
 };
 
 const VD_NAV = [
@@ -2522,6 +2596,280 @@ function LeadsPanel() {
   );
 }
 
+
+const WA_FEATURES = [
+  ["bolt", "Instant Lead Delivery", "Leads reach WhatsApp in real-time"],
+  ["chat", "Real-time Conversations", "Respond faster and close more deals"],
+  ["target", "Better Lead Quality", "Engage genuine and interested leads"],
+  ["bars", "Track & Optimize", "Monitor performance and improve results"],
+];
+
+/* The four steps under "How it works", each on its own colour. */
+const WA_STEPS = [
+  ["megaphone", "s1", "Ads Run", "on Meta & Google"],
+  ["page", "s2", "Lead Captured", "from Ad / Form"],
+  ["whatsapp", "s3", "Sent to WhatsApp", "Automatically"],
+  ["person", "s4", "You Connect", "& Close the Deal"],
+];
+
+const WA_KPIS = [
+  ["users", "248", "Leads Captured", "28%"],
+  ["whatsapp", "186", "Leads on WhatsApp", "35%"],
+  ["chat", "75%", "Reply Rate", "18%"],
+  ["trend", "32", "Deals Closed", "22%"],
+];
+
+const WA_RECENT = [
+  ["RS", "Rohit Sharma", "meta", "Meta Ads", "Hi, I'm interested in your service.", "2m ago"],
+  ["PP", "Priya Patel", "google", "Google Ads", "Please share more details and pricing.", "5m ago"],
+  ["AV", "Amit Verma", "meta", "Meta Ads", "Can you call me back?", "12m ago"],
+  ["SG", "Sneha Gupta", "google", "Google Ads", "I want to know availability.", "18m ago"],
+  ["KM", "Karan Mehta", "meta", "Meta Ads", "Is this offer still valid?", "25m ago"],
+];
+
+/* The lead card that lands in the chat, field by field. */
+const WA_CARD = [
+  ["person", "Name:", "Rohit Sharma"],
+  ["phoneCall", "Phone:", "+91 98765 43210"],
+  ["target", "Interest:", "Service Inquiry"],
+  ["clock", "Time:", "Just now"],
+];
+
+/** A dashed connector between two steps of a flow. */
+function WaArrow() {
+  return (
+    <span className="wa-arw" aria-hidden="true">
+      <svg viewBox="0 0 34 8" fill="none">
+        <path
+          d="M1 4h26"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeDasharray="3 3"
+          strokeLinecap="round"
+        />
+        <path
+          d="M25.5 1.4L29.5 4l-4 2.6"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </span>
+  );
+}
+
+/**
+ * The WhatsApp forwarding tab. Three columns rather than the `.vd` app frame:
+ * the pitch on the left, the numbers in the middle and a phone showing the
+ * message as it arrives on the right — the artwork has no browser window
+ * around it, like the leads tab. Hidden from assistive tech like the other
+ * mocks: every figure in it belongs to the picture.
+ */
+function WhatsAppPanel() {
+  return (
+    <div className="wa" aria-hidden="true">
+      <div className="wa-left">
+        <span className="wa-brands">
+          <i className="lg">
+            <MetaMark className="bi meta" />
+          </i>
+          <i className="lg">
+            <GoogleAdsMark className="bi" />
+          </i>
+          <WaArrow />
+          <i className="lg on">{ICONS.whatsapp}</i>
+        </span>
+
+        <div className="wa-h">
+          Get Your
+          <b>
+            <em className="mt">Meta</em> &amp; <em className="gg">Google</em> Ads
+          </b>
+          <b>
+            Leads on <em className="wg">WhatsApp</em>
+          </b>
+        </div>
+        <p>Capture leads from your ads and instantly deliver them to WhatsApp.</p>
+
+        <span className="wa-feats">
+          {WA_FEATURES.map(([icon, title, sub]) => (
+            <span key={title}>
+              <i className="ic">{ICONS[icon]}</i>
+              <span className="tx">
+                <b>{title}</b>
+                <em>{sub}</em>
+              </span>
+            </span>
+          ))}
+        </span>
+
+        <div className="wa-how">
+          <span className="ct">How it works</span>
+          <span className="rw">
+            {WA_STEPS.map(([icon, tone, title, sub], i) => (
+              <span className="st" key={title}>
+                {i ? <WaArrow /> : null}
+                <span className="bd">
+                  <i className={`ic ${tone}`}>{ICONS[icon]}</i>
+                  <b>{title}</b>
+                  <em>{sub}</em>
+                </span>
+              </span>
+            ))}
+          </span>
+        </div>
+      </div>
+
+      <div className="wa-mid">
+        <div className="vd-card wa-flow">
+          <span className="ct">
+            From Ads to <em>WhatsApp</em> in Seconds
+          </span>
+          <span className="rw">
+            <span className="st">
+              <span className="bd">
+                <i className="ic pair">
+                  <MetaMark className="bi meta" />
+                  <GoogleAdsMark className="bi" />
+                </i>
+                <b>Meta &amp; Google Ads</b>
+              </span>
+            </span>
+            <WaArrow />
+            <span className="st">
+              <span className="bd">
+                <i className="ic blue">{ICONS.idcard}</i>
+                <b>Lead Captured</b>
+              </span>
+            </span>
+            <WaArrow />
+            <span className="st">
+              <span className="bd">
+                <i className="ic green">{ICONS.send}</i>
+                <b>Auto Forward</b>
+              </span>
+            </span>
+            <WaArrow />
+            <span className="st">
+              <span className="bd">
+                <i className="ic on">{ICONS.whatsapp}</i>
+                <b>Delivered on WhatsApp</b>
+              </span>
+            </span>
+          </span>
+        </div>
+
+        <div className="vd-card wa-kpis">
+          {WA_KPIS.map(([icon, value, label, delta]) => (
+            <span key={label}>
+              <i className="ic">{ICONS[icon]}</i>
+              <b>{value}</b>
+              <em>{label}</em>
+              <s>+ {delta} vs last 7 days</s>
+            </span>
+          ))}
+        </div>
+
+        <div className="vd-card wa-recent">
+          <span className="ct">
+            Recent Leads on WhatsApp
+            <em className="lk">View All</em>
+          </span>
+          <span className="rows">
+            {WA_RECENT.map(([initials, name, mark, platform, msg, ago]) => (
+              <span key={name}>
+                <i className="av">{initials}</i>
+                <span className="tx">
+                  <b>
+                    {name}
+                    <s className={`vf ${mark}`}>{ICONS.verified}</s>
+                  </b>
+                  <em>{platform}</em>
+                </span>
+                <span className="msg">{msg}</span>
+                <span className="ago">{ago}</span>
+                <span className="btn-chat">{ICONS.whatsapp} Open Chat</span>
+              </span>
+            ))}
+          </span>
+        </div>
+      </div>
+
+      <div className="wa-right">
+        <div className="wa-phone">
+          <span className="bar">
+            <b>9:41</b>
+            <i className="notch" />
+            <s>
+              {ICONS.bars}
+              {ICONS.wave}
+            </s>
+          </span>
+
+          <span className="hd">
+            <i className="bk">{ICONS.back}</i>
+            <i className="av">{ICONS.person}</i>
+            <span className="tx">
+              <b>
+                Your Business
+                <s className="vf">{ICONS.verified}</s>
+              </b>
+              <em>Online</em>
+            </span>
+            <i className="ac">{ICONS.phoneCall}</i>
+            <i className="ac">{ICONS.kebab}</i>
+          </span>
+
+          <span className="chat">
+            <span className="lead">
+              <span className="lh">
+                <i>{ICONS.chat}</i>
+                <b>
+                  New Lead from
+                  <em>Facebook Ads</em>
+                </b>
+              </span>
+              {WA_CARD.map(([icon, label, value]) => (
+                <span className="fd" key={label}>
+                  <i>{ICONS[icon]}</i>
+                  <b>{label}</b>
+                  <em>{value}</em>
+                </span>
+              ))}
+              <span className="go">{ICONS.whatsapp} Start Conversation</span>
+            </span>
+
+            <span className="bub in">
+              Hi, I&apos;m interested in your service.
+              <s>9:41 AM</s>
+            </span>
+            <span className="bub out">
+              Hi Rohit! 👋 Thanks for reaching out. How can we help you today?
+              <s>9:41 AM ✓✓</s>
+            </span>
+          </span>
+
+          <span className="inp">
+            <i>{ICONS.smile}</i>
+            <b>Message</b>
+            <i>{ICONS.clip}</i>
+            <i>{ICONS.camera}</i>
+            <i className="rec">{ICONS.mic}</i>
+          </span>
+        </div>
+
+        <div className="wa-note">
+          <span className="ic">{ICONS.whatsapp}</span>
+          <b>Never miss a lead!</b>
+          <em>Get instant WhatsApp notifications and reply on the go.</em>
+          <span className="fab">{ICONS.whatsapp}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function StagePanel({ kind }: { kind: string }) {
   if (kind === "setup") return <SetupPanel />;
   if (kind === "page") return <PagePanel />;
@@ -2529,6 +2877,7 @@ function StagePanel({ kind }: { kind: string }) {
   if (kind === "replay") return <ReplayPanel />;
   if (kind === "cta") return <CtaPanel />;
   if (kind === "forms") return <FormsPanel />;
+  if (kind === "whatsapp") return <WhatsAppPanel />;
   return <LeadsPanel />;
 }
 
@@ -2551,8 +2900,11 @@ function StagePanel({ kind }: { kind: string }) {
  * column left to match heights with, so it's left alone.
  */
 /* Low enough for a phone frame, where the mock has to shrink a long way to
-   fit; it only ever bites if a mock can't fit at any scale. */
+   fit; it only ever bites if a mock can't fit at any scale. The ceiling is
+   above 1 so a mock shorter than its frame grows into it rather than leaving
+   the bottom of the window empty — it's vector and text, so it stays sharp. */
 const MIN_K = 0.16;
+const MAX_K = 1.35;
 
 function fitStage(screen: HTMLElement | null) {
   const el = screen?.firstElementChild as HTMLElement | null;
@@ -2567,17 +2919,13 @@ function fitStage(screen: HTMLElement | null) {
   const avail = screen.clientHeight - pad * 2;
   if (avail <= 0) return;
 
-  /* Unscaled if it already fits — most mocks do on a wide screen. */
-  el.style.setProperty("--k", "1");
-  if (el.offsetHeight <= avail) return;
-
   /* Bisection rather than iterating height/avail directly: a smaller scale
      lays the mock out wider, which makes it shorter, so the naive ratio
      overshoots and settles well under the height it was given. The scaled
      height only ever rises with `--k`, though, so halving the interval finds
      the largest one that fits. */
   let lo = MIN_K;
-  let hi = 1;
+  let hi = MAX_K;
   for (let i = 0; i < 9; i++) {
     const mid = (lo + hi) / 2;
     el.style.setProperty("--k", String(mid));

@@ -320,6 +320,14 @@ export const setupSteps = [
     url: "dashboard / leads",
     panel: "leads",
   },
+  {
+    key: "whatsapp",
+    n: "08",
+    label: "Leads on WhatsApp",
+    body: "Every lead from your Meta and Google ads is forwarded to your WhatsApp the moment it arrives, so you can reply while they are still reading your page.",
+    url: "dashboard / whatsapp leads",
+    panel: "whatsapp",
+  },
 ];
 
 /**

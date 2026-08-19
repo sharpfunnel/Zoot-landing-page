@@ -2661,7 +2661,7 @@ footer {
    pinned to it so the two columns end on the same line, and each mock is
    scaled to fit rather than setting the height itself. */
 .setup-grid {
-  --stage-h: 543px;
+  --stage-h: 607px;
   display: grid;
   grid-template-columns: 320px 1fr;
   gap: 26px;
@@ -2878,6 +2878,10 @@ footer {
 
 .ld {
   --k: 0.79;
+}
+
+.wa {
+  --k: 0.62;
 }
 
 /* -------------------------------------------- stage mock: setup wizard */
@@ -6597,6 +6601,875 @@ footer {
   width: 17%;
   height: 76px;
   color: var(--accent-deep);
+}
+
+/* ------------------------------------------ stage mock: WhatsApp leads */
+
+/* Three columns and no browser frame, like the leads tab: the pitch on the
+   left, the numbers in the middle, the phone on the right. WhatsApp's own
+   greens are scoped to this block — they belong to the picture, not to the
+   site's palette. */
+
+.wa {
+  --wg: #25d366;
+  --wg-deep: #128c7e;
+  --wg-dark: #075e54;
+  --wg-soft: #e7f8ee;
+  display: grid;
+  grid-template-columns: 0.98fr 1.62fr 0.92fr;
+  align-items: start;
+  gap: 12px;
+  font-size: 8px;
+  color: var(--text);
+}
+
+/* ---- left column ---- */
+
+.wa-left {
+  min-width: 0;
+}
+
+.wa-brands {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 12px;
+}
+
+.wa-brands .lg {
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wa-brands .lg.on {
+  background: var(--wg);
+  border-color: var(--wg);
+  color: #ffffff;
+}
+
+.wa-brands .bi {
+  width: 15px;
+  min-width: 15px;
+}
+
+.wa-brands .bi.meta {
+  width: 19px;
+  min-width: 19px;
+}
+
+.wa-brands .lg.on svg {
+  width: 17px;
+}
+
+/* Sized so "Leads on WhatsApp" holds one line in this column, as it does in
+   the artwork — the panel is scaled to its frame anyway, so what matters is
+   the proportion to everything beside it, not the absolute size. */
+.wa-h {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 1.18;
+  letter-spacing: -0.03em;
+}
+
+.wa-h b {
+  display: block;
+  font-weight: 700;
+}
+
+.wa-h em {
+  font-style: normal;
+}
+
+.wa-h .mt {
+  color: #0081fb;
+}
+
+.wa-h .gg {
+  color: #4285f4;
+}
+
+.wa-h .wg {
+  color: var(--wg-deep);
+}
+
+.wa-left > p {
+  font-size: 9px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin: 8px 0 13px;
+}
+
+/* ---- the four selling points ---- */
+
+.wa-feats {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.wa-feats > span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.wa-feats .ic {
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  border-radius: 50%;
+  background: var(--wg);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wa-feats .ic svg {
+  width: 12px;
+}
+
+.wa-feats .tx {
+  min-width: 0;
+}
+
+.wa-feats .tx b {
+  display: block;
+  font-size: 8.5px;
+  font-weight: 600;
+}
+
+.wa-feats .tx em {
+  display: block;
+  font-style: normal;
+  font-size: 7px;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+
+/* ---- how it works ---- */
+
+.wa-how {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.wa-how .ct {
+  display: block;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 9px;
+  margin-bottom: 9px;
+}
+
+.wa-how .rw {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2px;
+}
+
+.wa-how .st {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+}
+
+.wa-how .bd {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-width: 0;
+}
+
+.wa-how .ic {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.wa-how .ic svg {
+  width: 13px;
+}
+
+/* One colour per step, as in the artwork — the run, the capture, the send
+   and the reply each read as a different stage. */
+.wa-how .s1 {
+  background: var(--accent);
+}
+
+.wa-how .s2 {
+  background: #7c5cf0;
+}
+
+.wa-how .s3 {
+  background: var(--wg);
+}
+
+.wa-how .s4 {
+  background: #f5a623;
+}
+
+.wa-how .bd b {
+  font-size: 6.5px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.wa-how .bd em {
+  font-style: normal;
+  font-size: 5px;
+  white-space: nowrap;
+  color: var(--text-muted);
+  line-height: 1.25;
+}
+
+/* ---- the dashed connector ---- */
+
+.wa-arw {
+  display: block;
+  width: 22px;
+  min-width: 22px;
+  color: var(--text-faint);
+}
+
+.wa-arw svg {
+  display: block;
+  width: 100%;
+}
+
+.wa-how .wa-arw {
+  width: 11px;
+  min-width: 11px;
+  margin-top: -14px;
+}
+
+/* ---- middle column ---- */
+
+.wa-mid {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  min-width: 0;
+}
+
+.wa-mid .vd-card {
+  padding: 11px;
+}
+
+.wa-flow .ct {
+  display: block;
+  text-align: center;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 10px;
+  margin-bottom: 11px;
+}
+
+.wa-flow .ct em {
+  font-style: normal;
+  color: var(--wg-deep);
+}
+
+.wa-flow .rw {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 3px;
+}
+
+.wa-flow .st {
+  min-width: 0;
+}
+
+.wa-flow .bd {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.wa-flow .ic {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  margin-bottom: 6px;
+}
+
+.wa-flow .ic svg {
+  width: 16px;
+}
+
+/* The first step carries both platform marks, stacked to fit one tile. */
+.wa-flow .ic.pair {
+  flex-direction: column;
+  gap: 1px;
+}
+
+.wa-flow .ic.pair .bi {
+  width: 13px;
+}
+
+.wa-flow .ic.pair .bi.meta {
+  width: 16px;
+}
+
+.wa-flow .ic.blue {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+}
+
+.wa-flow .ic.green {
+  background: var(--wg);
+  border-color: var(--wg);
+  color: #ffffff;
+}
+
+.wa-flow .ic.on {
+  background: var(--wg);
+  border-color: var(--wg);
+  border-radius: 50%;
+  color: #ffffff;
+}
+
+.wa-flow .bd b {
+  font-size: 7px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.wa-flow .wa-arw {
+  margin-top: 14px;
+}
+
+/* ---- the four numbers ---- */
+
+.wa-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.wa-kpis > span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-width: 0;
+}
+
+.wa-kpis .ic {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--wg-soft);
+  color: var(--wg-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+.wa-kpis .ic svg {
+  width: 13px;
+}
+
+.wa-kpis b {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: -0.025em;
+}
+
+.wa-kpis em {
+  font-style: normal;
+  font-size: 6px;
+  color: var(--text-muted);
+  margin-top: 1px;
+  white-space: nowrap;
+}
+
+.wa-kpis s {
+  text-decoration: none;
+  font-size: 5.5px;
+  font-weight: 600;
+  color: var(--good);
+  margin-top: 3px;
+  white-space: nowrap;
+}
+
+/* ---- recent leads ---- */
+
+.wa-recent .ct {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 9.5px;
+  margin-bottom: 9px;
+}
+
+.wa-recent .ct .lk {
+  font-family: var(--body);
+  font-style: normal;
+  font-size: 7.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--bg-1);
+  border-radius: 100px;
+  padding: 3px 8px;
+}
+
+.wa-recent .rows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wa-recent .rows > span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+}
+
+.wa-recent .av {
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+  color: #ffffff;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 7px;
+  font-style: normal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wa-recent .tx {
+  width: 22%;
+  min-width: 0;
+}
+
+.wa-recent .tx b {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 7.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* The badge takes its platform's colour rather than a single brand blue. */
+.wa-recent .vf {
+  width: 9px;
+  min-width: 9px;
+  display: block;
+}
+
+.wa-recent .vf.meta {
+  color: #0081fb;
+}
+
+.wa-recent .vf.google {
+  color: #34a853;
+}
+
+.wa-recent .tx em {
+  display: block;
+  font-style: normal;
+  font-size: 6.5px;
+  color: var(--text-faint);
+  margin-top: 1px;
+}
+
+.wa-recent .msg {
+  flex: 1;
+  min-width: 0;
+  font-size: 6.5px;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wa-recent .ago {
+  flex-shrink: 0;
+  font-size: 6.5px;
+  color: var(--text-faint);
+}
+
+.wa-recent .btn-chat {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+  background: var(--wg);
+  color: #ffffff;
+  border-radius: 100px;
+  padding: 4px 7px;
+  font-size: 6px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.wa-recent .btn-chat svg {
+  width: 9px;
+}
+
+/* ---- the phone ---- */
+
+.wa-right {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.wa-phone {
+  background: #0b0f14;
+  border-radius: 20px;
+  padding: 5px;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.wa-phone .bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 9px 5px;
+  color: #ffffff;
+  font-size: 6.5px;
+  font-weight: 600;
+}
+
+.wa-phone .bar .notch {
+  width: 34%;
+  height: 9px;
+  border-radius: 100px;
+  background: #000000;
+}
+
+.wa-phone .bar s {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  text-decoration: none;
+}
+
+.wa-phone .bar svg {
+  width: 8px;
+}
+
+.wa-phone .hd {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--wg-dark);
+  color: #ffffff;
+  padding: 7px 8px;
+  border-radius: 14px 14px 0 0;
+}
+
+.wa-phone .hd .bk svg,
+.wa-phone .hd .ac svg {
+  width: 10px;
+  display: block;
+}
+
+.wa-phone .hd .av {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wa-phone .hd .av svg {
+  width: 11px;
+}
+
+.wa-phone .hd .tx {
+  flex: 1;
+  min-width: 0;
+}
+
+.wa-phone .hd .tx b {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 7.5px;
+  font-weight: 600;
+}
+
+.wa-phone .hd .vf {
+  width: 8px;
+  min-width: 8px;
+  display: block;
+  color: #4fc3f7;
+}
+
+.wa-phone .hd .tx em {
+  display: block;
+  font-style: normal;
+  font-size: 6px;
+  opacity: 0.75;
+}
+
+.wa-phone .hd .ac {
+  opacity: 0.9;
+}
+
+/* ---- the conversation ---- */
+
+.wa-phone .chat {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: #f4f6f7;
+  padding: 8px;
+}
+
+.wa-phone .lead {
+  background: #ffffff;
+  border-radius: 8px;
+  border-left: 2.5px solid var(--wg);
+  padding: 7px 8px;
+  box-shadow: var(--shadow-sm);
+}
+
+.wa-phone .lh {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 6px;
+}
+
+.wa-phone .lh i {
+  width: 14px;
+  min-width: 14px;
+  color: #0081fb;
+  display: block;
+}
+
+.wa-phone .lh b {
+  font-size: 6.5px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.wa-phone .lh em {
+  display: block;
+  font-style: normal;
+  color: #0081fb;
+}
+
+.wa-phone .fd {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 6px;
+  margin-top: 3px;
+}
+
+.wa-phone .fd i {
+  width: 8px;
+  min-width: 8px;
+  color: var(--text-faint);
+  display: block;
+}
+
+.wa-phone .fd b {
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.wa-phone .fd em {
+  font-style: normal;
+  font-weight: 600;
+}
+
+.wa-phone .go {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin-top: 7px;
+  border: 1px solid var(--wg);
+  border-radius: 6px;
+  padding: 4px;
+  font-size: 6.5px;
+  font-weight: 600;
+  color: var(--wg-deep);
+}
+
+.wa-phone .go svg {
+  width: 9px;
+}
+
+.wa-phone .bub {
+  max-width: 84%;
+  border-radius: 8px;
+  padding: 5px 7px 4px;
+  font-size: 6.5px;
+  line-height: 1.4;
+  box-shadow: var(--shadow-sm);
+}
+
+.wa-phone .bub s {
+  display: block;
+  text-decoration: none;
+  font-size: 5.5px;
+  color: var(--text-faint);
+  text-align: right;
+  margin-top: 2px;
+}
+
+.wa-phone .bub.in {
+  align-self: flex-start;
+  background: #ffffff;
+  border-top-left-radius: 2px;
+}
+
+.wa-phone .bub.out {
+  align-self: flex-end;
+  background: #d9fdd3;
+  border-top-right-radius: 2px;
+}
+
+.wa-phone .bub.out s {
+  color: var(--wg-deep);
+}
+
+.wa-phone .inp {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  padding: 6px 8px;
+  border-radius: 0 0 14px 14px;
+}
+
+.wa-phone .inp i {
+  width: 11px;
+  min-width: 11px;
+  color: var(--text-faint);
+  display: block;
+}
+
+.wa-phone .inp b {
+  flex: 1;
+  font-size: 6.5px;
+  font-weight: 400;
+  color: var(--text-faint);
+}
+
+.wa-phone .inp .rec {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  border-radius: 50%;
+  background: var(--wg);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wa-phone .inp .rec svg {
+  width: 10px;
+}
+
+/* ---- the notification card under the phone ---- */
+
+.wa-note {
+  position: relative;
+  background: var(--wg-soft);
+  border: 1px solid #cdeedb;
+  border-radius: 10px;
+  padding: 9px 11px 11px;
+}
+
+.wa-note .ic {
+  display: block;
+  width: 20px;
+  color: var(--wg-deep);
+  margin-bottom: 4px;
+}
+
+.wa-note b {
+  display: block;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 9px;
+}
+
+.wa-note em {
+  display: block;
+  font-style: normal;
+  font-size: 7px;
+  line-height: 1.45;
+  color: var(--text-muted);
+  margin-top: 2px;
+  padding-right: 22px;
+}
+
+/* The floating action button, as it sits over the corner in the artwork. */
+.wa-note .fab {
+  position: absolute;
+  right: -6px;
+  bottom: -8px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--wg);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+}
+
+.wa-note .fab svg {
+  width: 15px;
 }
 
 /* ---------------------------------------------------------- breakpoints */
