@@ -10716,6 +10716,482 @@ footer {
   font-weight: 600;
 }
 
+/* ---- the tech stack view ---- */
+
+/* Stretch, not start: the three cards in a row square off along the bottom,
+   and the View All footers line up because each is pushed there. */
+.ts-r {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.ts-card {
+  padding: 15px;
+}
+
+.ts-card .ct {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 14px;
+  margin-bottom: 14px;
+}
+
+.ts-card .ct .ic {
+  width: 18px;
+  min-width: 18px;
+  color: var(--accent);
+  display: block;
+}
+
+.ts-card .ct .ic svg {
+  width: 18px;
+  display: block;
+}
+
+.ts-split {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+.ts-split .dv-ring {
+  width: 42%;
+  max-width: 132px;
+}
+
+.ts-split .dv-ring circle {
+  stroke-width: 7;
+}
+
+.ts-split .dv-ring .c b {
+  font-size: 19px;
+  color: var(--accent);
+}
+
+.ts-split .lg {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 11.5px;
+}
+
+.ts-split .lg > span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.ts-split .d {
+  width: 9px;
+  height: 9px;
+  min-width: 9px;
+  border-radius: 50%;
+}
+
+.ts-split .lg .n {
+  flex: 1;
+  min-width: 0;
+  font-weight: 400;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ts-split .lg em {
+  flex-shrink: 0;
+  font-style: normal;
+  font-weight: 600;
+}
+
+/* Nine slices at most, so the ramp runs further than the other rings'. */
+.ts .dv-ring .s0,
+.ts-split .c0 {
+  stroke: #2563eb;
+  background: #2563eb;
+}
+
+.ts .dv-ring .s1,
+.ts-split .c1 {
+  stroke: #38bdf8;
+  background: #38bdf8;
+}
+
+.ts .dv-ring .s2,
+.ts-split .c2 {
+  stroke: #10b981;
+  background: #10b981;
+}
+
+.ts .dv-ring .s3,
+.ts-split .c3 {
+  stroke: #8b5cf6;
+  background: #8b5cf6;
+}
+
+.ts .dv-ring .s4,
+.ts-split .c4 {
+  stroke: #f5a623;
+  background: #f5a623;
+}
+
+.ts .dv-ring .s5,
+.ts-split .c5 {
+  stroke: #f97316;
+  background: #f97316;
+}
+
+.ts .dv-ring .s6,
+.ts-split .c6 {
+  stroke: #22d3ee;
+  background: #22d3ee;
+}
+
+.ts .dv-ring .s7,
+.ts-split .c7 {
+  stroke: #1e40af;
+  background: #1e40af;
+}
+
+.ts .dv-ring .s8,
+.ts-split .c8 {
+  stroke: #94a3b8;
+  background: #94a3b8;
+}
+
+/* ---- ranked lists ---- */
+
+.ts-bars {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 11.5px;
+}
+
+.ts-bars > span {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.ts-bars .n {
+  width: 72px;
+  min-width: 72px;
+  font-style: normal;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ts-bars .tk {
+  flex: 1;
+  min-width: 0;
+  height: 6px;
+  border-radius: 4px;
+  background: var(--bg-2);
+  overflow: hidden;
+}
+
+.ts-bars .tk s {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: var(--accent);
+  text-decoration: none;
+}
+
+.ts-bars b {
+  width: 42px;
+  flex-shrink: 0;
+  text-align: right;
+  font-weight: 600;
+}
+
+/* Pinned to the foot of the card, so the three line up even though the
+   network list has one row and the others have fifteen. */
+.ts-more {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 16px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.ts-more i {
+  font-style: normal;
+  font-size: 14px;
+}
+
+.ts-note {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: var(--accent-soft);
+  border-radius: 10px;
+  padding: 13px 15px;
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+.ts-note svg {
+  width: 15px;
+  min-width: 15px;
+  color: var(--accent);
+}
+
+/* ---- the Meta CAPI view ---- */
+
+.mc-r {
+  display: grid;
+  grid-template-columns: 0.78fr 1.55fr;
+  gap: 12px;
+  align-items: start;
+}
+
+.mc-comp,
+.mc-log {
+  padding: 16px;
+}
+
+.mc-r .ct {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.mc-r .sub {
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+/* ---- the composer ---- */
+
+.mc-comp .fl {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 500;
+  margin-bottom: 7px;
+}
+
+.mc-comp .inp {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: 9px;
+  padding: 11px 13px;
+  font-size: 11.5px;
+  margin-bottom: 16px;
+}
+
+/* An empty field, so its text is the placeholder rather than a value. */
+.mc-comp .inp.ph {
+  color: var(--text-faint);
+}
+
+.mc-comp .inp em {
+  font-style: normal;
+  color: var(--text-faint);
+}
+
+.mc-comp .chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.mc-comp .chips em {
+  font-style: normal;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+.mc-comp .chips .on {
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.mc-comp .two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.mc-comp .warn {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  background: #fdf9f1;
+  border: 1px solid #f0e0c4;
+  border-radius: 9px;
+  padding: 11px 13px;
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--warn);
+  margin-bottom: 16px;
+}
+
+.mc-comp .warn svg {
+  width: 14px;
+  min-width: 14px;
+  margin-top: 1px;
+}
+
+/* The dry run, shown before anything is sent. */
+.mc-comp .code {
+  display: block;
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 12px;
+  font-family: var(--mono);
+  font-size: 10px;
+  line-height: 1.65;
+  color: var(--text-muted);
+  overflow-x: auto;
+  margin-bottom: 16px;
+}
+
+.mc-comp .code i {
+  display: block;
+  font-style: normal;
+  white-space: pre;
+}
+
+.mc-comp .code .k {
+  font-weight: 400;
+  color: var(--accent-deep);
+}
+
+.mc-comp .code .s {
+  font-weight: 400;
+  color: var(--good);
+}
+
+.mc-comp .send {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  background: var(--accent);
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 13px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.mc-comp .send svg {
+  width: 16px;
+}
+
+/* ---- the delivery log ---- */
+
+.mc-tbl {
+  display: flex;
+  flex-direction: column;
+  font-size: 11.5px;
+}
+
+.mc-tbl .hd,
+.mc-tbl .rw {
+  display: grid;
+  grid-template-columns: 1.5fr 0.7fr 0.8fr 1.6fr;
+  gap: 12px;
+  align-items: center;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.mc-tbl .hd {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  padding-top: 0;
+}
+
+.mc-tbl .rw:last-child {
+  border-bottom: none;
+}
+
+.mc-tbl i {
+  font-style: normal;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-muted);
+}
+
+.mc-tbl .cr {
+  color: var(--text-faint);
+}
+
+.mc-tbl .eid {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-faint);
+}
+
+/* `.mc-ld`, not `.ld`: that one is the leads stage mock's root and sets
+   `display: grid` with 40px of padding, which made every row here 120px tall.
+   Same trap as the leads table further up. */
+.mc-tbl .mc-ld {
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* Three states, each with its own outline rather than a filled pill. */
+.mc-tbl .st {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.mc-tbl .st.ok {
+  background: #e6f6ee;
+  border: 1px solid #c7ebd8;
+  color: var(--good);
+}
+
+.mc-tbl .st.bad {
+  background: #fdecec;
+  border: 1px solid #f7cdcd;
+  color: #d64545;
+}
+
+.mc-tbl .st.none {
+  background: #ffffff;
+  border: 1px solid var(--border-strong);
+  color: var(--text-muted);
+}
+
 /* ---------------------------------------------------------- breakpoints */
 
 /* Narrow desktops: the wrap has stopped shrinking but the image box hasn't,
@@ -10774,6 +11250,12 @@ footer {
     grid-template-columns: 1fr;
   }
   .pf-r {
+    grid-template-columns: 1fr;
+  }
+  .ts-r {
+    grid-template-columns: 1fr 1fr;
+  }
+  .mc-r {
     grid-template-columns: 1fr;
   }
   .dv-tab {

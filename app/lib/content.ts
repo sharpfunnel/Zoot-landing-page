@@ -835,6 +835,18 @@ export const dashboardViews = [
     view: "errors",
     body: "Anything that broke on a real visit — scripts that threw, images that never loaded, tags that failed — grouped so one fault reads as one row.",
   },
+  {
+    key: "tech",
+    label: "Tech Stack",
+    view: "tech",
+    body: "What your visitors were actually using — device, browser, operating system, screen size and language — so the page can be built for the ones who show up.",
+  },
+  {
+    key: "capi",
+    label: "Meta CAPI",
+    view: "capi",
+    body: "The server-side conversion payload, shown in full before it is sent, and the log of every one Meta did and didn't accept.",
+  },
 ];
 
 /* --------------------------------------------------------------- pricing */

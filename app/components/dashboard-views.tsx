@@ -233,6 +233,42 @@ const I: Record<string, React.ReactElement> = {
       <path d="M10 14.3v.2" />
     </svg>
   ),
+  devices: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinejoin="round">
+      <rect x="2.2" y="4" width="10" height="7.6" rx="1.4" />
+      <path d="M5.4 14.6h3.6" strokeLinecap="round" />
+      <rect x="13" y="7.4" width="4.8" height="9.2" rx="1.4" />
+    </svg>
+  ),
+  globe: (
+    <svg viewBox="0 0 20 20" {...S}>
+      <circle cx="10" cy="10" r="7.2" />
+      <path d="M2.8 10h14.4" />
+      <path d="M10 2.8c2.5 2.6 2.5 11.8 0 14.4-2.5-2.6-2.5-11.8 0-14.4z" />
+    </svg>
+  ),
+  screen: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinejoin="round">
+      <rect x="2.4" y="3.6" width="15.2" height="10.4" rx="1.6" />
+      <path d="M7 17h6" strokeLinecap="round" />
+    </svg>
+  ),
+  wifi: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinecap="round">
+      <path d="M2.6 7.6a11 11 0 0114.8 0" />
+      <path d="M5.4 10.8a7 7 0 019.2 0" />
+      <path d="M8 13.9a3 3 0 014 0" />
+      <path d="M10 16.6v.1" strokeWidth="2" />
+    </svg>
+  ),
+  lang: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M2.6 4.8h7.2M6.2 3.2v1.6" />
+      <path d="M8.2 4.8c0 3.4-2.4 5.8-5.6 6.8" />
+      <path d="M4.4 8.2c1 1.9 2.8 3.2 4.8 3.8" />
+      <path d="M10.4 16.8l3.2-8 3.2 8M11.6 14.2h4" />
+    </svg>
+  ),
 };
 
 /* --------------------------------------------------------------- data */
@@ -2152,6 +2188,344 @@ function ErrorsView({ onPick }: Picker) {
   );
 }
 
+
+/* The three rings. Percentages are of the same 8,742 visitors the Overview
+   view counts, so the totals in the middle of each agree with it. */
+const TS_DEVICE = [
+  ["Mobile", "72.1%", 72.1],
+  ["Other", "17.0%", 17],
+  ["Desktop", "10.5%", 10.5],
+  ["Tablet", "0.4%", 0.4],
+] as const;
+
+const TS_BROWSER = [
+  ["Facebook", "37.1%", 37.1],
+  ["Instagram", "31.2%", 31.2],
+  ["Unknown", "18.3%", 18.3],
+  ["Chrome", "7.7%", 7.7],
+  ["Mobile Chrome", "2.7%", 2.7],
+  ["Chrome Headless", "1.6%", 1.6],
+  ["Mobile Safari", "1.0%", 1],
+  ["Electron", "0.1%", 0.1],
+  ["Samsung Internet", "0.1%", 0.1],
+] as const;
+
+const TS_OS = [
+  ["Android", "65.2%", 65.2],
+  ["Unknown", "18.5%", 18.5],
+  ["iOS", "7.3%", 7.3],
+  ["Windows", "6.7%", 6.7],
+  ["Linux", "2.0%", 2],
+  ["macOS", "0.3%", 0.3],
+] as const;
+
+/* Counts, with each bar as a share of the longest in its own list. */
+const TS_RES = [
+  ["Unknown", "1,490", 100],
+  ["360×800", "1,215", 82],
+  ["385×854", "388", 26],
+  ["1920×1080", "326", 22],
+  ["360×820", "288", 19],
+  ["412×915", "263", 18],
+  ["360×825", "263", 18],
+  ["1280×720", "238", 16],
+  ["393×873", "238", 16],
+  ["360×806", "188", 13],
+  ["360×780", "150", 10],
+  ["440×956", "138", 9],
+  ["384×854", "138", 9],
+  ["800×600", "125", 8],
+  ["393×852", "125", 8],
+] as const;
+
+const TS_NET = [["Unknown", "8,742", 100]] as const;
+
+/* These add up to the full 8,742 — every visit reports a language. */
+const TS_LANG = [
+  ["en-IN", "3,104", 100],
+  ["en-US", "2,768", 89],
+  ["Unknown", "1,490", 48],
+  ["en-GB", "814", 26],
+  ["hi-IN", "313", 10],
+  ["hi-US", "63", 2],
+  ["en-AU", "50", 2],
+  ["gu-IN", "25", 1],
+  ["mr-IN", "25", 1],
+  ["hi-GB", "25", 1],
+  ["te-IN", "13", 1],
+  ["fi-FI", "13", 1],
+  ["bn-IN", "13", 1],
+  ["en-CA", "13", 1],
+  ["en-AE", "13", 1],
+] as const;
+
+/** One of the three ring cards, with its legend beside it. */
+function TsRing({
+  icon,
+  title,
+  slices,
+}: {
+  icon: string;
+  title: string;
+  slices: readonly (readonly [string, string, number])[];
+}) {
+  return (
+    <div className="dv-card ts-card">
+      <span className="ct">
+        <i className="ic">{I[icon]}</i>
+        {title}
+      </span>
+      <div className="ts-split">
+        <Ring slices={slices} total="8,742" label="Visitors" />
+        <span className="lg">
+          {slices.map(([name, pct], i) => (
+            <span key={name}>
+              <i className={`d c${i}`} />
+              <b className="n">{name}</b>
+              <em>{pct}</em>
+            </span>
+          ))}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+/** One of the three ranked lists, with its View All footer. */
+function TsBars({
+  icon,
+  title,
+  rows,
+}: {
+  icon: string;
+  title: string;
+  rows: readonly (readonly [string, string, number])[];
+}) {
+  return (
+    <div className="dv-card ts-card">
+      <span className="ct">
+        <i className="ic">{I[icon]}</i>
+        {title}
+      </span>
+      <span className="ts-bars">
+        {rows.map(([label, count, w]) => (
+          <span key={label}>
+            <i className="n">{label}</i>
+            <i className="tk">
+              <s style={{ width: `${w}%` }} />
+            </i>
+            <b>{count}</b>
+          </span>
+        ))}
+      </span>
+      <span className="ts-more">
+        View All<i>›</i>
+      </span>
+    </div>
+  );
+}
+
+/**
+ * The Tech Stack view: what the visitors were actually using. Three rings for
+ * the splits that are shares of everyone, three ranked lists for the ones with
+ * a long tail.
+ */
+function TechView({ onPick }: Picker) {
+  return (
+    <div className="dv ts" aria-hidden="true">
+      <Rail active="Tech Stack" onPick={onPick} />
+
+      <div className="dv-body">
+        <div className="dv-head">
+          <span className="ht">
+            <b>Tech Stack</b>
+            <i>Devices, browsers and networks your visitors use</i>
+          </span>
+          <span className="ctl">
+            <s className="exp">
+              {I.cal}
+              Last 30 days
+              <em>⌄</em>
+            </s>
+            <s className="exp">
+              {I.down}
+              Export
+            </s>
+          </span>
+        </div>
+
+        <div className="ts-r">
+          <TsRing icon="devices" title="Device Type" slices={TS_DEVICE} />
+          <TsRing icon="globe" title="Browser" slices={TS_BROWSER} />
+          <TsRing icon="monitor" title="Operating System" slices={TS_OS} />
+        </div>
+
+        <div className="ts-r">
+          <TsBars icon="screen" title="Screen Resolution" rows={TS_RES} />
+          <TsBars icon="wifi" title="Network" rows={TS_NET} />
+          <TsBars icon="lang" title="Language" rows={TS_LANG} />
+        </div>
+
+        <p className="ts-note">
+          {I.info}
+          Data is collected from real visitors using Chrome UX Report.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+const MC_EVENTS = ["Lead", "Purchase", "Subscribe", "Registration", "Start Trial", "Custom"];
+
+/**
+ * The delivery log. The four sent, one failed and four not sent are the same
+ * nine leads the Leads view lists, in the same states its Meta CAPI column
+ * shows — the two views are looking at one queue.
+ */
+const MC_LOG = [
+  ["Aarav Sharma", "987******10", "4d ago", "sent", "castcwu3180e41284ye86dxyd"],
+  ["Neha Kulkarni", "982******47", "5d ago", "sent", "cssckatzkde051904xwacagvvd"],
+  ["Rohan Desai", "916******04", "11 Aug", "sent", "cnsuac4r6400e11d0a452f2tklg3"],
+  ["Priya Nair", "809******13", "5 Aug", "sent", "cmsg24h3j0611ndzz0pxpxqmqg"],
+  ["Site Visit Team", "993******28", "5 Aug", "none", "–"],
+  ["Ishita Rao", "702******35", "5 Aug", "none", "–"],
+  ["Karan Mehta", "782******45", "1 Aug", "failed", "–"],
+  ["Meera Joshi", "900******11", "1 Aug", "none", "–"],
+  ["Devansh Patel", "961******72", "1 Aug", "none", "–"],
+] as const;
+
+/* The dry-run body, written out as lines so the block can be highlighted
+   without pulling in a syntax highlighter. `k` is a key, `s` a string, `n` a
+   number, and anything else is punctuation. */
+const MC_JSON: readonly (readonly [number, string, string, string])[] = [
+  [0, "", "", "{"],
+  [1, "k", '"data"', ": ["],
+  [2, "", "", "{"],
+  [3, "k", '"event_name"', ': "Lead",'],
+  [3, "k", '"event_time"', ": 1783744589,"],
+  [3, "k", '"action_source"', ': "website",'],
+  [3, "k", '"event_id"', ': "castcwu3180e41284ye86dxyd",'],
+  [3, "k", '"event_source_url"', ': "https://yourbrand.com/",'],
+  [3, "k", '"user_data"', ": {"],
+  [4, "k", '"ph"', ": ["],
+  [5, "s", '"963fc4fe64097bf6cc8c067749d8bada7b61350c7d6c0f7f8ee6cc5bcfc11156c855"', ""],
+  [4, "", "", "]"],
+  [3, "", "", "}"],
+  [2, "", "", "}"],
+  [1, "", "", "]"],
+  [0, "", "", "}"],
+];
+
+/**
+ * The Meta CAPI view: the composer that builds a server-side conversion
+ * payload, and the log of what was actually delivered. The payload is shown
+ * before it is sent, which is the point of the screen — nothing leaves the
+ * server until the button is pressed.
+ */
+function CapiView({ onPick }: Picker) {
+  return (
+    <div className="dv mc" aria-hidden="true">
+      <Rail active="Meta CAPI" onPick={onPick} />
+
+      <div className="dv-body">
+        <div className="dv-head">
+          <span className="ht">
+            <b>Meta CAPI</b>
+            <i>Server-side conversion payloads: compose, inspect, and see what was delivered</i>
+          </span>
+        </div>
+
+        <div className="mc-r">
+          <div className="dv-card mc-comp">
+            <span className="ct">Payload Composer</span>
+            <p className="sub">
+              Builds the exact JSON the server would POST. Nothing leaves this server until you
+              press Send.
+            </p>
+
+            <span className="fl">Lead</span>
+            <span className="inp sel">
+              Aarav Sharma - 987******10 - 8/15/2026
+              <em>⌄</em>
+            </span>
+
+            <span className="fl">Event</span>
+            <span className="chips">
+              {MC_EVENTS.map((e, i) => (
+                <em className={i === 0 ? "on" : undefined} key={e}>
+                  {e}
+                </em>
+              ))}
+            </span>
+
+            <span className="two">
+              <span>
+                <span className="fl">Value</span>
+                <span className="inp ph">optional</span>
+              </span>
+              <span>
+                <span className="fl">Currency</span>
+                <span className="inp sel">
+                  INR<em>⌄</em>
+                </span>
+              </span>
+            </span>
+
+            <span className="fl">Order / reference ID (becomes event_id)</span>
+            <span className="inp ph">Leave blank to use the lead ID</span>
+
+            <span className="warn">
+              {I.info}
+              Phone had no country code; +91 was assumed before hashing.
+            </span>
+
+            <span className="fl">Payload (dry run)</span>
+            <span className="code">
+              {MC_JSON.map(([ind, kind, key, rest], i) => (
+                <i key={i} style={{ paddingLeft: ind * 12 }}>
+                  {kind === "k" ? <b className="k">{key}</b> : null}
+                  {kind === "s" ? <b className="s">{key}</b> : null}
+                  {rest}
+                </i>
+              ))}
+            </span>
+
+            <span className="send">{I.send} Send to Meta</span>
+          </div>
+
+          <div className="dv-card mc-log">
+            <span className="ct">Delivery Log</span>
+            <p className="sub">4 sent · 1 failed · 4 not sent</p>
+
+            <span className="mc-tbl">
+              <span className="hd">
+                <i>Lead</i>
+                <i>Created</i>
+                <i>Status</i>
+                <i>event_id</i>
+              </span>
+              {MC_LOG.map(([name, phone, created, status, id]) => (
+                <span className="rw" key={name}>
+                  <i className="mc-ld">
+                    {name} - {phone}
+                  </i>
+                  <i className="cr">{created}</i>
+                  <i>
+                    {status === "sent" ? <b className="st ok">✓ Sent</b> : null}
+                    {status === "failed" ? <b className="st bad">⊘ Failed</b> : null}
+                    {status === "none" ? <b className="st none">○ Not sent</b> : null}
+                  </i>
+                  <i className="eid">{id}</i>
+                </span>
+              ))}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function View({ kind, onPick }: { kind: string } & Picker) {
   if (kind === "leads") return <LeadsView onPick={onPick} />;
   if (kind === "sessions") return <SessionsView onPick={onPick} />;
@@ -2161,6 +2535,8 @@ function View({ kind, onPick }: { kind: string } & Picker) {
   if (kind === "heatmap") return <HeatmapView onPick={onPick} />;
   if (kind === "performance") return <PerfView onPick={onPick} />;
   if (kind === "errors") return <ErrorsView onPick={onPick} />;
+  if (kind === "tech") return <TechView onPick={onPick} />;
+  if (kind === "capi") return <CapiView onPick={onPick} />;
   return <OverviewView onPick={onPick} />;
 }
 
