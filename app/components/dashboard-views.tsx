@@ -201,6 +201,13 @@ const I: Record<string, React.ReactElement> = {
       <path d="M10 6.4v.2" />
     </svg>
   ),
+  gauge: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinecap="round">
+      <circle cx="10" cy="10" r="7.2" />
+      <path d="M10 10l3.4-3.4" />
+      <path d="M10 4.4v.8M15.6 10h-.8M10 15.6v-.8M4.4 10h.8" />
+    </svg>
+  ),
 };
 
 /* --------------------------------------------------------------- data */
@@ -1613,6 +1620,334 @@ function HeatmapView({ onPick }: Picker) {
   );
 }
 
+
+/**
+ * The five Core Web Vitals cards. The good / needs-work / poor splits are
+ * shares of each metric's own sample count, and the five sets add up to the
+ * status ring beside them — 1,683 good, 301 needs work, 176 poor, 2,160 in
+ * total. Change one and the ring has to move with it.
+ */
+const PF_VITALS = [
+  {
+    key: "lcp",
+    name: "LCP",
+    good: "Good ≤ 2.5s",
+    body: "Largest Contentful Paint — when the main content finished loading.",
+    value: "2.28s",
+    samples: "452",
+    split: [80, 12, 8],
+  },
+  {
+    key: "inp",
+    name: "INP",
+    good: "Good ≤ 200ms",
+    body: "Interaction to Next Paint — how quickly the page responds to a tap.",
+    value: "448ms",
+    samples: "178",
+    split: [57, 20, 23],
+  },
+  {
+    key: "cls",
+    name: "CLS",
+    good: "Good ≤ 0.1",
+    body: "Cumulative Layout Shift — how much the page moves under the reader.",
+    value: "0.000",
+    samples: "447",
+    split: [100, 0, 0],
+  },
+  {
+    key: "fcp",
+    name: "FCP",
+    good: "Good ≤ 1.8s",
+    body: "First Contentful Paint — when anything first appeared.",
+    value: "1.62s",
+    samples: "520",
+    split: [63, 22, 15],
+  },
+  {
+    key: "ttfb",
+    name: "TTFB",
+    good: "Good ≤ 800ms",
+    body: "Time to First Byte — how long the server took to respond.",
+    value: "705ms",
+    samples: "563",
+    split: [79, 17, 4],
+  },
+] as const;
+
+const PF_STATUS = [
+  ["Good", "78%", 78],
+  ["Needs Work", "14%", 14],
+  ["Poor", "8%", 8],
+] as const;
+
+const PF_STATUS_N = ["1,683", "301", "176"];
+
+const PF_LOAD = [
+  ["clock", "Avg. Load Time", "2.14s", "↓ -18.6%", true],
+  ["pulse", "Page Views", "24,563", "↑ +12.4%", true],
+  ["users", "Bounce Rate", "38.6%", "↓ -6.2%", true],
+] as const;
+
+/* Good / needs work / poor are counts per device; the last row is the three
+   above it added up, not a figure of its own. */
+const PF_DEVICES = [
+  ["phone", "Mobile", "71%", "18%", "11%", "1,246"],
+  ["monitor", "Desktop", "86%", "9%", "5%", "2,357"],
+  ["tablet", "Tablet", "78%", "14%", "8%", "842"],
+] as const;
+
+/* Five series over a month, on two axes: seconds on the left, milliseconds on
+   the right. y is already in the 0–100 box, so the two scales resolve here
+   rather than in the markup. */
+const PF_TREND = [
+  { key: "lcp", pts: [58, 57, 58, 56, 57, 55, 56, 54, 55, 53, 54, 55, 53, 54, 52] },
+  { key: "inp", pts: [22, 20, 21, 19, 22, 18, 20, 15, 17, 19, 16, 18, 20, 17, 19] },
+  { key: "cls", pts: [98, 98, 98, 98, 98, 98, 98, 98, 98, 98, 98, 98, 98, 98, 98] },
+  { key: "fcp", pts: [69, 68, 70, 67, 69, 66, 68, 65, 67, 69, 66, 68, 70, 67, 69] },
+  { key: "ttfb", pts: [44, 42, 45, 41, 43, 40, 42, 38, 40, 42, 39, 41, 43, 40, 42] },
+];
+
+const PF_DATES = [
+  "Apr 28",
+  "Apr 30",
+  "May 2",
+  "May 4",
+  "May 6",
+  "May 8",
+  "May 10",
+  "May 12",
+  "May 14",
+  "May 16",
+  "May 18",
+  "May 20",
+  "May 22",
+  "May 24",
+  "May 27",
+];
+
+const PF_KEYS = ["LCP (s)", "INP (ms)", "CLS", "FCP (s)", "TTFB (ms)"];
+
+/**
+ * The Performance view: Core Web Vitals as measured on real visits, with the
+ * distribution behind each number rather than a single verdict.
+ */
+function PerfView({ onPick }: Picker) {
+  return (
+    <div className="dv pf" aria-hidden="true">
+      <Rail active="Performance" onPick={onPick} />
+
+      <div className="dv-body">
+        <div className="dv-head">
+          <span className="ht">
+            <b>Performance</b>
+            <i>Core Web Vitals from real visitors, not a lab test</i>
+          </span>
+          <span className="ctl">
+            <s className="seg">
+              <em>7d</em>
+              <em className="on">30d</em>
+              <em>90d</em>
+              <em>All</em>
+            </s>
+            <s className="exp">
+              {I.down}
+              Export
+            </s>
+          </span>
+        </div>
+
+        <div className="pf-r">
+          <div className="pf-main">
+            <div className="pf-cards">
+              {PF_VITALS.map((v) => (
+                <div className="dv-card pf-card" key={v.key}>
+                  <span className="top">
+                    <i className="ic">{I.gauge}</i>
+                    <b className="nm">{v.name}</b>
+                    <s className="gd">{v.good}</s>
+                  </span>
+                  <p>{v.body}</p>
+                  <span className="val">
+                    <b>{v.value}</b>
+                    <em>p75 · {v.samples} samples</em>
+                  </span>
+                  <span className="bar">
+                    <i className="g" style={{ width: `${v.split[0]}%` }} />
+                    <i className="n" style={{ width: `${v.split[1]}%` }} />
+                    <i className="p" style={{ width: `${v.split[2]}%` }} />
+                  </span>
+                  <span className="lbl">
+                    <em className="g">{v.split[0]}% good</em>
+                    <em className="n">{v.split[1]}% needs work</em>
+                    <em className="p">{v.split[2]}% poor</em>
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            <div className="dv-card pf-trend">
+              <span className="ct">
+                <span className="lh">
+                  <i className="ic">{I.pulse}</i>
+                  <span className="tx">
+                    <b>Core Web Vitals Trend</b>
+                    <em>P75 values over time</em>
+                  </span>
+                </span>
+                <s className="lk">View Full Report →</s>
+              </span>
+
+              <span className="keys">
+                {PF_KEYS.map((k, i) => (
+                  <em key={k}>
+                    <b className={`d t${i}`} />
+                    {k}
+                  </em>
+                ))}
+              </span>
+
+              <div className="plot">
+                <span className="ax l">
+                  {["4", "3", "2", "1", "0"].map((t) => (
+                    <i key={t}>{t}</i>
+                  ))}
+                  <b>Seconds (s)</b>
+                </span>
+                <div className="gr">
+                  <svg viewBox="0 0 300 100" preserveAspectRatio="none" className="gl">
+                    {[0, 25, 50, 75, 100].map((y) => (
+                      <line x1="0" y1={y} x2="300" y2={y} key={y} />
+                    ))}
+                  </svg>
+                  {PF_TREND.map((s, i) => (
+                    <svg
+                      viewBox="0 0 300 100"
+                      preserveAspectRatio="none"
+                      className={`ln t${i}`}
+                      key={s.key}
+                    >
+                      <path d={path(s.pts)} />
+                    </svg>
+                  ))}
+                  {PF_TREND.map((s, i) =>
+                    s.pts.map((y, j) => (
+                      <span
+                        className={`dt t${i}`}
+                        key={`${s.key}${j}`}
+                        style={{
+                          left: `${(j / (s.pts.length - 1)) * 100}%`,
+                          top: `${y}%`,
+                        }}
+                      />
+                    )),
+                  )}
+                </div>
+                <span className="ax r">
+                  {["1000", "750", "500", "250", "0"].map((t) => (
+                    <i key={t}>{t}</i>
+                  ))}
+                  <b>Milliseconds (ms)</b>
+                </span>
+                <span className="xax">
+                  {PF_DATES.map((d) => (
+                    <i key={d}>{d}</i>
+                  ))}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="pf-side">
+            <div className="dv-card">
+              <span className="ct">
+                Core Web Vitals Status
+                <i className="inf">{I.info}</i>
+              </span>
+              <div className="pf-status">
+                <Ring slices={PF_STATUS} total="78%" label="Good" />
+                <span className="lg">
+                  {PF_STATUS.map(([name, pct], i) => (
+                    <span key={name}>
+                      <i className={`d v${i}`} />
+                      <b className="n">{name}</b>
+                      <span className="fig">
+                        <b>{pct}</b>
+                        <em>{PF_STATUS_N[i]}</em>
+                      </span>
+                    </span>
+                  ))}
+                </span>
+              </div>
+              <span className="pf-total">
+                Total Samples<b>2,160</b>
+              </span>
+            </div>
+
+            <div className="dv-card">
+              <span className="ct blue">
+                Page Load <em>Overview</em>
+              </span>
+              <span className="pf-load">
+                {PF_LOAD.map(([icon, label, value, delta]) => (
+                  <span key={label}>
+                    <i className="ic">{I[icon]}</i>
+                    <b className="n">{label}</b>
+                    <em className="v">{value}</em>
+                    <span className="dl">
+                      <b>{delta}</b>
+                      <em>vs last 30 days</em>
+                    </span>
+                  </span>
+                ))}
+              </span>
+            </div>
+
+            <div className="dv-card">
+              <span className="ct blue">
+                Device <em>Breakdown</em>
+              </span>
+              <span className="pf-dev">
+                <span className="hd">
+                  <i>Device</i>
+                  <i className="r">Good</i>
+                  <i className="r">Needs Work</i>
+                  <i className="r">Poor</i>
+                  <i className="r">Samples</i>
+                </span>
+                {PF_DEVICES.map(([icon, name, good, needs, poor, samples]) => (
+                  <span className="rw" key={name}>
+                    <i className="dv2">
+                      <b className="ic">{I[icon]}</b>
+                      {name}
+                    </i>
+                    <i className="r g">{good}</i>
+                    <i className="r n">{needs}</i>
+                    <i className="r p">{poor}</i>
+                    <i className="r">{samples}</i>
+                  </span>
+                ))}
+                <span className="rw all">
+                  <i className="dv2">All Devices</i>
+                  <i className="r g">80%</i>
+                  <i className="r n">13%</i>
+                  <i className="r p">7%</i>
+                  <i className="r">4,445</i>
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <p className="ct-note hm-foot">
+          {I.info}
+          All metrics are field data from real users via Chrome UX Report. <em>Learn more</em>
+        </p>
+      </div>
+    </div>
+  );
+}
+
 function View({ kind, onPick }: { kind: string } & Picker) {
   if (kind === "leads") return <LeadsView onPick={onPick} />;
   if (kind === "sessions") return <SessionsView onPick={onPick} />;
@@ -1620,6 +1955,7 @@ function View({ kind, onPick }: { kind: string } & Picker) {
   if (kind === "ctas") return <CtasView onPick={onPick} />;
   if (kind === "forms") return <FormsView onPick={onPick} />;
   if (kind === "heatmap") return <HeatmapView onPick={onPick} />;
+  if (kind === "performance") return <PerfView onPick={onPick} />;
   return <OverviewView onPick={onPick} />;
 }
 

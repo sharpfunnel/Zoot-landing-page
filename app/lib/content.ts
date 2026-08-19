@@ -823,6 +823,12 @@ export const dashboardViews = [
     view: "heatmap",
     body: "Your page with the clicks painted over it, so the buttons people press and the ones they ignore are visible at a glance — plus scroll depth and hover.",
   },
+  {
+    key: "performance",
+    label: "Performance",
+    view: "performance",
+    body: "Core Web Vitals measured on real visits rather than a lab test, with the spread behind each number and how it breaks down by device.",
+  },
 ];
 
 /* --------------------------------------------------------------- pricing */

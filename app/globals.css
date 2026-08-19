@@ -9894,6 +9894,661 @@ footer {
   color: var(--accent);
 }
 
+/* ---- the performance view ---- */
+
+.pf-r {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 12px;
+  align-items: start;
+}
+
+.pf-main {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+/* Three across, so LCP / INP / CLS lead and FCP / TTFB sit under them. */
+.pf-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.pf-card {
+  padding: 15px;
+}
+
+.pf-card .top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 9px;
+}
+
+.pf-card .ic {
+  width: 20px;
+  min-width: 20px;
+  color: var(--accent);
+  display: block;
+}
+
+.pf-card .ic svg {
+  width: 20px;
+  display: block;
+}
+
+.pf-card .nm {
+  flex: 1;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--accent);
+}
+
+.pf-card .gd {
+  flex-shrink: 0;
+  text-decoration: none;
+  background: #e6f6ee;
+  color: var(--good);
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: 9.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.pf-card p {
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.pf-card .val {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  margin-bottom: 11px;
+}
+
+.pf-card .val b {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 26px;
+  letter-spacing: -0.03em;
+}
+
+.pf-card .val em {
+  font-style: normal;
+  font-size: 10.5px;
+  color: var(--text-faint);
+}
+
+/* One bar, three segments — the split is the point, not the headline. */
+.pf-card .bar {
+  display: flex;
+  gap: 2px;
+  height: 7px;
+  margin-bottom: 9px;
+}
+
+.pf-card .bar i {
+  display: block;
+  border-radius: 3px;
+}
+
+.pf-card .bar .g {
+  background: #22c55e;
+}
+
+.pf-card .bar .n {
+  background: #f5a623;
+}
+
+.pf-card .bar .p {
+  background: #ef4444;
+}
+
+.pf-card .lbl {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 10.5px;
+  font-weight: 500;
+}
+
+.pf-card .lbl em {
+  font-style: normal;
+  white-space: nowrap;
+}
+
+.pf-card .lbl .g {
+  color: var(--good);
+}
+
+.pf-card .lbl .n {
+  color: #b7791f;
+}
+
+.pf-card .lbl .p {
+  color: #d64545;
+}
+
+/* ---- the trend chart ---- */
+
+.pf-trend .ct {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.pf-trend .lh {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.pf-trend .lh .ic {
+  width: 20px;
+  min-width: 20px;
+  color: var(--accent);
+  display: block;
+}
+
+.pf-trend .lh .ic svg {
+  width: 20px;
+  display: block;
+}
+
+.pf-trend .lh b {
+  display: block;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.pf-trend .lh em {
+  display: block;
+  font-family: var(--body);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+
+.pf-trend .lk {
+  flex-shrink: 0;
+  text-decoration: none;
+  font-family: var(--body);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.pf-trend .keys {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.pf-trend .keys em {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-style: normal;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.pf-trend .keys .d {
+  width: 12px;
+  height: 4px;
+  border-radius: 2px;
+}
+
+/* Five series, each with its own colour on the key, line and markers. */
+.pf-trend .t0 .d,
+.pf-trend .keys .t0,
+.pf .dt.t0 {
+  background: #22c55e;
+}
+
+.pf-trend .keys .t1,
+.pf .dt.t1 {
+  background: #2563eb;
+}
+
+.pf-trend .keys .t2,
+.pf .dt.t2 {
+  background: #f5a623;
+}
+
+.pf-trend .keys .t3,
+.pf .dt.t3 {
+  background: #8b5cf6;
+}
+
+.pf-trend .keys .t4,
+.pf .dt.t4 {
+  background: #06b6d4;
+}
+
+.pf .ln.t0 path {
+  stroke: #22c55e;
+}
+
+.pf .ln.t1 path {
+  stroke: #2563eb;
+}
+
+.pf .ln.t2 path {
+  stroke: #f5a623;
+}
+
+.pf .ln.t3 path {
+  stroke: #8b5cf6;
+}
+
+.pf .ln.t4 path {
+  stroke: #06b6d4;
+}
+
+/* Two axes, one on each side, with the plot and its dates between. */
+.pf-trend .plot {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: 210px auto;
+  column-gap: 9px;
+  row-gap: 7px;
+}
+
+.pf-trend .ax {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 10px;
+  color: var(--text-faint);
+}
+
+.pf-trend .ax i {
+  font-style: normal;
+}
+
+.pf-trend .ax.l {
+  padding-left: 15px;
+  text-align: right;
+}
+
+.pf-trend .ax.r {
+  padding-right: 15px;
+}
+
+/* The axis name runs up the outside edge of its own scale. */
+.pf-trend .ax b {
+  position: absolute;
+  top: 50%;
+  font-size: 9.5px;
+  font-weight: 400;
+  color: var(--text-faint);
+  white-space: nowrap;
+  transform-origin: center;
+}
+
+.pf-trend .ax.l b {
+  left: 0;
+  transform: translate(-50%, -50%) rotate(-90deg);
+}
+
+.pf-trend .ax.r b {
+  right: 0;
+  transform: translate(50%, -50%) rotate(90deg);
+}
+
+.pf-trend .gr {
+  position: relative;
+  min-width: 0;
+}
+
+.pf-trend .gr svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.pf-trend .gl line {
+  stroke: var(--border);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.pf-trend .ln path {
+  fill: none;
+  stroke-width: 1.8;
+  vector-effect: non-scaling-stroke;
+}
+
+.pf .dt {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.pf-trend .xax {
+  grid-column: 2;
+  display: flex;
+  justify-content: space-between;
+  font-size: 9.5px;
+  color: var(--text-faint);
+}
+
+.pf-trend .xax i {
+  font-style: normal;
+}
+
+/* ---- sidebar ---- */
+
+.pf-side {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.pf-side .ct {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.pf-side .ct .inf {
+  width: 14px;
+  min-width: 14px;
+  color: var(--accent);
+  display: block;
+}
+
+.pf-side .ct.blue {
+  color: var(--accent);
+}
+
+.pf-side .ct.blue em {
+  font-style: normal;
+  color: var(--text);
+}
+
+.pf-status {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.pf-status .dv-ring {
+  width: 46%;
+  max-width: 118px;
+}
+
+.pf-status .dv-ring circle {
+  stroke-width: 7;
+}
+
+.pf-status .dv-ring .s0 {
+  stroke: #22c55e;
+}
+
+.pf-status .dv-ring .s1 {
+  stroke: #f5a623;
+}
+
+.pf-status .dv-ring .s2 {
+  stroke: #ef4444;
+}
+
+.pf-status .dv-ring .c b {
+  font-size: 20px;
+  color: var(--good);
+}
+
+.pf-status .lg {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pf-status .lg > span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11.5px;
+}
+
+.pf-status .d {
+  width: 10px;
+  height: 10px;
+  min-width: 10px;
+  border-radius: 50%;
+}
+
+.pf-status .v0 {
+  background: #22c55e;
+}
+
+.pf-status .v1 {
+  background: #f5a623;
+}
+
+.pf-status .v2 {
+  background: #ef4444;
+}
+
+.pf-status .lg .n {
+  flex: 1;
+  min-width: 0;
+  font-weight: 400;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pf-status .fig {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.pf-status .fig b {
+  display: block;
+  font-weight: 600;
+}
+
+.pf-status .fig em {
+  display: block;
+  font-style: normal;
+  font-size: 10px;
+  color: var(--text-faint);
+}
+
+.pf-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border-top: 1px solid var(--border);
+  margin-top: 14px;
+  padding-top: 12px;
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+.pf-total b {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--text);
+}
+
+/* ---- page load rows ---- */
+
+.pf-load {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pf-load > span {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.pf-load .ic {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: 9px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pf-load .ic svg {
+  width: 16px;
+}
+
+.pf-load .n {
+  flex: 1;
+  min-width: 0;
+  font-size: 11.5px;
+  font-weight: 400;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pf-load .v {
+  font-style: normal;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--accent);
+}
+
+.pf-load .dl {
+  width: 74px;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.pf-load .dl b {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--good);
+}
+
+.pf-load .dl em {
+  display: block;
+  font-style: normal;
+  font-size: 9.5px;
+  color: var(--text-faint);
+}
+
+/* ---- device table ---- */
+
+.pf-dev {
+  display: flex;
+  flex-direction: column;
+  font-size: 11px;
+}
+
+.pf-dev .hd,
+.pf-dev .rw {
+  display: grid;
+  grid-template-columns: 1.5fr 0.72fr 1fr 0.65fr 0.95fr;
+  gap: 6px;
+  align-items: center;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.pf-dev .hd {
+  font-size: 10px;
+  color: var(--text-faint);
+  padding-top: 0;
+}
+
+.pf-dev i {
+  font-style: normal;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-muted);
+}
+
+.pf-dev .r {
+  text-align: right;
+}
+
+.pf-dev .dv2 {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--text);
+  overflow: visible;
+}
+
+.pf-dev .dv2 .ic {
+  width: 14px;
+  min-width: 14px;
+  color: var(--text-faint);
+  display: block;
+}
+
+.pf-dev .g {
+  color: var(--good);
+  font-weight: 600;
+}
+
+.pf-dev .n {
+  color: #b7791f;
+  font-weight: 600;
+}
+
+.pf-dev .p {
+  color: #d64545;
+  font-weight: 600;
+}
+
+/* The total row: the three above it added up, so it carries no border. */
+.pf-dev .all {
+  border-bottom: none;
+  font-weight: 600;
+}
+
+.pf-dev .all .dv2 {
+  font-weight: 600;
+}
+
 /* ---------------------------------------------------------- breakpoints */
 
 /* Narrow desktops: the wrap has stopped shrinking but the image box hasn't,
@@ -9949,6 +10604,9 @@ footer {
   }
   /* The heatmap's sidebar drops under the page it annotates. */
   .hm-r {
+    grid-template-columns: 1fr;
+  }
+  .pf-r {
     grid-template-columns: 1fr;
   }
   .dv-tab {
