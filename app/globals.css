@@ -7581,20 +7581,36 @@ footer {
   overflow: hidden;
 }
 
-.dv-nav .tabs > span {
+/* Buttons, so the three that have a view behind them can be clicked — the
+   rest are inert and set like plain labels. */
+.dv-nav .tabs .it {
   display: flex;
   align-items: center;
   gap: 4px;
   padding: 6px 7px;
+  border: none;
+  background: none;
   border-radius: 7px;
+  font: inherit;
   font-size: 10.5px;
   font-weight: 500;
   color: var(--text-muted);
   white-space: nowrap;
+  cursor: default;
 }
 
-.dv-nav .tabs > span svg {
+.dv-nav .tabs .it svg {
   width: 12px;
+}
+
+.dv-nav .tabs .lnk {
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s;
+}
+
+.dv-nav .tabs .lnk:not(.on):hover {
+  background: var(--bg-1);
+  color: var(--text);
 }
 
 /* The open view keeps the underline the product uses, not a filled pill. */

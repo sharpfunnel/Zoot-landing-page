@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { dashboardViews } from "../lib/content";
 import { Eyebrow } from "./ui";
 
@@ -274,19 +274,38 @@ const DV_PAGES = [
 const path = (pts: readonly number[]) =>
   pts.map((y, i) => `${i ? "L" : "M"}${(i / (pts.length - 1)) * 300} ${y}`).join("");
 
+/** Clicking a rail item switches the tab, so every view is handed the setter. */
+type Picker = { onPick: (label: string) => void };
+
 /** The app's own top rail, shared by every view — only the open tab differs. */
-function Rail({ active }: { active: string }) {
+function Rail({ active, onPick }: { active: string; onPick: (label: string) => void }) {
   return (
     <div className="dv-nav">
       <span className="lg">DA</span>
       <b className="nm">Dashboard</b>
       <span className="tabs">
-        {DV_NAV.map((label) => (
-          <span className={label === active ? "on" : undefined} key={label}>
-            {label === active ? I.grid : null}
-            {label}
-          </span>
-        ))}
+        {DV_NAV.map((label) => {
+          const built = dashboardViews.some((v) => v.label === label);
+          const cls = ["it", label === active ? "on" : "", built ? "lnk" : ""]
+            .filter(Boolean)
+            .join(" ");
+          /* A real button for the pointer, but out of the tab order: the whole
+             mock is aria-hidden, and the tab strip above it is the accessible
+             way to the same views. A focusable control in here would be a stop
+             on the keyboard path that a screen reader never announces. */
+          return (
+            <button
+              type="button"
+              className={cls}
+              key={label}
+              tabIndex={-1}
+              onClick={built ? () => onPick(label) : undefined}
+            >
+              {label === active ? I.grid : null}
+              {label}
+            </button>
+          );
+        })}
       </span>
       <span className="rt">
         <s className="btn">
@@ -349,10 +368,10 @@ function Ring({
  * is editable. Hidden from assistive tech: every figure in it is a picture of
  * a product, not information about this page.
  */
-function OverviewView() {
+function OverviewView({ onPick }: Picker) {
   return (
     <div className="dv" aria-hidden="true">
-      <Rail active="Overview" />
+      <Rail active="Overview" onPick={onPick} />
 
       <div className="dv-body">
         <div className="dv-head">
@@ -711,10 +730,10 @@ const LV_ROWS = [
  * Same chassis as the Overview view — the app's rail, then a header row, then
  * cards — with a filter bar and a wide table instead of charts.
  */
-function LeadsView() {
+function LeadsView({ onPick }: Picker) {
   return (
     <div className="dv lv" aria-hidden="true">
-      <Rail active="Leads" />
+      <Rail active="Leads" onPick={onPick} />
 
       <div className="dv-body">
         <div className="dv-head">
@@ -873,10 +892,10 @@ const SV_ROWS = [
  * The widest of the views — thirteen columns — so it sets the width the
  * frame scrolls to on a narrow screen.
  */
-function SessionsView() {
+function SessionsView({ onPick }: Picker) {
   return (
     <div className="dv sv" aria-hidden="true">
-      <Rail active="Sessions" />
+      <Rail active="Sessions" onPick={onPick} />
 
       <div className="dv-body">
         <div className="dv-head">
@@ -985,10 +1004,10 @@ function SessionsView() {
   );
 }
 
-function View({ kind }: { kind: string }) {
-  if (kind === "leads") return <LeadsView />;
-  if (kind === "sessions") return <SessionsView />;
-  return <OverviewView />;
+function View({ kind, onPick }: { kind: string } & Picker) {
+  if (kind === "leads") return <LeadsView onPick={onPick} />;
+  if (kind === "sessions") return <SessionsView onPick={onPick} />;
+  return <OverviewView onPick={onPick} />;
 }
 
 /* -------------------------------------------------------------- section */
@@ -997,6 +1016,13 @@ export default function DashboardViews() {
   const [active, setActive] = useState(0);
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
   const view = dashboardViews[active];
+
+  /* The mock's own rail is a second way into the same views — the labels
+     there match dashboardViews, so the label is enough to find the tab. */
+  const onPick = useCallback((label: string) => {
+    const i = dashboardViews.findIndex((v) => v.label === label);
+    if (i >= 0) setActive(i);
+  }, []);
 
   /* Roving tabindex, so only the selected tab is in the tab order and the
      arrow keys reach the rest. */
@@ -1066,7 +1092,7 @@ export default function DashboardViews() {
         >
           {/* Re-keyed so the view remounts and its bars re-fill on change. */}
           <div className="dv-frame" key={view.key}>
-            <View kind={view.view} />
+            <View kind={view.view} onPick={onPick} />
           </div>
         </div>
 
