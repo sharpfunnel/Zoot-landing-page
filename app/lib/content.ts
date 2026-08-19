@@ -799,6 +799,12 @@ export const dashboardViews = [
     view: "sessions",
     body: "One row per visit — city, device, campaign, how far they scrolled and how long they stayed — with the recording of each one a click away.",
   },
+  {
+    key: "funnels",
+    label: "Funnels",
+    view: "funnels",
+    body: "The same journey twice — everyone, then only the sessions that came from a Meta ad — so you can see which step is losing people and whether your ads lose them faster.",
+  },
 ];
 
 /* --------------------------------------------------------------- pricing */

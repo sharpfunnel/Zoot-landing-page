@@ -8904,6 +8904,153 @@ footer {
   min-width: 1320px;
 }
 
+/* ---- the funnels view ---- */
+
+.fn-r {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.fn-card {
+  padding: 16px;
+}
+
+.fn-top {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin-bottom: 18px;
+}
+
+.fn-top .ic {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fn-top .ic svg {
+  width: 17px;
+}
+
+.fn-top .tx {
+  flex: 1;
+  min-width: 0;
+}
+
+.fn-top .tx b {
+  display: block;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 13.5px;
+}
+
+.fn-top .tx em {
+  display: block;
+  font-style: normal;
+  font-size: 10.5px;
+  color: var(--text-muted);
+  margin-top: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* The lead count for this funnel, as a badge on its header row. */
+.fn-top .bdg {
+  flex-shrink: 0;
+  text-decoration: none;
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  border-radius: 100px;
+  padding: 6px 13px;
+  font-size: 11.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.fn-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fn-steps > span {
+  display: block;
+  min-width: 0;
+}
+
+.fn-steps .hd {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+  font-size: 12px;
+}
+
+.fn-steps .n {
+  width: 12px;
+  min-width: 12px;
+  font-style: normal;
+  font-size: 11px;
+  color: var(--text-faint);
+}
+
+.fn-steps .hd b {
+  flex: 1;
+  min-width: 0;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fn-steps em {
+  font-style: normal;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.fn-steps .c {
+  font-weight: 700;
+}
+
+.fn-steps .p {
+  width: 46px;
+  text-align: right;
+  color: var(--text-muted);
+}
+
+.fn-steps .dp {
+  width: 44px;
+  text-align: right;
+  font-weight: 600;
+  color: #d64545;
+}
+
+.fn-steps .tk {
+  display: block;
+  height: 9px;
+  border-radius: 5px;
+  background: var(--bg-2);
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.fn-steps .tk s {
+  display: block;
+  height: 100%;
+  border-radius: 5px;
+  background: var(--accent);
+  text-decoration: none;
+}
+
 /* ---------------------------------------------------------- breakpoints */
 
 /* Narrow desktops: the wrap has stopped shrinking but the image box hasn't,
@@ -8953,6 +9100,9 @@ footer {
   }
   .dv {
     min-width: 1040px;
+  }
+  .fn-r {
+    grid-template-columns: 1fr;
   }
   .dv-tab {
     padding: 9px 16px;

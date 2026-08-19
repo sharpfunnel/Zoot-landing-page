@@ -164,6 +164,18 @@ const I: Record<string, React.ReactElement> = {
       <path d="M6.6 4.2l9.4 5.8-9.4 5.8z" />
     </svg>
   ),
+  funnel: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinejoin="round">
+      <path d="M2.8 3.5h14.4l-5.7 6.8V17l-3-1.8v-4.9z" />
+    </svg>
+  ),
+  megaphone: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinejoin="round">
+      <path d="M14.2 3.6v12.8L7.6 13.2v-.2H6.2a2.8 2.8 0 010-5.6h1.4v-.2z" />
+      <path d="M16.2 7.2a3.2 3.2 0 010 5.6" strokeLinecap="round" />
+      <path d="M7.8 13.6h2l.7 3h-2z" />
+    </svg>
+  ),
 };
 
 /* --------------------------------------------------------------- data */
@@ -1004,9 +1016,109 @@ function SessionsView({ onPick }: Picker) {
   );
 }
 
+
+/**
+ * The two funnels side by side. Percentages are of the first step; the drop
+ * is against the step above, so both are arithmetic on the counts and move
+ * with them. The totals agree with the Overview view's funnel.
+ */
+const FN_FUNNELS = [
+  {
+    key: "all",
+    icon: "funnel",
+    title: "All traffic",
+    sub: "Every session in the window",
+    badge: "327 leads",
+    steps: [
+      ["1", "Page View", "10,351", "100.0%", null, 100],
+      ["2", "Scrolled 25%+", "7,024", "67.9%", "32%", 67.9],
+      ["3", "CTA Click", "1,842", "17.8%", "74%", 17.8],
+      ["4", "Form Start", "623", "6.0%", "66%", 6],
+      ["5", "Lead Submit", "327", "3.2%", "48%", 3.2],
+    ],
+  },
+  {
+    key: "meta",
+    icon: "megaphone",
+    title: "Meta ads only",
+    sub: "Sessions carrying an fbclid or Meta campaign id",
+    badge: "168 leads",
+    steps: [
+      ["1", "Page View", "4,182", "100.0%", null, 100],
+      ["2", "Scrolled 25%+", "2,986", "71.4%", "29%", 71.4],
+      ["3", "CTA Click", "842", "20.1%", "72%", 20.1],
+      ["4", "Form Start", "301", "7.2%", "64%", 7.2],
+      ["5", "Lead Submit", "168", "4.0%", "44%", 4],
+    ],
+  },
+] as const;
+
+/**
+ * The Funnels view: the same journey twice, once for everything and once for
+ * the sessions that carry a Meta click id, so the two can be read against
+ * each other.
+ */
+function FunnelsView({ onPick }: Picker) {
+  return (
+    <div className="dv fn" aria-hidden="true">
+      <Rail active="Funnels" onPick={onPick} />
+
+      <div className="dv-body">
+        <div className="dv-head">
+          <span className="ht">
+            <b>Funnels</b>
+            <i>Where visitors drop out on the way to becoming a lead</i>
+          </span>
+          <span className="ctl">
+            <s className="seg">
+              <em>7d</em>
+              <em className="on">30d</em>
+              <em>90d</em>
+              <em>All</em>
+            </s>
+          </span>
+        </div>
+
+        <div className="fn-r">
+          {FN_FUNNELS.map((f) => (
+            <div className="dv-card fn-card" key={f.key}>
+              <span className="fn-top">
+                <i className="ic">{I[f.icon]}</i>
+                <span className="tx">
+                  <b>{f.title}</b>
+                  <em>{f.sub}</em>
+                </span>
+                <s className="bdg">{f.badge}</s>
+              </span>
+
+              <span className="fn-steps">
+                {f.steps.map(([n, name, count, pct, drop, w]) => (
+                  <span key={name}>
+                    <span className="hd">
+                      <i className="n">{n}</i>
+                      <b>{name}</b>
+                      <em className="c">{count}</em>
+                      <em className="p">{pct}</em>
+                      <em className="dp">{drop ? `↓ ${drop}` : ""}</em>
+                    </span>
+                    <span className="tk">
+                      <s style={{ width: `${w}%` }} />
+                    </span>
+                  </span>
+                ))}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function View({ kind, onPick }: { kind: string } & Picker) {
   if (kind === "leads") return <LeadsView onPick={onPick} />;
   if (kind === "sessions") return <SessionsView onPick={onPick} />;
+  if (kind === "funnels") return <FunnelsView onPick={onPick} />;
   return <OverviewView onPick={onPick} />;
 }
 
