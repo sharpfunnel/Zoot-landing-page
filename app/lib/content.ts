@@ -805,6 +805,12 @@ export const dashboardViews = [
     view: "funnels",
     body: "The same journey twice — everyone, then only the sessions that came from a Meta ad — so you can see which step is losing people and whether your ads lose them faster.",
   },
+  {
+    key: "ctas",
+    label: "CTAs",
+    view: "ctas",
+    body: "Which button people actually press. Every call, WhatsApp and enquiry element on the page, ranked by clicks, with the views and hovers behind each one.",
+  },
 ];
 
 /* --------------------------------------------------------------- pricing */

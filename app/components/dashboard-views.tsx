@@ -1115,10 +1115,104 @@ function FunnelsView({ onPick }: Picker) {
   );
 }
 
+
+/**
+ * Every tagged element, ranked by clicks. CTR and conversion are derived from
+ * the counts beside them rather than written by hand, and the clicks total to
+ * the 1,298 the Overview view reports. The labels are invented: the design
+ * came from a live dashboard, where they carried a real person's name and
+ * phone number.
+ */
+const CT_ROWS = [
+  ["Call us on +91 98765 43210", "header-call-mobile", "5,842", "412", "582", "10.0%", "0", "0%"],
+  ["Chat on WhatsApp about 3BHK Launch", "sticky-whatsapp", "3,104", "528", "372", "12.0%", "0", "0%"],
+  ["Call us on +91 98765 43210", "sticky-call", "3,104", "361", "149", "4.8%", "0", "0%"],
+  ["Get Price & Floor Plan", "hero-enquire", "3,412", "284", "51", "1.5%", "10", "20%"],
+  ["Call Now", "hero-call", "3,210", "281", "51", "1.6%", "0", "0%"],
+  ["Request a Callback", "contact-enquire", "1,552", "268", "21", "1.4%", "4", "19%"],
+  ["+91 98765 43210", "header-call", "631", "292", "21", "3.3%", "0", "0%"],
+  ["WhatsApp", "contact-whatsapp", "1,621", "251", "11", "0.7%", "0", "0%"],
+  ["WhatsApp Us", "callback-whatsapp", "1,132", "250", "10", "0.9%", "2", "20%"],
+  ["+91 98765 43210", "callback-call", "1,124", "248", "10", "0.9%", "0", "0%"],
+  ["Chat on WhatsApp about 3BHK Launch", "floating-whatsapp", "631", "247", "10", "1.6%", "0", "0%"],
+  ["Get Price & Floor Plan", "header-enquire", "521", "243", "10", "1.9%", "2", "20%"],
+  ["Get Office Details", "spaces-office-spaces", "1,441", "252", "0", "0.0%", "0", "0%"],
+  ["Get Retail Details", "spaces-retail-outlets", "1,252", "249", "0", "0.0%", "0", "0%"],
+] as const;
+
+/**
+ * The CTAs view: which button on the page people actually press. Ranked by
+ * clicks, with the element's own `data-cta-id` beside its label so a row can
+ * be matched back to the markup.
+ */
+function CtasView({ onPick }: Picker) {
+  return (
+    <div className="dv ct" aria-hidden="true">
+      <Rail active="CTAs" onPick={onPick} />
+
+      <div className="dv-body">
+        <div className="dv-head">
+          <span className="ht">
+            <b>CTAs</b>
+            <i>Every element tagged with data-cta-id, ranked by clicks</i>
+          </span>
+          <span className="ctl">
+            <s className="seg">
+              <em>7d</em>
+              <em>30d</em>
+              <em>90d</em>
+              <em className="on">All</em>
+            </s>
+            <s className="exp">
+              {I.down}
+              Export
+            </s>
+          </span>
+        </div>
+
+        <div className="dv-card lv-tblwrap">
+          <span className="ct-tbl">
+            <span className="hd">
+              <i>CTA</i>
+              <i className="r">Views</i>
+              <i className="r">Hovers</i>
+              <i className="r">Clicks</i>
+              <i className="r">CTR</i>
+              <i className="r">Leads</i>
+              <i className="r">Conv. rate</i>
+            </span>
+            {CT_ROWS.map(([label, id, views, hovers, clicks, ctr, leads, conv]) => (
+              <span className="rw" key={id}>
+                <i className="el">
+                  <b>{label}</b>
+                  <em>{id}</em>
+                </i>
+                <i className="r">{views}</i>
+                <i className="r">{hovers}</i>
+                <i className="r ck">{clicks}</i>
+                <i className="r">{ctr}</i>
+                <i className="r">{leads}</i>
+                <i className={conv === "0%" ? "r" : "r cv"}>{conv}</i>
+              </span>
+            ))}
+          </span>
+        </div>
+
+        <p className="ct-note">
+          CTR is clicks ÷ views. Conversion rate is the share of sessions that clicked this CTA
+          <em> and </em>
+          went on to submit a lead — not a claim that the CTA caused the lead.
+        </p>
+      </div>
+    </div>
+  );
+}
+
 function View({ kind, onPick }: { kind: string } & Picker) {
   if (kind === "leads") return <LeadsView onPick={onPick} />;
   if (kind === "sessions") return <SessionsView onPick={onPick} />;
   if (kind === "funnels") return <FunnelsView onPick={onPick} />;
+  if (kind === "ctas") return <CtasView onPick={onPick} />;
   return <OverviewView onPick={onPick} />;
 }
 
