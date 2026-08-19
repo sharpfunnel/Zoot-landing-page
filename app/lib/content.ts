@@ -787,6 +787,12 @@ export const dashboardViews = [
     view: "overview",
     body: "Visitors, sessions, leads and conversion rate for the week, with the funnel from first scroll to submitted form underneath.",
   },
+  {
+    key: "leads",
+    label: "Leads",
+    view: "leads",
+    body: "Every form submission as a row: what they asked about, where they came from, and whether the conversion made it back to Meta.",
+  },
 ];
 
 /* --------------------------------------------------------------- pricing */

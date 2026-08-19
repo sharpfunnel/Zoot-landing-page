@@ -8389,6 +8389,280 @@ footer {
   font-weight: 600;
 }
 
+/* ---- the leads view ---- */
+
+/* Six tiles rather than the overview's ten, and no delta on them — these are
+   counts of a pipeline, not week-on-week movement. */
+.lv-kpis {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+}
+
+.lv-kpi {
+  padding: 12px;
+}
+
+.lv-kpi .top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.lv-kpi .ic {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  border-radius: 8px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lv-kpi .ic svg {
+  width: 15px;
+}
+
+/* Won and lost carry their own colour on both the tile and the figure. */
+.lv-kpi .ic.win {
+  background: #e6f6ee;
+  color: var(--good);
+}
+
+.lv-kpi .ic.loss {
+  background: #fdecec;
+  color: #d64545;
+}
+
+.lv-kpi .n {
+  flex: 1;
+  min-width: 0;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lv-kpi .v {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: -0.03em;
+  margin-top: 10px;
+}
+
+.lv-kpi .v.win {
+  color: var(--good);
+}
+
+.lv-kpi .v.loss {
+  color: #d64545;
+}
+
+/* ---- filter bar ---- */
+
+.lv-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.lv-bar .srch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 270px;
+  background: #ffffff;
+  border: 1px solid var(--border-strong);
+  border-radius: 9px;
+  padding: 9px 12px;
+  font-size: 11px;
+  color: var(--text-faint);
+}
+
+.lv-bar .srch svg {
+  width: 14px;
+  min-width: 14px;
+}
+
+.lv-bar .sel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-width: 128px;
+  background: #ffffff;
+  border: 1px solid var(--border-strong);
+  border-radius: 9px;
+  padding: 9px 12px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.lv-bar .sel em {
+  font-style: normal;
+  color: var(--text-faint);
+}
+
+.lv-bar .cnt {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* ---- the table ---- */
+
+.lv-tblwrap {
+  padding: 0;
+}
+
+.lv-tbl {
+  display: flex;
+  flex-direction: column;
+  font-size: 11px;
+}
+
+.lv-tbl .hd,
+.lv-tbl .rw {
+  display: grid;
+  grid-template-columns:
+    1.65fr 0.85fr 0.6fr 0.78fr 0.55fr 1.5fr 0.65fr 0.55fr 1.15fr 0.6fr;
+  gap: 10px;
+  align-items: center;
+  padding: 11px 13px;
+  border-bottom: 1px solid var(--border);
+}
+
+.lv-tbl .hd {
+  background: var(--bg-1);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.lv-tbl .rw:last-child {
+  border-bottom: none;
+}
+
+.lv-tbl i {
+  font-style: normal;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-muted);
+}
+
+/* Prefixed, not `.ld` / `.sr`: both are already the root class of a stage
+   mock further up this sheet, and `.ld` sets `display: grid` — which turned
+   this cell into a grid and sat the name beside its id. */
+.lv-tbl .lv-ld b,
+.lv-tbl .lv-sr b {
+  display: block;
+  font-weight: 600;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lv-tbl .lv-ld em,
+.lv-tbl .lv-sr em {
+  display: block;
+  font-style: normal;
+  font-size: 9.5px;
+  color: var(--text-faint);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 1px;
+}
+
+.lv-tbl .lv-sr b {
+  font-weight: 500;
+  color: var(--accent-deep);
+}
+
+.lv-tbl .dv-dev {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.04em;
+}
+
+.lv-tbl .cr {
+  color: var(--text-faint);
+}
+
+.pill-new {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  border-radius: 100px;
+  padding: 3px 9px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.pill-new::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* CAPI cell: the delivery state, then the resend control beside it. */
+.lv-tbl .capi {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow: visible;
+}
+
+.lv-tbl .capi .ok,
+.lv-tbl .capi .bad {
+  border-radius: 7px;
+  padding: 4px 8px;
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.lv-tbl .capi .ok {
+  background: #e6f6ee;
+  color: var(--good);
+}
+
+.lv-tbl .capi .bad {
+  background: #fdecec;
+  color: #d64545;
+}
+
+.lv-tbl .capi .send {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid var(--border-strong);
+  border-radius: 7px;
+  padding: 4px 9px;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.lv-tbl .capi .send svg {
+  width: 11px;
+}
+
 /* ---------------------------------------------------------- breakpoints */
 
 /* Narrow desktops: the wrap has stopped shrinking but the image box hasn't,

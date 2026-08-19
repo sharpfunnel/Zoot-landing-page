@@ -105,6 +105,43 @@ const I: Record<string, React.ReactElement> = {
       <path d="M8.4 10H17M13.6 7l3 3-3 3" />
     </svg>
   ),
+  cal: (
+    <svg viewBox="0 0 20 20" {...S}>
+      <rect x="3" y="4.5" width="14" height="12.5" rx="2" />
+      <path d="M3 8.4h14M7 2.8v3.2M13 2.8v3.2" strokeLinecap="round" />
+    </svg>
+  ),
+  check: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="10" cy="10" r="7.2" />
+      <path d="M6.6 10.2l2.4 2.4 4.4-4.9" />
+    </svg>
+  ),
+  cup: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinejoin="round">
+      <path d="M5.6 3.2h8.8v4.2a4.4 4.4 0 01-8.8 0z" />
+      <path d="M5.6 4.4H3.2v1.4a2.6 2.6 0 002.6 2.6M14.4 4.4h2.4v1.4a2.6 2.6 0 01-2.6 2.6" />
+      <path d="M10 11.8v3M7 16.8h6" strokeLinecap="round" />
+    </svg>
+  ),
+  xmark: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinecap="round">
+      <circle cx="10" cy="10" r="7.2" />
+      <path d="M7.8 7.8l4.4 4.4M12.2 7.8l-4.4 4.4" />
+    </svg>
+  ),
+  search: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinecap="round">
+      <circle cx="9" cy="9" r="5.6" />
+      <path d="M13.2 13.2l3.4 3.4" />
+    </svg>
+  ),
+  send: (
+    <svg viewBox="0 0 20 20" {...S} strokeLinejoin="round">
+      <path d="M17.2 3.2L2.6 8.5l5.6 2.3 2.3 5.6z" />
+      <path d="M8.2 10.8l3.4-3.4" strokeLinecap="round" />
+    </svg>
+  ),
 };
 
 /* --------------------------------------------------------------- data */
@@ -215,6 +252,32 @@ const DV_PAGES = [
 const path = (pts: readonly number[]) =>
   pts.map((y, i) => `${i ? "L" : "M"}${(i / (pts.length - 1)) * 300} ${y}`).join("");
 
+/** The app's own top rail, shared by every view — only the open tab differs. */
+function Rail({ active }: { active: string }) {
+  return (
+    <div className="dv-nav">
+      <span className="lg">DA</span>
+      <b className="nm">Dashboard</b>
+      <span className="tabs">
+        {DV_NAV.map((label) => (
+          <span className={label === active ? "on" : undefined} key={label}>
+            {label === active ? I.grid : null}
+            {label}
+          </span>
+        ))}
+      </span>
+      <span className="rt">
+        <s className="btn">
+          {I.link}
+          View Website
+        </s>
+        <s className="ic">{I.bell}</s>
+        <s className="ic">{I.logout}</s>
+      </span>
+    </div>
+  );
+}
+
 /**
  * A ring built from one circle per slice on a shared track: `pathLength=100`
  * lets each slice be sized in percent directly, offset by everything before it.
@@ -267,26 +330,7 @@ function Ring({
 function OverviewView() {
   return (
     <div className="dv" aria-hidden="true">
-      <div className="dv-nav">
-        <span className="lg">DA</span>
-        <b className="nm">Dashboard</b>
-        <span className="tabs">
-          {DV_NAV.map((label, i) => (
-            <span className={i === 0 ? "on" : undefined} key={label}>
-              {i === 0 ? I.grid : null}
-              {label}
-            </span>
-          ))}
-        </span>
-        <span className="rt">
-          <s className="btn">
-            {I.link}
-            View Website
-          </s>
-          <s className="ic">{I.bell}</s>
-          <s className="ic">{I.logout}</s>
-        </span>
-      </div>
+      <Rail active="Overview" />
 
       <div className="dv-body">
         <div className="dv-head">
@@ -503,8 +547,244 @@ function OverviewView() {
   );
 }
 
+
+/* Six tiles over the table. The totals agree with the Overview view — a
+   visitor can flip between the two tabs, so they can't disagree. */
+const LV_KPIS = [
+  ["users", "Total Leads", "327", null],
+  ["cal", "Today", "12", null],
+  ["check", "Qualified", "148", null],
+  ["cup", "Won", "46", "win"],
+  ["xmark", "Lost", "23", "loss"],
+  ["pulse", "Conv. Rate", "3.16%", null],
+] as const;
+
+/**
+ * Invented leads. The design came from a live dashboard, so the names, phone
+ * numbers and record ids there were real people's — none of that belongs on a
+ * public page, and none of it is reproduced here.
+ */
+const LV_ROWS = [
+  {
+    name: "Aarav Sharma",
+    id: "cmld4k29a0001x7fq2ub9nzew",
+    phone: "98765 43210",
+    interest: "Retail",
+    budget: "—",
+    city: "Mumbai",
+    source: "Facebook",
+    sub: "facebook/paid_social · 3BHK Launch — Leads",
+    device: "MOBILE",
+    capi: "sent",
+    created: "4d ago",
+  },
+  {
+    name: "Neha Kulkarni",
+    id: "cmld3v81m0004p2ha7cwqk5td",
+    phone: "98220 11347",
+    interest: "Office",
+    budget: "—",
+    city: "Mumbai",
+    source: "Direct",
+    sub: null,
+    device: "DESKTOP",
+    capi: "sent",
+    created: "5d ago",
+  },
+  {
+    name: "Rohan Desai",
+    id: "cmlcz7t4x0002g8kd1rvme903",
+    phone: "91670 88204",
+    interest: "Office",
+    budget: "Under ₹1 Cr",
+    city: "Mumbai",
+    source: "Google",
+    sub: "google/cpc · Office Space — Search",
+    device: "DESKTOP",
+    capi: "sent",
+    created: "11 Aug",
+  },
+  {
+    name: "Priya Nair",
+    id: "cmlcy0hs70007b3nz6dfwq182",
+    phone: "80975 22613",
+    interest: "Office",
+    budget: "—",
+    city: "—",
+    source: "Direct",
+    sub: null,
+    device: "DESKTOP",
+    capi: "sent",
+    created: "5 Aug",
+  },
+  {
+    name: "Site Visit Team",
+    id: "cmlcxm4b90003d1qs8ptrz740",
+    phone: "99304 55128",
+    interest: "Office",
+    budget: "—",
+    city: "Mumbai",
+    source: "Direct",
+    sub: null,
+    device: "DESKTOP",
+    capi: null,
+    created: "5 Aug",
+  },
+  {
+    name: "Ishita Rao",
+    id: "cmlcw8p2k0006j5tv3ynbc419",
+    phone: "70214 96635",
+    interest: "Both",
+    budget: "—",
+    city: "—",
+    source: "Instagram",
+    sub: "instagram/paid_social · Weekend Site Visit",
+    device: "MOBILE",
+    capi: null,
+    created: "5 Aug",
+  },
+  {
+    name: "Karan Mehta",
+    id: "cmlcv1z6r0005h9wp4kaxu268",
+    phone: "78281 90045",
+    interest: "Office",
+    budget: "—",
+    city: "Mumbai",
+    source: "Direct",
+    sub: null,
+    device: "DESKTOP",
+    capi: "failed",
+    created: "1 Aug",
+  },
+  {
+    name: "Meera Joshi",
+    id: "cmlcu6qd10008n4bx2ejft507",
+    phone: "90083 20011",
+    interest: "Office",
+    budget: "Under ₹1 Cr",
+    city: "Mumbai",
+    source: "Direct",
+    sub: null,
+    device: "DESKTOP",
+    capi: null,
+    created: "1 Aug",
+  },
+  {
+    name: "Devansh Patel",
+    id: "cmlct9wf40009m2cr7uzhd613",
+    phone: "96193 40772",
+    interest: "Retail",
+    budget: "—",
+    city: "Mumbai",
+    source: "yourbrand.com",
+    sub: null,
+    device: "DESKTOP",
+    capi: null,
+    created: "1 Aug",
+  },
+];
+
+/**
+ * The Leads view: the CRM side of the dashboard, one row per form submission.
+ * Same chassis as the Overview view — the app's rail, then a header row, then
+ * cards — with a filter bar and a wide table instead of charts.
+ */
+function LeadsView() {
+  return (
+    <div className="dv lv" aria-hidden="true">
+      <Rail active="Leads" />
+
+      <div className="dv-body">
+        <div className="dv-head">
+          <span className="ht">
+            <b>Leads</b>
+            <i>Lightweight CRM for every form submission</i>
+          </span>
+          <span className="ctl">
+            <s className="exp">
+              {I.down}
+              Export
+            </s>
+          </span>
+        </div>
+
+        <div className="lv-kpis">
+          {LV_KPIS.map(([icon, label, value, tone]) => (
+            <div className="dv-card lv-kpi" key={label}>
+              <span className="top">
+                <i className={tone ? `ic ${tone}` : "ic"}>{I[icon]}</i>
+                <b className="n">{label}</b>
+              </span>
+              <span className={tone ? `v ${tone}` : "v"}>{value}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="lv-bar">
+          <span className="srch">
+            {I.search}
+            Search name, phone, email, city...
+          </span>
+          <span className="sel">
+            All statuses
+            <em>⌄</em>
+          </span>
+          <span className="sel">
+            All sources
+            <em>⌄</em>
+          </span>
+          <span className="cnt">327 leads</span>
+        </div>
+
+        <div className="dv-card lv-tblwrap">
+          <span className="lv-tbl">
+            <span className="hd">
+              <i>Lead</i>
+              <i>Phone</i>
+              <i>Interest</i>
+              <i>Budget</i>
+              <i>City</i>
+              <i>Source</i>
+              <i>Device</i>
+              <i>Status</i>
+              <i>Meta CAPI</i>
+              <i>Created</i>
+            </span>
+            {LV_ROWS.map((r) => (
+              <span className="rw" key={r.id}>
+                <i className="lv-ld">
+                  <b>{r.name}</b>
+                  <em>{r.id}</em>
+                </i>
+                <i>{r.phone}</i>
+                <i>{r.interest}</i>
+                <i>{r.budget}</i>
+                <i>{r.city}</i>
+                <i className="lv-sr">
+                  <b>{r.source}</b>
+                  {r.sub ? <em>{r.sub}</em> : null}
+                </i>
+                <i className="dv-dev">{r.device}</i>
+                <i>
+                  <b className="pill-new">New</b>
+                </i>
+                <i className="capi">
+                  {r.capi === "sent" ? <b className="ok">✓ Sent</b> : null}
+                  {r.capi === "failed" ? <b className="bad">✕ Failed</b> : null}
+                  <b className="send">{I.send} Send</b>
+                </i>
+                <i className="cr">{r.created}</i>
+              </span>
+            ))}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function View({ kind }: { kind: string }) {
-  if (kind === "overview") return <OverviewView />;
+  if (kind === "leads") return <LeadsView />;
   return <OverviewView />;
 }
 
