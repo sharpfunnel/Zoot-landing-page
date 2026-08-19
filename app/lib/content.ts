@@ -49,12 +49,12 @@ export const offer = {
   bar: "Limited build slots — 0 of 00 remaining this month",
   /** The entry package's price, shown in the hero, the sticky bar and the
       savings bar. Mirrors pricingPlans[0] — keep the two in step. */
-  now: "₹16,999",
+  now: "₹1,999",
   period: "/mo",
   /** valueStack totalled, and that total less `now`. Both are arithmetic on
       the list below, so recompute them if any line item changes. */
-  worth: "₹42,999",
-  saves: "₹26,000",
+  worth: "₹8,999",
+  saves: "₹7,000",
   /** Hours the countdown runs for. Restarts on load — a real deadline should
       come from a fixed date instead. */
   countdownHours: 24,
@@ -87,19 +87,19 @@ export const specChips = [
  *
  * Monthly figures, so they sit against the packages rather than against a
  * one-off build. Estimated market rates — see the note above. They sum to
- * offer.worth (₹42,999); change one and both offer.worth and offer.saves
+ * offer.worth (₹8,999); change one and both offer.worth and offer.saves
  * have to move with it.
  */
 export const valueStack = [
-  { title: "Custom landing page design & build", value: "₹12,000" },
-  { title: "Private analytics dashboard", value: "₹6,500" },
-  { title: "Lead CRM with ad attribution", value: "₹5,000" },
-  { title: "Heatmaps & session recording", value: "₹4,000" },
-  { title: "Meta Pixel + Conversion API setup", value: "₹3,500" },
-  { title: "Funnel & form analytics", value: "₹3,000" },
-  { title: "Campaign dashboard (ROAS & ROI)", value: "₹4,500" },
-  { title: "Automated weekly & monthly reports", value: "₹2,500" },
-  { title: "Performance & error monitoring", value: "₹1,999" },
+  { title: "Custom landing page design & build", value: "₹2,500" },
+  { title: "Private analytics dashboard", value: "₹1,400" },
+  { title: "Lead CRM with ad attribution", value: "₹1,100" },
+  { title: "Heatmaps & session recording", value: "₹900" },
+  { title: "Meta Pixel + Conversion API setup", value: "₹750" },
+  { title: "Funnel & form analytics", value: "₹650" },
+  { title: "Campaign dashboard (ROAS & ROI)", value: "₹950" },
+  { title: "Automated weekly & monthly reports", value: "₹450" },
+  { title: "Performance & error monitoring", value: "₹299" },
 ];
 
 /* --------------------------------------------------- 3-way comparison */
@@ -119,7 +119,7 @@ export const comparison3 = {
     { feature: "Performance monitoring", values: [true, false, false] },
     { feature: "One team, one invoice", values: [true, true, false] },
   ],
-  cost: ["₹16,999/mo", "₹35,000+/mo", "₹12,000/mo + your time"],
+  cost: ["₹1,999/mo", "₹12,000+/mo", "₹4,500/mo + your time"],
 };
 
 /* --------------------------------------------------------- review wall */
@@ -770,7 +770,7 @@ export const processSteps = [
 export const pricingPlans = [
   {
     title: "Starter Launch",
-    price: "₹16,999",
+    price: "₹1,999",
     period: "/mo",
     body: "Get your first campaign live on a page built to convert, with tracking wired in from day one.",
     checks: [
@@ -787,7 +787,7 @@ export const pricingPlans = [
   },
   {
     title: "Growth Engine",
-    price: "₹19,999",
+    price: "₹2,899",
     period: "/mo",
     body: "Once the first campaign works, this is the one that scales it — more segments, retargeting and monthly optimisation.",
     checks: [
@@ -806,7 +806,7 @@ export const pricingPlans = [
   },
   {
     title: "Scale Boost",
-    price: "₹24,999",
+    price: "₹4,999",
     period: "/mo",
     body: "For campaigns already bringing in leads, where the work is testing, lead quality and spending more without paying more per lead.",
     checks: [
