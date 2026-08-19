@@ -1208,11 +1208,108 @@ function CtasView({ onPick }: Picker) {
   );
 }
 
+
+/**
+ * Every form on the site. Start rate, completion and abandons are derived
+ * from views, starts and submits rather than written by hand, so no row can
+ * disagree with itself.
+ *
+ * The first row is the landing page's own lead form, and its 623 starts and
+ * 327 submits are the same two steps the Overview and Funnels views end on.
+ * The rest are the other forms across the site, which that journey doesn't
+ * count.
+ */
+const FM_ROWS = [
+  ["Enquiry Lead Form", "3,412", "623", "18.3%", "327", "52.5%", true, "296", "41", "Budget"],
+  ["Hero Lead Form", "2,684", "301", "11.2%", "42", "14.0%", false, "259", "6", "Phone"],
+  ["Contact Us Form", "1,240", "205", "16.5%", "57", "27.8%", true, "148", "9", "Email"],
+  ["Callback Request Form", "1,072", "163", "15.2%", "42", "25.8%", true, "121", "4", "Phone"],
+  ["Pricing & Plan Form", "869", "123", "14.2%", "27", "22.0%", false, "96", "5", "Budget"],
+  ["Get a Quote Form", "1,571", "267", "17.0%", "84", "31.5%", true, "183", "6", "Requirements"],
+  ["Free Consultation Form", "1,124", "180", "16.0%", "51", "28.3%", true, "129", "3", "Message"],
+  ["Demo Request Form", "903", "135", "15.0%", "33", "24.4%", false, "102", "2", "Company"],
+  ["Newsletter Signup Form", "2,034", "306", "15.0%", "126", "41.2%", true, "180", "0", "Email"],
+  ["Download Resource Form", "690", "99", "14.3%", "30", "30.3%", true, "69", "0", "Email"],
+  ["Event Registration Form", "594", "84", "14.1%", "21", "25.0%", true, "63", "0", "Phone"],
+  ["Partner With Us Form", "492", "63", "12.8%", "15", "23.8%", false, "48", "0", "—"],
+] as const;
+
+/**
+ * The Forms view: how many people saw each form, how many began it, and how
+ * many finished — with the field they gave up on last.
+ */
+function FormsView({ onPick }: Picker) {
+  return (
+    <div className="dv fm" aria-hidden="true">
+      <Rail active="Forms" onPick={onPick} />
+
+      <div className="dv-body">
+        <div className="dv-head">
+          <span className="ht">
+            <b>Forms</b>
+            <i>Views, starts, completions and where visitors give up</i>
+          </span>
+          <span className="ctl">
+            <s className="seg">
+              <em>7d</em>
+              <em>30d</em>
+              <em>90d</em>
+              <em className="on">All</em>
+            </s>
+            <s className="exp">
+              {I.down}
+              Export
+            </s>
+          </span>
+        </div>
+
+        <div className="dv-card lv-tblwrap">
+          <span className="fm-tbl">
+            <span className="hd">
+              <i>Form</i>
+              <i className="r">Views</i>
+              <i className="r">Starts</i>
+              <i className="r">Start rate</i>
+              <i className="r">Submits</i>
+              <i className="r">Completion</i>
+              <i className="r">Abandons</i>
+              <i className="r">Errors</i>
+              <i>Worst field</i>
+            </span>
+            {FM_ROWS.map(
+              ([name, views, starts, rate, submits, comp, good, abandons, errors, worst]) => (
+                <span className="rw" key={name}>
+                  <i className="nm">{name}</i>
+                  <i className="r">{views}</i>
+                  <i className="r">{starts}</i>
+                  <i className="r">{rate}</i>
+                  <i className="r">{submits}</i>
+                  <i className={good ? "r cp ok" : "r cp bad"}>{comp}</i>
+                  <i className="r">{abandons}</i>
+                  <i className="r">{errors}</i>
+                  <i>{worst}</i>
+                </span>
+              ),
+            )}
+          </span>
+        </div>
+
+        <p className="ct-note">
+          A form is <em>started</em> on first field focus and <em>abandoned</em> if the visitor
+          leaves the page after starting without submitting. Only <em>field names</em> are recorded
+          — never what anyone typed.
+        </p>
+      </div>
+    </div>
+  );
+}
+
 function View({ kind, onPick }: { kind: string } & Picker) {
   if (kind === "leads") return <LeadsView onPick={onPick} />;
   if (kind === "sessions") return <SessionsView onPick={onPick} />;
   if (kind === "funnels") return <FunnelsView onPick={onPick} />;
   if (kind === "ctas") return <CtasView onPick={onPick} />;
+  if (kind === "forms") return <FormsView onPick={onPick} />;
   return <OverviewView onPick={onPick} />;
 }
 

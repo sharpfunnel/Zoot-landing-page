@@ -811,6 +811,12 @@ export const dashboardViews = [
     view: "ctas",
     body: "Which button people actually press. Every call, WhatsApp and enquiry element on the page, ranked by clicks, with the views and hovers behind each one.",
   },
+  {
+    key: "forms",
+    label: "Forms",
+    view: "forms",
+    body: "How many people saw each form, how many began it and how many finished — and the field they gave up on last, so you know which question to cut.",
+  },
 ];
 
 /* --------------------------------------------------------------- pricing */

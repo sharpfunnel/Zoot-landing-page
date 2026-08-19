@@ -9146,6 +9146,70 @@ footer {
   font-style: italic;
 }
 
+/* ---- the forms view ---- */
+
+.fm-tbl {
+  display: flex;
+  flex-direction: column;
+  font-size: 11.5px;
+}
+
+.fm-tbl .hd,
+.fm-tbl .rw {
+  display: grid;
+  grid-template-columns: 1.9fr 0.7fr 0.7fr 0.9fr 0.8fr 1fr 0.9fr 0.7fr 1fr;
+  gap: 10px;
+  align-items: center;
+  padding: 13px;
+  border-bottom: 1px solid var(--border);
+}
+
+.fm-tbl .hd {
+  background: var(--bg-1);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.fm-tbl .rw:last-child {
+  border-bottom: none;
+}
+
+.fm-tbl i {
+  font-style: normal;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-muted);
+}
+
+.fm-tbl .r {
+  text-align: right;
+}
+
+/* Each form's name links through to its own breakdown in the product. */
+.fm-tbl .nm {
+  font-weight: 500;
+  color: var(--accent);
+}
+
+/* Completion carries the judgement: a quarter of starts finishing is the
+   line, and everything under it is the one worth looking at. */
+.fm-tbl .cp {
+  font-weight: 600;
+}
+
+.fm-tbl .cp.ok {
+  color: var(--good);
+}
+
+.fm-tbl .cp.bad {
+  color: #d64545;
+}
+
 /* ---------------------------------------------------------- breakpoints */
 
 /* Narrow desktops: the wrap has stopped shrinking but the image box hasn't,
