@@ -71,7 +71,7 @@ export const heroTrust = {
 
 /** Spec chips, like the reference's "7hr 20min · Hindi · Self Paced" row. */
 export const specChips = [
-  { v: "2–4 weeks", l: "To go live" },
+  { v: "7 days", l: "To go live" },
   { v: "20+", l: "Tracking tools" },
   { v: "Unlimited", l: "Dashboard logins" },
   { v: "100%", l: "Your data" },
@@ -211,7 +211,7 @@ export const trustPoints = [
   { icon: "★", title: "Rated 5 stars", body: "By the teams we build for" },
   { icon: "◆", title: "100+ projects", body: "Delivered since 2016" },
   { icon: "✓", title: "95% satisfaction", body: "Clients who'd recommend us" },
-  { icon: "⚡", title: "Fast delivery", body: "Live in two to four weeks" },
+  { icon: "⚡", title: "Fast delivery", body: "Live in seven days" },
   { icon: "☎", title: "Dedicated support", body: "One team, one contact" },
 ];
 
@@ -846,7 +846,7 @@ export const faqs = [
   },
   {
     q: "How long does it take to get started?",
-    a: "Most projects go from our first call to a fully working page and dashboard in two to four weeks.",
+    a: "Most projects go from our first call to a fully working page and dashboard in seven days.",
   },
   {
     q: "Can I download my reports?",

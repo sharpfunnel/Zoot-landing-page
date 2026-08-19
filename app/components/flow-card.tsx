@@ -2,7 +2,7 @@ import { specChips } from "../lib/content";
 
 const ROWS = [
   { ic: "◷", t: "Book a free demo", b: "One call — we look at your current funnel." },
-  { ic: "◱", t: "We build page + dashboard", b: "Live in two to four weeks, tested end to end." },
+  { ic: "◱", t: "We build page + dashboard", b: "Live in seven days, tested end to end." },
   { ic: "◎", t: "Watch every lead land", b: "Tagged to the exact ad that produced it." },
 ];
 
