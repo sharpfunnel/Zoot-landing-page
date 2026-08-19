@@ -1,4 +1,5 @@
 import ComparisonTable from "./components/comparison-table";
+import DashboardViews from "./components/dashboard-views";
 import Deliverables from "./components/deliverables";
 import Faq from "./components/faq";
 import FinalCta from "./components/final-cta";
@@ -84,6 +85,7 @@ export default function Page() {
         {/* Hook → clarity → credibility */}
         <Hero />
         <TrackingSetup />
+        <DashboardViews />
         <FlowCard />
         <ProofStrip />
 

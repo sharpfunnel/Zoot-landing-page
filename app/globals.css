@@ -7472,6 +7472,923 @@ footer {
   width: 15px;
 }
 
+/* -------------------------------------------------- dashboard views */
+
+/* A centred tab strip with the view below it, rather than the setup
+   section's rail-and-stage: there's no step copy to keep beside each one,
+   so the tabs can sit on their own line and the mock gets the full width. */
+
+.dv-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.dv-tab {
+  background: #ffffff;
+  border: 1px solid var(--border-strong);
+  border-radius: 100px;
+  padding: 10px 20px;
+  font-family: var(--display);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.dv-tab:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+.dv-tab.on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+  box-shadow: var(--shadow-md);
+}
+
+.dv-cap {
+  max-width: 620px;
+  margin: 0 auto 22px;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.dv-stage:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* The window the mock sits in. `overflow: hidden` keeps the app's own top
+   rail inside the rounded corners. */
+.dv-frame {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+/* ---- the app's top rail ---- */
+
+.dv {
+  font-size: 11px;
+  color: var(--text);
+}
+
+.dv-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  background: #ffffff;
+}
+
+.dv-nav .lg {
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  background: var(--accent);
+  color: #ffffff;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dv-nav .nm {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 13px;
+  margin-right: 6px;
+}
+
+.dv-nav .tabs {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.dv-nav .tabs > span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 7px;
+  border-radius: 7px;
+  font-size: 10.5px;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.dv-nav .tabs > span svg {
+  width: 12px;
+}
+
+/* The open view keeps the underline the product uses, not a filled pill. */
+.dv-nav .tabs .on {
+  color: var(--accent);
+  font-weight: 600;
+  box-shadow: inset 0 -2px 0 var(--accent);
+  border-radius: 0;
+}
+
+.dv-nav .rt {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.dv-nav .btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 10.5px;
+  font-weight: 600;
+}
+
+.dv-nav .btn svg {
+  width: 12px;
+}
+
+.dv-nav .ic {
+  text-decoration: none;
+  color: var(--text-muted);
+  display: block;
+}
+
+.dv-nav .ic svg {
+  width: 15px;
+  display: block;
+}
+
+/* ---- header row ---- */
+
+.dv-body {
+  padding: 16px;
+  background: var(--bg-1);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dv-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.dv-head .ht b {
+  display: block;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: -0.02em;
+}
+
+.dv-head .ht i {
+  display: block;
+  font-style: normal;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.dv-head .ctl {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.dv-head s {
+  text-decoration: none;
+}
+
+.dv-head .live {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #e6f6ee;
+  color: var(--good);
+  border-radius: 100px;
+  padding: 6px 11px;
+  font-size: 10.5px;
+  font-weight: 600;
+}
+
+.dv-head .live::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--good);
+}
+
+.dv-head .seg {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: #ffffff;
+  border: 1px solid var(--border-strong);
+  border-radius: 9px;
+  padding: 3px;
+}
+
+.dv-head .seg em {
+  font-style: normal;
+  border-radius: 6px;
+  padding: 4px 9px;
+  font-size: 10.5px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.dv-head .seg .on {
+  background: var(--accent);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.dv-head .exp {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid var(--border-strong);
+  border-radius: 9px;
+  padding: 6px 11px;
+  font-size: 10.5px;
+  font-weight: 500;
+  background: #ffffff;
+}
+
+.dv-head .exp svg {
+  width: 12px;
+  color: var(--text-muted);
+}
+
+/* ---- cards ---- */
+
+.dv-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 13px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.dv-card .ct {
+  display: block;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.dv-card .ct i {
+  display: block;
+  font-family: var(--body);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10.5px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* ---- the ten KPI cards ---- */
+
+.dv-kpis {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+
+.dv-kpi {
+  padding: 12px;
+}
+
+.dv-kpi .top {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+}
+
+.dv-kpi .ic {
+  width: 26px;
+  height: 26px;
+  min-width: 26px;
+  border-radius: 8px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dv-kpi .ic svg {
+  width: 14px;
+}
+
+.dv-kpi .n {
+  flex: 1;
+  min-width: 0;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dv-kpi em {
+  flex-shrink: 0;
+  font-style: normal;
+  font-size: 9.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.dv-kpi .up {
+  color: var(--good);
+}
+
+/* A fall in bounce rate is the good direction, but the arrow still points
+   the way the number moved — the colour is what carries the reading. */
+.dv-kpi .dn {
+  color: #d64545;
+}
+
+.dv-kpi .v {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: -0.03em;
+  margin-top: 10px;
+}
+
+/* ---- chart + device ring ---- */
+
+.dv-r2 {
+  display: grid;
+  grid-template-columns: 1.9fr 1fr;
+  gap: 10px;
+}
+
+.dv-key {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+
+.dv-key em {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-style: normal;
+  font-size: 10.5px;
+  color: var(--text-muted);
+}
+
+.dv-key .d {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* Three series, strongest first — the same ramp the rings use. */
+.dv-key .s0,
+.dv-plot .dt.s0 {
+  background: var(--accent);
+}
+
+.dv-key .s1,
+.dv-plot .dt.s1 {
+  background: #7fc0f9;
+}
+
+.dv-key .s2,
+.dv-plot .dt.s2 {
+  background: #22c07d;
+}
+
+.dv-plot {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 190px auto;
+  column-gap: 8px;
+  row-gap: 6px;
+  flex: 1;
+}
+
+.dv-plot .ax {
+  position: relative;
+  width: 26px;
+  font-size: 9.5px;
+  color: var(--text-faint);
+}
+
+.dv-plot .ax i {
+  position: absolute;
+  right: 0;
+  transform: translateY(-50%);
+  font-style: normal;
+}
+
+.dv-plot .gr {
+  position: relative;
+  min-width: 0;
+}
+
+.dv-plot .gr svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.dv-plot .gl line {
+  stroke: var(--border);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.dv-plot .ln .st {
+  fill: none;
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.dv-plot .ln .ar {
+  stroke: none;
+}
+
+.dv-plot .ln.s0 .st {
+  stroke: var(--accent);
+}
+
+.dv-plot .ln.s0 .ar {
+  fill: rgba(0, 138, 252, 0.1);
+}
+
+.dv-plot .ln.s1 .st {
+  stroke: #7fc0f9;
+}
+
+.dv-plot .ln.s1 .ar {
+  fill: rgba(127, 192, 249, 0.12);
+}
+
+.dv-plot .ln.s2 .st {
+  stroke: #22c07d;
+}
+
+.dv-plot .ln.s2 .ar {
+  fill: rgba(34, 192, 125, 0.1);
+}
+
+/* Percent-positioned, so the markers track the stretched line at any width
+   instead of turning into ellipses with the viewBox. */
+.dv-plot .dt {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.dv-plot .xax {
+  grid-column: 2;
+  display: flex;
+  justify-content: space-between;
+  font-size: 9.5px;
+  color: var(--text-faint);
+}
+
+.dv-plot .xax i {
+  font-style: normal;
+}
+
+/* ---- rings ---- */
+
+.dv-split {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.dv-ring {
+  position: relative;
+  display: block;
+  width: 44%;
+  max-width: 150px;
+  flex-shrink: 0;
+}
+
+.dv-ring svg {
+  width: 100%;
+  display: block;
+}
+
+.dv-ring circle {
+  fill: none;
+  stroke-width: 6.5;
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+.dv-ring .c {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.2;
+}
+
+.dv-ring .c b {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: -0.02em;
+}
+
+.dv-ring .c i {
+  font-style: normal;
+  font-size: 9.5px;
+  color: var(--text-muted);
+}
+
+/* Device slices */
+.dv-ring .s0 {
+  stroke: var(--accent);
+}
+
+.dv-ring .s1 {
+  stroke: #a5d6fb;
+}
+
+.dv-ring .s2 {
+  stroke: #22c07d;
+}
+
+.dv-ring .s3 {
+  stroke: #a78bfa;
+}
+
+/* Browser slices — six of them, so their own ramp. */
+.dv-ring .b0 {
+  stroke: var(--accent);
+}
+
+.dv-ring .b1 {
+  stroke: #a78bfa;
+}
+
+.dv-ring .b2 {
+  stroke: #22c07d;
+}
+
+.dv-ring .b3 {
+  stroke: #f5c451;
+}
+
+.dv-ring .b4 {
+  stroke: #ef6262;
+}
+
+.dv-ring .b5 {
+  stroke: #cbd5e1;
+}
+
+.dv-legend {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  font-size: 11px;
+}
+
+.dv-legend > span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.dv-legend .d {
+  width: 9px;
+  height: 9px;
+  min-width: 9px;
+  border-radius: 50%;
+}
+
+.dv-legend .n {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text-muted);
+}
+
+.dv-legend b {
+  flex-shrink: 0;
+  font-weight: 600;
+}
+
+.dv-legend .s0,
+.dv-legend .b0 {
+  background: var(--accent);
+}
+
+.dv-legend .s1 {
+  background: #a5d6fb;
+}
+
+.dv-legend .s2,
+.dv-legend .b2 {
+  background: #22c07d;
+}
+
+.dv-legend .s3,
+.dv-legend .b1 {
+  background: #a78bfa;
+}
+
+.dv-legend .b3 {
+  background: #f5c451;
+}
+
+.dv-legend .b4 {
+  background: #ef6262;
+}
+
+.dv-legend .b5 {
+  background: #cbd5e1;
+}
+
+/* ---- funnel + sources ---- */
+
+.dv-r3 {
+  display: grid;
+  grid-template-columns: 0.92fr 1.35fr;
+  gap: 10px;
+}
+
+.dv-funnel {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.dv-funnel > span {
+  display: block;
+  min-width: 0;
+}
+
+.dv-funnel .hd {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  font-size: 11px;
+}
+
+.dv-funnel .n {
+  width: 11px;
+  min-width: 11px;
+  font-style: normal;
+  font-size: 10px;
+  color: var(--text-faint);
+}
+
+.dv-funnel .hd b {
+  flex: 1;
+  min-width: 0;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dv-funnel em {
+  font-style: normal;
+  flex-shrink: 0;
+}
+
+.dv-funnel .c {
+  font-weight: 700;
+}
+
+.dv-funnel .p {
+  width: 40px;
+  text-align: right;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.dv-funnel .dp {
+  width: 52px;
+  text-align: right;
+  font-weight: 600;
+  color: #d64545;
+  white-space: nowrap;
+}
+
+.dv-funnel .tk {
+  display: block;
+  height: 7px;
+  border-radius: 4px;
+  background: var(--bg-2);
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.dv-funnel .tk s {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: var(--accent);
+  text-decoration: none;
+}
+
+.dv-tbl {
+  display: flex;
+  flex-direction: column;
+  font-size: 11px;
+}
+
+.dv-tbl .hd,
+.dv-tbl .rw {
+  display: grid;
+  grid-template-columns: 0.85fr 0.7fr 1.5fr 0.8fr 0.55fr 0.6fr;
+  gap: 8px;
+  align-items: center;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.dv-tbl .hd {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  padding-top: 0;
+}
+
+.dv-tbl .rw:last-child {
+  border-bottom: none;
+}
+
+.dv-tbl i {
+  font-style: normal;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-muted);
+}
+
+.dv-tbl .r {
+  text-align: right;
+}
+
+.dv-tbl .sc {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.dv-tbl .cv {
+  font-weight: 600;
+  color: var(--good);
+}
+
+/* ---- browsers, countries, pages ---- */
+
+.dv-r4 {
+  display: grid;
+  grid-template-columns: 1.1fr 1.15fr 0.95fr;
+  gap: 10px;
+}
+
+.dv-geo {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  font-size: 11px;
+}
+
+.dv-geo > span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.dv-geo .cc {
+  width: 20px;
+  min-width: 20px;
+  font-family: var(--mono);
+  font-style: normal;
+  font-size: 9.5px;
+  font-weight: 500;
+  color: var(--text-faint);
+}
+
+.dv-geo .n {
+  width: 34%;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-muted);
+}
+
+.dv-geo .tk {
+  flex: 1;
+  min-width: 0;
+  height: 6px;
+  border-radius: 4px;
+  background: var(--bg-2);
+  overflow: hidden;
+}
+
+.dv-geo .tk s {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: var(--accent);
+  text-decoration: none;
+}
+
+.dv-geo b {
+  flex-shrink: 0;
+  font-weight: 600;
+  min-width: 38px;
+  text-align: right;
+}
+
+.dv-pages {
+  display: flex;
+  flex-direction: column;
+  font-size: 11px;
+}
+
+.dv-pages > span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  min-width: 0;
+}
+
+.dv-pages > span:last-child {
+  border-bottom: none;
+}
+
+.dv-pages .n {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-muted);
+}
+
+.dv-pages b {
+  flex-shrink: 0;
+  font-weight: 600;
+}
+
 /* ---------------------------------------------------------- breakpoints */
 
 /* Narrow desktops: the wrap has stopped shrinking but the image box hasn't,
@@ -7512,6 +8429,20 @@ footer {
 }
 
 @media (max-width: 1080px) {
+  /* The view keeps its shape and scrolls sideways — five KPI cards and a
+     six-column table have no useful narrow form, and squashing them would
+     lose the thing the section exists to show. */
+  .dv-frame {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .dv {
+    min-width: 1040px;
+  }
+  .dv-tab {
+    padding: 9px 16px;
+    font-size: 12.5px;
+  }
   .form-split,
   .feature-row,
   .tab-panel,

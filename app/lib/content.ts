@@ -773,6 +773,22 @@ export const processSteps = [
   { n: "09", title: "Optimization", body: "We read the data with you and keep improving it." },
 ];
 
+/* ---------------------------------------------------- dashboard views */
+
+/**
+ * The tabs over the dashboard section. One entry per view; `view` picks the
+ * mock that renders below the tab strip, and every view but the first falls
+ * back to the overview until its own mock is built.
+ */
+export const dashboardViews = [
+  {
+    key: "overview",
+    label: "Overview",
+    view: "overview",
+    body: "Visitors, sessions, leads and conversion rate for the week, with the funnel from first scroll to submitted form underneath.",
+  },
+];
+
 /* --------------------------------------------------------------- pricing */
 
 export const pricingPlans = [
