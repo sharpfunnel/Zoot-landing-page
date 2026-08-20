@@ -68,8 +68,8 @@ export default function Hero() {
             <a href="#demo" className="btn btn-accent" data-ripple>
               Get My Free Demo
             </a>
-            <a href="#setup" className="btn btn-ghost" data-ripple>
-              See How Tracking Works ↓
+            <a href="#dashboard" className="btn btn-ghost" data-ripple>
+              See Your Dashboard ↓
             </a>
           </div>
 
