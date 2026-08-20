@@ -11199,31 +11199,16 @@ footer {
 }
 
 @media (max-width: 1080px) {
-  /* The view keeps its shape and scrolls sideways — five KPI cards and a
-     six-column table have no useful narrow form, and squashing them would
-     lose the thing the section exists to show. */
-  .dv-frame {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
+  /* The whole view is laid out at its design width and scaled down to fit
+     rather than scrolled sideways — a view you can only see a third of at a
+     time doesn't show what the section is there to show. fitFrame sets the
+     width, the scale and the frame's height; the origin is here so the mock
+     shrinks towards the top-left corner it starts in.
+
+     Nothing collapses the mock's own columns any more, either. It never
+     renders narrow now: it renders wide and small. */
   .dv {
-    min-width: 1040px;
-  }
-  .fn-r {
-    grid-template-columns: 1fr;
-  }
-  /* The heatmap's sidebar drops under the page it annotates. */
-  .hm-r {
-    grid-template-columns: 1fr;
-  }
-  .pf-r {
-    grid-template-columns: 1fr;
-  }
-  .ts-r {
-    grid-template-columns: 1fr 1fr;
-  }
-  .mc-r {
-    grid-template-columns: 1fr;
+    transform-origin: top left;
   }
   .form-split,
   .feature-row,

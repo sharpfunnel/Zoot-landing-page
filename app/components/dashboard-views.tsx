@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { dashboardViews } from "../lib/content";
 import { Eyebrow } from "./ui";
 
@@ -2525,9 +2525,58 @@ function View({ kind, rail }: { kind: string } & Picker) {
 
 /* -------------------------------------------------------------- section */
 
+/* The width every view is drawn at. Below the stacking breakpoint the mock is
+   laid out at exactly this and scaled down to whatever the frame is, so its
+   columns keep their desktop shape instead of collapsing. */
+const DESIGN_W = 1040;
+
+/**
+ * Sizes the open view to its frame. Above 1080px the mock is fluid and this
+ * does nothing but clear up after itself; below it, the mock is pinned to
+ * DESIGN_W and scaled by frame ÷ design.
+ *
+ * The frame needs its height set too: a transform doesn't change the space an
+ * element takes, so without it the frame keeps the unscaled height and leaves
+ * a screen of dead white underneath.
+ */
+function fitFrame(frame: HTMLElement | null) {
+  const mock = frame?.firstElementChild as HTMLElement | null;
+  if (!frame || !mock) return;
+
+  if (!window.matchMedia("(max-width: 1080px)").matches) {
+    mock.style.width = "";
+    mock.style.transform = "";
+    frame.style.height = "";
+    return;
+  }
+
+  const k = Math.min(1, frame.clientWidth / DESIGN_W);
+  mock.style.width = `${DESIGN_W}px`;
+  mock.style.transform = `scale(${k})`;
+  frame.style.height = `${Math.round(mock.offsetHeight * k)}px`;
+}
+
 export default function DashboardViews() {
   const [active, setActive] = useState(0);
   const view = dashboardViews[active];
+  const frame = useRef<HTMLDivElement | null>(null);
+
+  const fit = useCallback(() => fitFrame(frame.current), []);
+
+  /* Before paint, so a freshly opened view is never shown at the wrong size —
+     it remounts on every change, hence the dependency. */
+  useLayoutEffect(fit, [fit, active]);
+
+  /* The frame's width moves with the viewport, and fonts land after first
+     paint and change the mock's height. */
+  useEffect(() => {
+    const el = frame.current;
+    if (!el) return;
+    const ro = new ResizeObserver(fit);
+    ro.observe(el);
+    document.fonts?.ready.then(fit);
+    return () => ro.disconnect();
+  }, [fit]);
 
   return (
     <section className="section section-alt" id="dashboard">
@@ -2549,7 +2598,7 @@ export default function DashboardViews() {
 
         <div className="dv-stage" data-anim="fade-up">
           {/* Re-keyed so the view remounts and its bars re-fill on change. */}
-          <div className="dv-frame" key={view.key}>
+          <div className="dv-frame" key={view.key} ref={frame}>
             <View kind={view.view} rail={<Rail active={active} onPick={setActive} />} />
           </div>
         </div>
