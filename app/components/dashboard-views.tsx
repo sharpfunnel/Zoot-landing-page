@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useState } from "react";
 import { dashboardViews } from "../lib/content";
 import { Eyebrow } from "./ui";
 
@@ -273,23 +273,6 @@ const I: Record<string, React.ReactElement> = {
 
 /* --------------------------------------------------------------- data */
 
-/* The app's own tab strip inside the mock — decorative, and shorter than the
-   real product's so it fits one line at this width. */
-const DV_NAV = [
-  "Overview",
-  "Leads",
-  "Sessions",
-  "Campaigns",
-  "Funnels",
-  "CTAs",
-  "Forms",
-  "Heatmap",
-  "Performance",
-  "Errors",
-  "Tech Stack",
-  "Meta CAPI",
-];
-
 const DV_KPIS = [
   ["users", "Total Visitors", "8,742", "128.6%", true],
   ["pulse", "Total Sessions", "10,351", "97.3%", true],
@@ -379,40 +362,40 @@ const DV_PAGES = [
 const path = (pts: readonly number[]) =>
   pts.map((y, i) => `${i ? "L" : "M"}${(i / (pts.length - 1)) * 300} ${y}`).join("");
 
-/** Clicking a rail item switches the tab, so every view is handed the setter. */
-type Picker = { onPick: (label: string) => void };
+/** The rail is built once by the section and handed to whichever view is open. */
+type Picker = { rail: React.ReactNode };
 
-/** The app's own top rail, shared by every view — only the open tab differs. */
-function Rail({ active, onPick }: { active: string; onPick: (label: string) => void }) {
+/**
+ * The app's own top rail, and the only way to change view — so it carries the
+ * real controls. The logo and the buttons on the right are picture, and say
+ * so; the items in the middle are buttons in the tab order, with the open one
+ * marked current. Its labels come from dashboardViews, so a view can't appear
+ * in one and not the other.
+ */
+function Rail({ active, onPick }: { active: number; onPick: (i: number) => void }) {
   return (
     <div className="dv-nav">
-      <span className="lg">DA</span>
-      <b className="nm">Dashboard</b>
-      <span className="tabs">
-        {DV_NAV.map((label) => {
-          const built = dashboardViews.some((v) => v.label === label);
-          const cls = ["it", label === active ? "on" : "", built ? "lnk" : ""]
-            .filter(Boolean)
-            .join(" ");
-          /* A real button for the pointer, but out of the tab order: the whole
-             mock is aria-hidden, and the tab strip above it is the accessible
-             way to the same views. A focusable control in here would be a stop
-             on the keyboard path that a screen reader never announces. */
-          return (
-            <button
-              type="button"
-              className={cls}
-              key={label}
-              tabIndex={-1}
-              onClick={built ? () => onPick(label) : undefined}
-            >
-              {label === active ? I.grid : null}
-              {label}
-            </button>
-          );
-        })}
+      <span className="lg" aria-hidden="true">
+        DA
       </span>
-      <span className="rt">
+      <b className="nm" aria-hidden="true">
+        Dashboard
+      </b>
+      <span className="tabs" role="group" aria-label="Dashboard views">
+        {dashboardViews.map((v, i) => (
+          <button
+            type="button"
+            className={i === active ? "it on" : "it"}
+            key={v.key}
+            aria-current={i === active ? "true" : undefined}
+            onClick={() => onPick(i)}
+          >
+            {i === active ? I.grid : null}
+            {v.label}
+          </button>
+        ))}
+      </span>
+      <span className="rt" aria-hidden="true">
         <s className="btn">
           {I.link}
           View Website
@@ -473,12 +456,12 @@ function Ring({
  * is editable. Hidden from assistive tech: every figure in it is a picture of
  * a product, not information about this page.
  */
-function OverviewView({ onPick }: Picker) {
+function OverviewView({ rail }: Picker) {
   return (
-    <div className="dv" aria-hidden="true">
-      <Rail active="Overview" onPick={onPick} />
+    <div className="dv">
+      {rail}
 
-      <div className="dv-body">
+      <div className="dv-body" aria-hidden="true">
         <div className="dv-head">
           <span className="ht">
             <b>Overview</b>
@@ -835,12 +818,12 @@ const LV_ROWS = [
  * Same chassis as the Overview view — the app's rail, then a header row, then
  * cards — with a filter bar and a wide table instead of charts.
  */
-function LeadsView({ onPick }: Picker) {
+function LeadsView({ rail }: Picker) {
   return (
-    <div className="dv lv" aria-hidden="true">
-      <Rail active="Leads" onPick={onPick} />
+    <div className="dv lv">
+      {rail}
 
-      <div className="dv-body">
+      <div className="dv-body" aria-hidden="true">
         <div className="dv-head">
           <span className="ht">
             <b>Leads</b>
@@ -997,12 +980,12 @@ const SV_ROWS = [
  * The widest of the views — thirteen columns — so it sets the width the
  * frame scrolls to on a narrow screen.
  */
-function SessionsView({ onPick }: Picker) {
+function SessionsView({ rail }: Picker) {
   return (
-    <div className="dv sv" aria-hidden="true">
-      <Rail active="Sessions" onPick={onPick} />
+    <div className="dv sv">
+      {rail}
 
-      <div className="dv-body">
+      <div className="dv-body" aria-hidden="true">
         <div className="dv-head">
           <span className="ht">
             <b>Sessions</b>
@@ -1151,12 +1134,12 @@ const FN_FUNNELS = [
  * the sessions that carry a Meta click id, so the two can be read against
  * each other.
  */
-function FunnelsView({ onPick }: Picker) {
+function FunnelsView({ rail }: Picker) {
   return (
-    <div className="dv fn" aria-hidden="true">
-      <Rail active="Funnels" onPick={onPick} />
+    <div className="dv fn">
+      {rail}
 
-      <div className="dv-body">
+      <div className="dv-body" aria-hidden="true">
         <div className="dv-head">
           <span className="ht">
             <b>Funnels</b>
@@ -1238,12 +1221,12 @@ const CT_ROWS = [
  * clicks, with the element's own `data-cta-id` beside its label so a row can
  * be matched back to the markup.
  */
-function CtasView({ onPick }: Picker) {
+function CtasView({ rail }: Picker) {
   return (
-    <div className="dv ct" aria-hidden="true">
-      <Rail active="CTAs" onPick={onPick} />
+    <div className="dv ct">
+      {rail}
 
-      <div className="dv-body">
+      <div className="dv-body" aria-hidden="true">
         <div className="dv-head">
           <span className="ht">
             <b>CTAs</b>
@@ -1331,12 +1314,12 @@ const FM_ROWS = [
  * The Forms view: how many people saw each form, how many began it, and how
  * many finished — with the field they gave up on last.
  */
-function FormsView({ onPick }: Picker) {
+function FormsView({ rail }: Picker) {
   return (
-    <div className="dv fm" aria-hidden="true">
-      <Rail active="Forms" onPick={onPick} />
+    <div className="dv fm">
+      {rail}
 
-      <div className="dv-body">
+      <div className="dv-body" aria-hidden="true">
         <div className="dv-head">
           <span className="ht">
             <b>Forms</b>
@@ -1482,12 +1465,12 @@ const HM_LINE2 = "M2 47L14 44L26 45L38 39L50 37L62 39L74 33L86 30L98 27L110 23L1
  * page rather than a screenshot — nothing here is an image file, so it stays
  * sharp and its copy stays editable like every other view.
  */
-function HeatmapView({ onPick }: Picker) {
+function HeatmapView({ rail }: Picker) {
   return (
-    <div className="dv hm" aria-hidden="true">
-      <Rail active="Heatmap" onPick={onPick} />
+    <div className="dv hm">
+      {rail}
 
-      <div className="dv-body">
+      <div className="dv-body" aria-hidden="true">
         <div className="dv-head">
           <span className="ht">
             <b>Heatmap</b>
@@ -1793,12 +1776,12 @@ const PF_KEYS = ["LCP (s)", "INP (ms)", "CLS", "FCP (s)", "TTFB (ms)"];
  * The Performance view: Core Web Vitals as measured on real visits, with the
  * distribution behind each number rather than a single verdict.
  */
-function PerfView({ onPick }: Picker) {
+function PerfView({ rail }: Picker) {
   return (
-    <div className="dv pf" aria-hidden="true">
-      <Rail active="Performance" onPick={onPick} />
+    <div className="dv pf">
+      {rail}
 
-      <div className="dv-body">
+      <div className="dv-body" aria-hidden="true">
         <div className="dv-head">
           <span className="ht">
             <b>Performance</b>
@@ -2117,12 +2100,12 @@ const ER_COLS = ["Kind", "Message", "Source", "Page", "Browser", "Count", "Last 
  * failed to load, grouped by message so a single fault reads as one row with
  * a count rather than a hundred.
  */
-function ErrorsView({ onPick }: Picker) {
+function ErrorsView({ rail }: Picker) {
   return (
-    <div className="dv er" aria-hidden="true">
-      <Rail active="Errors" onPick={onPick} />
+    <div className="dv er">
+      {rail}
 
-      <div className="dv-body">
+      <div className="dv-body" aria-hidden="true">
         <div className="dv-head">
           <span className="ht">
             <b>Errors</b>
@@ -2330,12 +2313,12 @@ function TsBars({
  * the splits that are shares of everyone, three ranked lists for the ones with
  * a long tail.
  */
-function TechView({ onPick }: Picker) {
+function TechView({ rail }: Picker) {
   return (
-    <div className="dv ts" aria-hidden="true">
-      <Rail active="Tech Stack" onPick={onPick} />
+    <div className="dv ts">
+      {rail}
 
-      <div className="dv-body">
+      <div className="dv-body" aria-hidden="true">
         <div className="dv-head">
           <span className="ht">
             <b>Tech Stack</b>
@@ -2422,12 +2405,12 @@ const MC_JSON: readonly (readonly [number, string, string, string])[] = [
  * before it is sent, which is the point of the screen — nothing leaves the
  * server until the button is pressed.
  */
-function CapiView({ onPick }: Picker) {
+function CapiView({ rail }: Picker) {
   return (
-    <div className="dv mc" aria-hidden="true">
-      <Rail active="Meta CAPI" onPick={onPick} />
+    <div className="dv mc">
+      {rail}
 
-      <div className="dv-body">
+      <div className="dv-body" aria-hidden="true">
         <div className="dv-head">
           <span className="ht">
             <b>Meta CAPI</b>
@@ -2526,48 +2509,25 @@ function CapiView({ onPick }: Picker) {
   );
 }
 
-function View({ kind, onPick }: { kind: string } & Picker) {
-  if (kind === "leads") return <LeadsView onPick={onPick} />;
-  if (kind === "sessions") return <SessionsView onPick={onPick} />;
-  if (kind === "funnels") return <FunnelsView onPick={onPick} />;
-  if (kind === "ctas") return <CtasView onPick={onPick} />;
-  if (kind === "forms") return <FormsView onPick={onPick} />;
-  if (kind === "heatmap") return <HeatmapView onPick={onPick} />;
-  if (kind === "performance") return <PerfView onPick={onPick} />;
-  if (kind === "errors") return <ErrorsView onPick={onPick} />;
-  if (kind === "tech") return <TechView onPick={onPick} />;
-  if (kind === "capi") return <CapiView onPick={onPick} />;
-  return <OverviewView onPick={onPick} />;
+function View({ kind, rail }: { kind: string } & Picker) {
+  if (kind === "leads") return <LeadsView rail={rail} />;
+  if (kind === "sessions") return <SessionsView rail={rail} />;
+  if (kind === "funnels") return <FunnelsView rail={rail} />;
+  if (kind === "ctas") return <CtasView rail={rail} />;
+  if (kind === "forms") return <FormsView rail={rail} />;
+  if (kind === "heatmap") return <HeatmapView rail={rail} />;
+  if (kind === "performance") return <PerfView rail={rail} />;
+  if (kind === "errors") return <ErrorsView rail={rail} />;
+  if (kind === "tech") return <TechView rail={rail} />;
+  if (kind === "capi") return <CapiView rail={rail} />;
+  return <OverviewView rail={rail} />;
 }
 
 /* -------------------------------------------------------------- section */
 
 export default function DashboardViews() {
   const [active, setActive] = useState(0);
-  const tabs = useRef<(HTMLButtonElement | null)[]>([]);
   const view = dashboardViews[active];
-
-  /* The mock's own rail is a second way into the same views — the labels
-     there match dashboardViews, so the label is enough to find the tab. */
-  const onPick = useCallback((label: string) => {
-    const i = dashboardViews.findIndex((v) => v.label === label);
-    if (i >= 0) setActive(i);
-  }, []);
-
-  /* Roving tabindex, so only the selected tab is in the tab order and the
-     arrow keys reach the rest. */
-  function onKeyDown(e: React.KeyboardEvent) {
-    const last = dashboardViews.length - 1;
-    let next = -1;
-    if (e.key === "ArrowRight" || e.key === "ArrowDown") next = active === last ? 0 : active + 1;
-    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") next = active === 0 ? last : active - 1;
-    else if (e.key === "Home") next = 0;
-    else if (e.key === "End") next = last;
-    if (next < 0) return;
-    e.preventDefault();
-    setActive(next);
-    tabs.current[next]?.focus();
-  }
 
   return (
     <section className="section section-alt" id="dashboard">
@@ -2577,52 +2537,20 @@ export default function DashboardViews() {
           <h2>The dashboard you get on day one</h2>
           <p>
             Your own login, your own data, and every view below built around the page we build for
-            you. Pick a tab to see what it shows.
+            you. Open a tab in the dashboard to see what it shows.
           </p>
         </div>
 
-        <div
-          className="dv-tabs"
-          role="tablist"
-          aria-label="Dashboard views"
-          onKeyDown={onKeyDown}
-          data-anim="fade-up"
-        >
-          {dashboardViews.map((item, i) => (
-            <button
-              key={item.key}
-              type="button"
-              role="tab"
-              id={`dv-tab-${item.key}`}
-              ref={(el) => {
-                tabs.current[i] = el;
-              }}
-              aria-selected={i === active}
-              aria-controls="dv-stage"
-              tabIndex={i === active ? 0 : -1}
-              className={i === active ? "dv-tab on" : "dv-tab"}
-              onClick={() => setActive(i)}
-            >
-              {item.label}
-            </button>
-          ))}
-        </div>
-
-        <p className="dv-cap" data-anim="fade-up">
+        {/* Announced on change: the rail that switches these is inside the
+            mock, so without this the caption would swap in silence. */}
+        <p className="dv-cap" aria-live="polite" data-anim="fade-up">
           {view.body}
         </p>
 
-        <div
-          className="dv-stage"
-          role="tabpanel"
-          id="dv-stage"
-          aria-labelledby={`dv-tab-${view.key}`}
-          tabIndex={0}
-          data-anim="fade-up"
-        >
+        <div className="dv-stage" data-anim="fade-up">
           {/* Re-keyed so the view remounts and its bars re-fill on change. */}
           <div className="dv-frame" key={view.key}>
-            <View kind={view.view} onPick={onPick} />
+            <View kind={view.view} rail={<Rail active={active} onPick={setActive} />} />
           </div>
         </div>
 

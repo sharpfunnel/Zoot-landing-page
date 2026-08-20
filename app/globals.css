@@ -7478,39 +7478,6 @@ footer {
    section's rail-and-stage: there's no step copy to keep beside each one,
    so the tabs can sit on their own line and the mock gets the full width. */
 
-.dv-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: 18px;
-}
-
-.dv-tab {
-  background: #ffffff;
-  border: 1px solid var(--border-strong);
-  border-radius: 100px;
-  padding: 10px 20px;
-  font-family: var(--display);
-  font-size: 13.5px;
-  font-weight: 600;
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: color 0.2s, border-color 0.2s, background 0.2s, box-shadow 0.2s;
-}
-
-.dv-tab:hover {
-  color: var(--text);
-  border-color: var(--accent);
-}
-
-.dv-tab.on {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #ffffff;
-  box-shadow: var(--shadow-md);
-}
-
 .dv-cap {
   max-width: 620px;
   margin: 0 auto 22px;
@@ -11257,10 +11224,6 @@ footer {
   }
   .mc-r {
     grid-template-columns: 1fr;
-  }
-  .dv-tab {
-    padding: 9px 16px;
-    font-size: 12.5px;
   }
   .form-split,
   .feature-row,
