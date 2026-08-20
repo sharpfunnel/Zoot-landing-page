@@ -85,12 +85,12 @@ export default function Page() {
         {/* Hook → clarity → credibility */}
         <Hero />
         <TrackingSetup />
-        <DashboardViews />
         <FlowCard />
         <ProofStrip />
 
         {/* Show the product, then what you receive, then how it works */}
         <Deliverables />
+        <DashboardViews />
         <Journey />
 
         {/* Differentiate, then prove */}
